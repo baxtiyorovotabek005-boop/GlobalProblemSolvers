@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Hub | GlobalProblemSolvers</title>
+    <meta name="description" content="Join the GlobalProblemSolvers live community chat. Discuss solutions to climate change, hunger, inequality and more — in real time with people worldwide.">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        :root {
+            --dark:#020c1b; --card:#0a192f; --card2:#0d2040;
+            --accent:#64ffda; --aqua:#00e9fa; --text:#ccd6f6;
+            --dim:#8892b0; --border:rgba(100,255,218,0.12); --red:#ff6b6b;
+        }
+        body { font-family:'Inter',sans-serif; background:var(--dark); color:var(--text); overflow-x:hidden; min-height:100vh; }
+        ::-webkit-scrollbar{width:6px} ::-webkit-scrollbar-track{background:transparent}
+        ::-webkit-scrollbar-thumb{background:#1e3a5f;border-radius:4px}
+        ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+
+        /* ── FIREBASE LOADING SCREEN ──────────────────── */
+        #firebase-loading {
+            position: fixed; inset: 0;
+            background: #020c1b;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            transition: opacity 0.5s ease;
+        }
+        #firebase-loading.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .fl-globe {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0,233,250,0.2), rgba(100,255,218,0.15));
+            border: 1px solid rgba(100,255,218,0.3);
+            display: flex; align-items: center; justify-content: center;
+            animation: fl-pulse 2s ease-in-out infinite;
+        }
+        .fl-globe i { font-size: 2.2rem; color: var(--accent); }
+        @keyframes fl-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(100,255,218,0.3); transform: scale(1); }
+            50%       { box-shadow: 0 0 0 20px rgba(100,255,218,0); transform: scale(1.05); }
+        }
+        .fl-ring {
+            width: 48px; height: 48px;
+            border: 3px solid rgba(100,255,218,0.15);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: fl-spin 0.9s linear infinite;
+        }
+        @keyframes fl-spin { to { transform: rotate(360deg); } }
+        .fl-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem; font-weight: 700; color: white;
+            letter-spacing: 3px; text-transform: uppercase;
+        }
+        .fl-text span { color: var(--accent); }
+        .fl-sub {
+            color: var(--dim); font-size: 0.82rem;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+
+        /* LANG BTNS */
+        .c-lang-btn { background:rgba(100,255,218,0.07); border:1px solid rgba(100,255,218,0.2); color:var(--dim); border-radius:6px; padding:5px 12px; font-size:0.75rem; font-weight:700; cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:1px; transition:all 0.2s; }
+        .c-lang-btn:hover,.c-lang-btn.active { background:rgba(100,255,218,0.15); border-color:var(--accent); color:var(--accent); }
+
+        /* AUTH OVERLAY */
+        #auth-overlay { position:fixed; inset:0; background:rgba(1,7,18,0.97); backdrop-filter:blur(14px); z-index:9999; display:flex; align-items:center; justify-content:center; padding:20px; transition:opacity 0.4s; }
+        /* Auth box always visible immediately — no loading delay */
+        #auth-overlay.hidden { opacity:0; pointer-events:none; }
+        .auth-box { background:linear-gradient(145deg,#0d1f3c,#071221); border:1px solid rgba(100,255,218,0.18); border-radius:24px; padding:44px 40px; width:100%; max-width:440px; text-align:center; box-shadow:0 30px 80px rgba(0,0,0,0.6); animation:boxIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
+        @keyframes boxIn { from{opacity:0;transform:translateY(40px) scale(0.95)} to{opacity:1;transform:translateY(0) scale(1)} }
+        .auth-globe { width:66px; height:66px; border-radius:50%; background:linear-gradient(135deg,rgba(0,233,250,0.15),rgba(100,255,218,0.1)); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; margin:0 auto 18px; }
+        .auth-globe i { font-size:1.9rem; color:var(--accent); animation:spin 10s linear infinite; }
+        @keyframes spin { to{transform:rotate(360deg)} }
+        .auth-box h2 { font-family:'Poppins',sans-serif; font-size:1.75rem; color:white; margin-bottom:6px; }
+        .auth-box h2 span { color:var(--accent); }
+        .auth-sub { color:var(--dim); font-size:0.88rem; line-height:1.6; margin-bottom:24px; }
+        .auth-tabs { display:flex; background:rgba(255,255,255,0.04); border-radius:10px; padding:4px; margin-bottom:22px; border:1px solid rgba(255,255,255,0.06); }
+        .auth-tab { flex:1; padding:9px; border:none; background:none; color:var(--dim); font-size:0.85rem; font-weight:600; cursor:pointer; border-radius:8px; transition:all 0.2s; font-family:'Inter',sans-serif; }
+        .auth-tab.active { background:rgba(100,255,218,0.12); color:var(--accent); }
+        .auth-field { position:relative; margin-bottom:12px; text-align:left; }
+        .auth-field i { position:absolute; left:16px; top:50%; transform:translateY(-50%); color:var(--dim); font-size:0.85rem; }
+        .auth-input { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:white; padding:13px 16px 13px 42px; border-radius:12px; font-size:0.92rem; outline:none; transition:border-color 0.3s,box-shadow 0.3s; font-family:'Inter',sans-serif; }
+        .auth-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(100,255,218,0.1); }
+        .auth-input::placeholder { color:#3a5070; }
+        .auth-error { background:rgba(255,107,107,0.1); border:1px solid rgba(255,107,107,0.25); color:var(--red); font-size:0.8rem; padding:9px 14px; border-radius:8px; margin-bottom:12px; display:none; text-align:left; }
+        .auth-error.show { display:block; }
+        .auth-btn { width:100%; padding:14px; background:linear-gradient(135deg,var(--accent),var(--aqua)); color:#020c1b; border:none; border-radius:50px; font-weight:800; font-size:0.97rem; cursor:pointer; transition:0.3s; letter-spacing:0.5px; margin-top:4px; font-family:'Inter',sans-serif; }
+        .auth-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(100,255,218,0.35); }
+        .auth-btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+        .forgot-link { display:block; margin-top:14px; font-size:0.8rem; color:var(--dim); cursor:pointer; transition:color 0.2s; background:none; border:none; font-family:'Inter',sans-serif; }
+        .forgot-link:hover { color:var(--accent); }
+
+        /* DASHBOARD */
+        #dashboard { display:none; min-height:100vh; background:linear-gradient(rgba(2,12,27,0.88),rgba(2,12,27,0.96)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072') center/cover fixed; display:flex; flex-direction:column; align-items:center; padding:60px 20px 80px; transition:opacity 0.3s; }
+        .dash-nav { width:100%; max-width:1200px; display:flex; align-items:center; gap:12px; margin-bottom:50px; flex-wrap:wrap; }
+        #dashboard h1 { font-family:'Poppins',sans-serif; font-size:clamp(2.2rem,7vw,4rem); color:white; text-align:center; text-transform:uppercase; letter-spacing:8px; text-shadow:0 0 30px rgba(100,255,218,0.4); margin-bottom:12px; }
+        .dash-subtitle { color:var(--accent); font-size:0.9rem; letter-spacing:3px; text-transform:uppercase; font-weight:300; text-align:center; margin-bottom:16px; }
+        .dash-user-greeting { color:var(--dim); font-size:0.88rem; margin-bottom:50px; text-align:center; }
+        .dash-user-greeting span { color:var(--accent); font-weight:600; }
+        .dash-user-chip { margin-left:auto; display:flex; align-items:center; gap:10px; background:rgba(100,255,218,0.07); border:1px solid var(--border); padding:7px 16px 7px 8px; border-radius:50px; }
+        .dash-chip-avatar { width:30px; height:30px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--aqua)); color:#020c1b; font-size:0.72rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
+        .dash-chip-name { color:var(--accent); font-size:0.82rem; font-weight:600; }
+        .dash-signout-btn { background:none; border:1px solid rgba(255,107,107,0.3); color:var(--red); padding:5px 12px; border-radius:20px; font-size:0.75rem; cursor:pointer; transition:0.2s; font-family:'Inter',sans-serif; }
+        .dash-signout-btn:hover { background:rgba(255,107,107,0.1); }
+        .topic-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; width:100%; max-width:1200px; }
+        .topic-card { background:rgba(13,32,64,0.7); backdrop-filter:blur(12px); border:1px solid var(--border); border-radius:20px; padding:40px 24px; cursor:pointer; transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); display:flex; flex-direction:column; align-items:center; gap:12px; position:relative; overflow:hidden; }
+        .topic-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(100,255,218,0.04),transparent); opacity:0; transition:opacity 0.3s; }
+        .topic-card:hover::before { opacity:1; }
+        .topic-card:hover { transform:scale(1.04) translateY(-8px); border-color:var(--accent); box-shadow:0 20px 40px -15px rgba(100,255,218,0.25); }
+        .topic-emoji { font-size:2.2rem; }
+        .topic-name { font-size:1.1rem; font-weight:700; color:var(--text); text-align:center; transition:color 0.3s; }
+        .topic-card:hover .topic-name { color:var(--accent); }
+        .topic-live-count { font-size:0.75rem; color:var(--dim); display:flex; align-items:center; gap:5px; }
+        .live-dot { width:7px; height:7px; border-radius:50%; background:#2ecc71; animation:livePulse 1.5s infinite; }
+        @keyframes livePulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+        /* CHAT ROOM */
+        #hub-page { display:none; min-height:100vh; background:linear-gradient(rgba(0,0,0,0.82),rgba(0,0,0,0.88)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072') center/cover fixed; transition:opacity 0.3s; }
+        .chat-topbar { position:sticky; top:0; background:rgba(2,12,27,0.9); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:16px 30px; display:flex; align-items:center; justify-content:space-between; gap:12px; z-index:100; }
+        .topbar-left { display:flex; align-items:center; gap:14px; }
+        .topbar-right { display:flex; align-items:center; gap:12px; }
+        .chat-topic-badge { display:flex; align-items:center; gap:10px; }
+        .chat-topic-emoji { font-size:1.5rem; }
+        .chat-topic-name { font-family:'Poppins',sans-serif; font-size:1.2rem; font-weight:700; color:var(--accent); }
+        .online-badge { display:flex; align-items:center; gap:6px; background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.25); padding:5px 12px; border-radius:50px; font-size:0.78rem; color:#2ecc71; font-weight:600; }
+        .user-me-badge { display:flex; align-items:center; gap:7px; background:rgba(100,255,218,0.07); border:1px solid var(--border); padding:6px 14px 6px 6px; border-radius:50px; }
+        .user-me-avatar { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--aqua)); color:#020c1b; font-size:0.7rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
+        .user-me-name { color:var(--accent); font-size:0.82rem; font-weight:600; }
+        .chat-layout { display:flex; max-width:1200px; margin:0 auto; height:calc(100vh - 72px); }
+        .chat-sidebar { width:260px; flex-shrink:0; background:rgba(7,18,33,0.7); border-right:1px solid var(--border); display:flex; flex-direction:column; overflow:hidden; }
+        .sidebar-section-title { padding:20px 20px 10px; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--dim); }
+        .sidebar-rooms { flex:1; overflow-y:auto; padding:0 10px 20px; }
+        .sidebar-room-btn { width:100%; padding:11px 14px; background:transparent; border:none; border-radius:10px; color:var(--dim); font-size:0.88rem; font-weight:500; cursor:pointer; text-align:left; display:flex; align-items:center; gap:10px; transition:0.2s; font-family:'Inter',sans-serif; }
+        .sidebar-room-btn:hover { background:rgba(100,255,218,0.06); color:var(--text); }
+        .sidebar-room-btn.active { background:rgba(100,255,218,0.1); color:var(--accent); font-weight:700; }
+        .sidebar-room-btn .room-emoji { font-size:1rem; }
+        .sidebar-online-section { border-top:1px solid var(--border); padding:12px 20px; }
+        .sidebar-online-title { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--dim); margin-bottom:10px; }
+        #online-users-list { display:flex; flex-direction:column; gap:8px; max-height:150px; overflow-y:auto; }
+        .online-user-row { display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text); }
+        .online-user-dot { width:8px; height:8px; border-radius:50%; background:#2ecc71; flex-shrink:0; }
+        .chat-main { flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
+        .chat-messages { flex:1; overflow-y:auto; padding:28px 30px; display:flex; flex-direction:column; gap:4px; }
+        .date-sep { display:flex; align-items:center; gap:12px; margin:16px 0 8px; }
+        .date-sep::before,.date-sep::after { content:''; flex:1; height:1px; background:var(--border); }
+        .date-sep span { color:var(--dim); font-size:0.74rem; letter-spacing:1px; white-space:nowrap; }
+        .sys-msg { align-self:center; color:var(--dim); font-size:0.78rem; letter-spacing:1.5px; text-transform:uppercase; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:8px 18px; border-radius:50px; margin:8px 0; text-align:center; }
+        .msg-group { display:flex; flex-direction:column; gap:2px; margin-bottom:10px; }
+        .msg-header { display:flex; align-items:baseline; gap:8px; padding:0 0 0 46px; }
+        .msg-header.is-me { flex-direction:row-reverse; padding:0 46px 0 0; }
+        .msg-author { font-size:0.85rem; font-weight:700; color:var(--accent); }
+        .msg-author.is-me { color:var(--aqua); }
+        .msg-time { font-size:0.72rem; color:var(--dim); }
+        .msg-row { display:flex; align-items:flex-start; gap:10px; }
+        .msg-row.is-me { flex-direction:row-reverse; }
+        .msg-avatar { width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#1a3a60,#0d2040); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; color:var(--accent); flex-shrink:0; margin-top:2px; }
+        .msg-avatar.is-me { background:linear-gradient(135deg,var(--accent),var(--aqua)); color:#020c1b; }
+        .msg-bubble { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.07); padding:10px 16px; border-radius:0 16px 16px 16px; max-width:70%; font-size:0.93rem; line-height:1.55; color:var(--text); word-wrap:break-word; animation:bubbleIn 0.3s ease; }
+        .msg-bubble.is-me { background:rgba(100,255,218,0.09); border-color:rgba(100,255,218,0.15); border-radius:16px 0 16px 16px; color:white; }
+        @keyframes bubbleIn { from{opacity:0;transform:translateY(8px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
+        .typing-bar { padding:6px 30px; font-size:0.78rem; color:var(--dim); font-style:italic; min-height:26px; }
+        .chat-input-area { padding:16px 24px; background:rgba(7,18,33,0.8); border-top:1px solid var(--border); }
+        .input-row { display:flex; align-items:center; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:50px; padding:6px 6px 6px 20px; gap:8px; transition:border-color 0.3s,box-shadow 0.3s; }
+        .input-row:focus-within { border-color:var(--accent); box-shadow:0 0 0 3px rgba(100,255,218,0.08); }
+        #user-input { flex:1; background:transparent; border:none; outline:none; color:white; font-size:0.95rem; font-family:'Inter',sans-serif; padding:8px 0; }
+        #user-input::placeholder { color:#3a5070; }
+        .char-count { font-size:0.75rem; color:var(--dim); white-space:nowrap; flex-shrink:0; }
+        .char-count.warn { color:var(--red); }
+        .send-btn { width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--aqua)); color:#020c1b; border:none; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:0.25s; flex-shrink:0; }
+        .send-btn:hover { transform:scale(1.1); box-shadow:0 4px 14px rgba(100,255,218,0.35); }
+        .send-btn:disabled { background:#1e3a5f; color:var(--dim); cursor:not-allowed; transform:none; box-shadow:none; }
+        .input-hint { font-size:0.72rem; color:var(--dim); text-align:center; margin-top:7px; }
+        .back-btn { display:inline-flex; align-items:center; gap:8px; background:transparent; border:1.5px solid var(--accent); color:var(--accent); padding:10px 22px; border-radius:50px; font-weight:700; font-size:0.85rem; cursor:pointer; text-decoration:none; transition:0.25s; }
+        .back-btn:hover { background:rgba(100,255,218,0.08); box-shadow:0 0 14px rgba(100,255,218,0.2); }
+        #setup-banner { display:none; background:rgba(255,165,0,0.1); border:1px solid rgba(255,165,0,0.3); border-radius:12px; padding:16px 20px; margin:16px 24px; font-size:0.85rem; color:#ffa500; line-height:1.6; }
+        #setup-banner strong { color:#ffcc44; display:block; margin-bottom:4px; }
+        #setup-banner a { color:#ffcc44; }
+        .loading-msgs { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:60px 20px; color:var(--dim); }
+        .spinner { width:32px; height:32px; border:3px solid rgba(100,255,218,0.15); border-top-color:var(--accent); border-radius:50%; animation:spinA 0.8s linear infinite; }
+        @keyframes spinA { to{transform:rotate(360deg)} }
+        /* LOADING SCREEN — shown immediately while Firebase checks auth */
+        #gps-loading {
+            position:fixed; inset:0; background:var(--dark);
+            z-index:99999; display:flex; flex-direction:column;
+            align-items:center; justify-content:center; gap:20px;
+            transition: opacity 0.5s ease;
+        }
+        #gps-loading.fade-out { opacity:0; pointer-events:none; }
+        .gps-loader-logo {
+            width:80px; height:80px; border-radius:50%;
+            background:linear-gradient(135deg,rgba(0,233,250,0.15),rgba(100,255,218,0.1));
+            border:1px solid var(--border);
+            display:flex; align-items:center; justify-content:center;
+            animation:logoPulse 2s ease-in-out infinite;
+        }
+        .gps-loader-logo i { font-size:2.2rem; color:var(--accent); }
+        @keyframes logoPulse {
+            0%,100% { box-shadow:0 0 0 0 rgba(100,255,218,0.3); }
+            50%      { box-shadow:0 0 0 20px rgba(100,255,218,0); }
+        }
+        .gps-loader-bar {
+            width:200px; height:3px; background:rgba(255,255,255,0.06);
+            border-radius:99px; overflow:hidden;
+        }
+        .gps-loader-fill {
+            height:100%; width:0%;
+            background:linear-gradient(90deg, var(--accent), var(--aqua));
+            border-radius:99px;
+            animation:loadFill 2.5s cubic-bezier(0.4,0,0.2,1) forwards;
+        }
+        @keyframes loadFill { 0%{width:0%} 60%{width:75%} 100%{width:100%} }
+        .gps-loader-text {
+            color:var(--dim); font-size:0.82rem; letter-spacing:2px;
+            text-transform:uppercase; font-family:'Inter',sans-serif;
+        }
+
+        @media(max-width:768px) { .chat-sidebar{display:none} .chat-topbar{padding:12px 16px} .chat-messages{padding:16px} .chat-input-area{padding:12px 16px} .msg-bubble{max-width:88%} .auth-box{padding:36px 24px} .chat-topic-name{font-size:1rem} .lang-pick-box{padding:36px 24px} }
+
+        /* TRANSLATED BADGE */
+        .translated-badge { font-size:0.68rem; color:var(--dim); margin-top:3px; padding-left:46px; display:flex; align-items:center; gap:4px; opacity:0.75; }
+        .translated-badge.is-me { padding-left:0; padding-right:46px; justify-content:flex-end; }
+
+        /* LANG PICKER OVERLAY */
+        #lang-pick-overlay { position:fixed; inset:0; background:rgba(1,7,18,0.97); backdrop-filter:blur(14px); z-index:9998; display:none; align-items:center; justify-content:center; padding:20px; }
+        #lang-pick-overlay.show { display:flex; }
+        .lang-pick-box { background:linear-gradient(145deg,#0d1f3c,#071221); border:1px solid rgba(100,255,218,0.18); border-radius:24px; padding:44px 40px; width:100%; max-width:420px; text-align:center; box-shadow:0 30px 80px rgba(0,0,0,0.6); animation:boxIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
+        .lang-pick-box h2 { font-family:'Poppins',sans-serif; font-size:1.6rem; color:white; margin-bottom:8px; }
+        .lang-pick-box h2 span { color:var(--accent); }
+        .lang-pick-box p { color:var(--dim); font-size:0.88rem; margin-bottom:32px; line-height:1.6; }
+        .lang-pick-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        .lang-pick-btn { padding:18px 12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; color:var(--text); cursor:pointer; transition:all 0.25s; font-family:'Inter',sans-serif; width:100%; }
+        .lang-pick-btn:hover { border-color:var(--accent); background:rgba(100,255,218,0.08); transform:translateY(-3px); }
+        .lang-pick-btn .lp-flag { font-size:2rem; display:block; margin-bottom:8px; }
+        .lang-pick-btn .lp-name { font-size:0.95rem; font-weight:700; color:white; display:block; }
+        .lang-pick-btn .lp-sub  { font-size:0.75rem; color:var(--dim); display:block; margin-top:2px; }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     AUTH OVERLAY — Firebase Email/Password
+════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════
+     FIREBASE LOADING SCREEN — shows while auth initializes
+════════════════════════════════════════════ -->
+<div id="firebase-loading">
+    <div class="fl-globe"><i class="fas fa-globe-americas"></i></div>
+    <div class="fl-text">Global<span>Problem</span>Solvers</div>
+    <div class="fl-ring"></div>
+    <div class="fl-sub">Community Hub</div>
+    <button onclick="dismissLoadingScreen()" style="margin-top:18px;background:rgba(100,255,218,0.1);border:1px solid rgba(100,255,218,0.35);color:#64ffda;padding:10px 30px;border-radius:50px;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;letter-spacing:1px;transition:0.2s;" onmouseover="this.style.background='rgba(100,255,218,0.2)'" onmouseout="this.style.background='rgba(100,255,218,0.1)'">
+        Press to Enter &nbsp;→
+    </button>
+</div>
+
+<!-- ════ GPS LOADING SCREEN — shown while Firebase checks auth ════ -->
+<div id="gps-loading">
+    <div class="gps-loader-logo">
+        <i class="fas fa-globe-americas"></i>
+    </div>
+    <div class="gps-loader-bar">
+        <div class="gps-loader-fill"></div>
+    </div>
+    <div class="gps-loader-text">Connecting to GPS…</div>
+</div>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-globe"><i class="fas fa-globe-americas"></i></div>
+        <h2>Enter the <span>Hub</span></h2>
+        <p class="auth-sub">Sign in or create an account to join the live discussion.</p>
+
+        <div class="auth-tabs">
+            <button class="auth-tab active" id="tab-login"  onclick="switchAuthTab('login')">Sign In</button>
+            <button class="auth-tab"         id="tab-signup" onclick="switchAuthTab('signup')">Create Account</button>
+        </div>
+
+        <div class="auth-error" id="auth-error"></div>
+
+        <!-- Display name — signup only -->
+        <div class="auth-field" id="field-name" style="display:none">
+            <i class="fas fa-user"></i>
+            <input type="text" class="auth-input" id="auth-name" placeholder="Your display name" maxlength="30" autocomplete="name">
+        </div>
+
+        <div class="auth-field">
+            <i class="fas fa-envelope"></i>
+            <input type="email" class="auth-input" id="auth-email" placeholder="Email address" autocomplete="email" onkeypress="if(event.key==='Enter')submitAuth()">
+        </div>
+
+        <div class="auth-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" class="auth-input" id="auth-password" placeholder="Password (min 6 characters)" autocomplete="current-password" onkeypress="if(event.key==='Enter')submitAuth()">
+        </div>
+
+        <button class="auth-btn" id="auth-submit-btn" onclick="submitAuth()">
+            <i class="fas fa-arrow-right"></i> <span id="auth-btn-label">Sign In</span>
+        </button>
+        <button class="forgot-link" id="forgot-link" onclick="sendPasswordReset()">Forgot password?</button>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     LANGUAGE PICKER — shown once after first login
+════════════════════════════════════════════ -->
+<div id="lang-pick-overlay">
+    <div class="lang-pick-box">
+        <div class="auth-globe"><i class="fas fa-language"></i></div>
+        <h2>Your <span>Language</span></h2>
+        <p>What language do you want to read messages in?<br>Messages from other languages will be auto-translated for you.</p>
+        <div class="lang-pick-grid">
+            <button class="lang-pick-btn" onclick="setReadLang('en')">
+                <span class="lp-flag">🇬🇧</span>
+                <span class="lp-name">English</span>
+                <span class="lp-sub">EN</span>
+            </button>
+            <button class="lang-pick-btn" onclick="setReadLang('uz')">
+                <span class="lp-flag">🇺🇿</span>
+                <span class="lp-name">O'zbek</span>
+                <span class="lp-sub">UZ</span>
+            </button>
+            <button class="lang-pick-btn" onclick="setReadLang('ru')">
+                <span class="lp-flag">🇷🇺</span>
+                <span class="lp-name">Русский</span>
+                <span class="lp-sub">RU</span>
+            </button>
+            <button class="lang-pick-btn" onclick="setReadLang('qr')">
+                <span class="lp-flag">🌏</span>
+                <span class="lp-name">Qaraqalpaq</span>
+                <span class="lp-sub">QR</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     DASHBOARD — TOPIC GRID
+════════════════════════════════════════════ -->
+<div id="dashboard">
+    <div class="dash-nav">
+        <a href="index10.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> <span class="c-back-label">Back to Home</span>
+        </a>
+        <div style="display:flex;gap:8px">
+            <button onclick="setCommunityLang('en')" class="c-lang-btn" id="clb-en">EN</button>
+            <button onclick="setCommunityLang('uz')" class="c-lang-btn" id="clb-uz">UZ</button>
+            <button onclick="setCommunityLang('ru')" class="c-lang-btn" id="clb-ru">RU</button>
+            <button onclick="setCommunityLang('qr')" class="c-lang-btn" id="clb-qr">QR</button>
+        </div>
+        <div class="dash-user-chip" id="dash-user-chip" style="display:none">
+            <div class="dash-chip-avatar" id="dash-chip-avatar"></div>
+            <span class="dash-chip-name" id="dash-chip-name"></span>
+            <button class="dash-signout-btn" onclick="signOutUser()">
+                <i class="fas fa-sign-out-alt"></i> <span class="c-signout-label">Sign out</span>
+            </button>
+        </div>
+    </div>
+
+    <h1 class="c-hub-title">Community Hub</h1>
+    <div class="dash-subtitle c-hub-subtitle">🌍 Live Global Brainstorm</div>
+    <div class="dash-user-greeting">
+        <span class="c-welcome-text">Welcome, </span><span id="greeting-name">—</span><span class="c-challenge-text">! Select a challenge to join the live discussion.</span>
+    </div>
+
+    <div class="topic-grid">
+        <div class="topic-card" data-room="climate-change"    onclick="openRoom('climate-change','🌡️')">   <div class="topic-emoji">🌡️</div><div class="topic-name" data-room-name="climate-change">Climate Change</div>   <div class="topic-live-count"><span class="live-dot"></span> <span class="c-livechat-label">Live chat</span></div></div>
+        <div class="topic-card" data-room="global-hunger"     onclick="openRoom('global-hunger','🌾')">    <div class="topic-emoji">🌾</div> <div class="topic-name" data-room-name="global-hunger">Global Hunger</div>    <div class="topic-live-count"><span class="live-dot"></span> <span class="c-livechat-label">Live chat</span></div></div>
+        <div class="topic-card" data-room="education"         onclick="openRoom('education','📚')">         <div class="topic-emoji">📚</div> <div class="topic-name" data-room-name="education">Access to Education</div>  <div class="topic-live-count"><span class="live-dot"></span> <span class="c-livechat-label">Live chat</span></div></div>
+        <div class="topic-card" data-room="water-scarcity"    onclick="openRoom('water-scarcity','💧')">   <div class="topic-emoji">💧</div> <div class="topic-name" data-room-name="water-scarcity">Water Scarcity</div>  <div class="topic-live-count"><span class="live-dot"></span> <span class="c-livechat-label">Live chat</span></div></div>
+        <div class="topic-card" data-room="air-pollution"     onclick="openRoom('air-pollution','🏭')">    <div class="topic-emoji">🏭</div> <div class="topic-name" data-room-name="air-pollution">Air Pollution</div>    <div class="topic-live-count"><span class="live-dot"></span> <span class="c-livechat-label">Live chat</span></div></div>
+        <div class="topic-card" data-room="deforestation"     onclick="openRoom('deforestation','🌲')">    <div class="topic-emoji">🌲</div> <div class="topic-name" data-room-name="deforestation">Deforestation</div>    <div class="topic-live-count"><span class="live-dot"></span> <span class="c-livechat-label">Live chat</span></div></div>
+        <div class="topic-card" data-room="ocean-plastic"     onclick="openRoom('ocean-plastic','🌊')">    <div class="topic-emoji">🌊</div> <div class="topic-name" data-room-name="ocean-plastic">Ocean Plastic</div>    <div class="topic-live-count"><span class="live-dot"></span> <span class="c-livechat-label">Live chat</span></div></div>
+        <div class="topic-card" data-room="healthcare"        onclick="openRoom('healthcare','🏥')">        <div class="topic-emoji">🏥</div> <div class="topic-name" data-room-name="healthcare">Healthcare Access</div>   <div class="topic-live-count"><span class="live-dot"></span> <span class="c-livechat-label">Live chat</span></div></div>
+        <div class="topic-card" data-room="corruption"        onclick="openRoom('corruption','⚖️')">        <div class="topic-emoji">⚖️</div><div class="topic-name" data-room-name="corruption">Corruption</div>           <div class="topic-live-count"><span class="live-dot"></span> <span class="c-livechat-label">Live chat</span></div></div>
+        <div class="topic-card" data-room="gender-inequality" onclick="openRoom('gender-inequality','♀️')"><div class="topic-emoji">♀️</div> <div class="topic-name" data-room-name="gender-inequality">Gender Inequality</div><div class="topic-live-count"><span class="live-dot"></span> <span class="c-livechat-label">Live chat</span></div></div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     CHAT ROOM PAGE
+════════════════════════════════════════════ -->
+<div id="hub-page">
+    <div class="chat-topbar">
+        <div class="topbar-left">
+            <a href="#" class="back-btn" onclick="goBack();return false;">
+                <i class="fas fa-arrow-left"></i> <span class="c-rooms-label">Rooms</span>
+            </a>
+            <div class="chat-topic-badge">
+                <span class="chat-topic-emoji" id="room-emoji">🌍</span>
+                <span class="chat-topic-name"  id="room-name">Room</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="online-badge">
+                <span class="live-dot"></span>
+                <span id="online-count">0</span><span class="c-online-label"> online</span>
+            </div>
+            <div class="user-me-badge">
+                <div class="user-me-avatar" id="topbar-avatar"></div>
+                <span class="user-me-name"  id="topbar-name"></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="setup-banner">
+        <strong>⚠️ Firestore not configured</strong>
+        Firebase Console → Build → Firestore Database → Create database → Start in TEST MODE.
+        Also enable Authentication → Email/Password.
+        <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a>
+    </div>
+
+    <div class="chat-layout">
+        <div class="chat-sidebar">
+            <div class="sidebar-section-title">💬 <span class="c-sidebar-rooms-label">Rooms</span></div>
+            <div class="sidebar-rooms">
+                <button class="sidebar-room-btn" data-sidebar-room="climate-change"    onclick="openRoom('climate-change','🌡️')">   <span class="room-emoji">🌡️</span><span data-room-label="climate-change">Climate Change</span></button>
+                <button class="sidebar-room-btn" data-sidebar-room="global-hunger"     onclick="openRoom('global-hunger','🌾')">    <span class="room-emoji">🌾</span> <span data-room-label="global-hunger">Global Hunger</span></button>
+                <button class="sidebar-room-btn" data-sidebar-room="education"         onclick="openRoom('education','📚')">         <span class="room-emoji">📚</span> <span data-room-label="education">Education</span></button>
+                <button class="sidebar-room-btn" data-sidebar-room="water-scarcity"    onclick="openRoom('water-scarcity','💧')">   <span class="room-emoji">💧</span> <span data-room-label="water-scarcity">Water Scarcity</span></button>
+                <button class="sidebar-room-btn" data-sidebar-room="air-pollution"     onclick="openRoom('air-pollution','🏭')">    <span class="room-emoji">🏭</span> <span data-room-label="air-pollution">Air Pollution</span></button>
+                <button class="sidebar-room-btn" data-sidebar-room="deforestation"     onclick="openRoom('deforestation','🌲')">    <span class="room-emoji">🌲</span> <span data-room-label="deforestation">Deforestation</span></button>
+                <button class="sidebar-room-btn" data-sidebar-room="ocean-plastic"     onclick="openRoom('ocean-plastic','🌊')">    <span class="room-emoji">🌊</span> <span data-room-label="ocean-plastic">Ocean Plastic</span></button>
+                <button class="sidebar-room-btn" data-sidebar-room="healthcare"        onclick="openRoom('healthcare','🏥')">        <span class="room-emoji">🏥</span> <span data-room-label="healthcare">Healthcare</span></button>
+                <button class="sidebar-room-btn" data-sidebar-room="corruption"        onclick="openRoom('corruption','⚖️')">        <span class="room-emoji">⚖️</span><span data-room-label="corruption">Corruption</span></button>
+                <button class="sidebar-room-btn" data-sidebar-room="gender-inequality" onclick="openRoom('gender-inequality','♀️')"><span class="room-emoji">♀️</span> <span data-room-label="gender-inequality">Gender Equality</span></button>
+            </div>
+            <div class="sidebar-online-section">
+                <div class="sidebar-online-title">🟢 <span class="c-in-room-label">In this room</span></div>
+                <div id="online-users-list"></div>
+            </div>
+        </div>
+
+        <div class="chat-main">
+            <div class="chat-messages" id="chat-box">
+                <div class="loading-msgs" id="loading-indicator">
+                    <div class="spinner"></div>
+                    <span class="c-connecting-label">Connecting to live chat…</span>
+                </div>
+            </div>
+            <div class="typing-bar" id="typing-bar"></div>
+            <div class="chat-input-area">
+                <div class="input-row">
+                    <input type="text" id="user-input" placeholder="Share your idea or solution…"
+                        maxlength="500" autocomplete="off"
+                        onkeypress="handleKey(event)" oninput="handleInputChange()">
+                    <span class="char-count" id="char-count">500</span>
+                    <button class="send-btn" id="send-btn" onclick="sendMessage()" disabled title="Send">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="input-hint c-input-hint">Press Enter to send · Be respectful · No spam</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     FIREBASE SDKs
+     Loaded: App + Auth + Firestore + RTDB (presence only)
+════════════════════════════════════════════ -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  FIREBASE CONFIG
+//  ─────────────────────────────────────────────────────────────
+//  TWO STEPS YOU MUST DO IN FIREBASE CONSOLE:
+//  1. Build → Authentication → Get started → Email/Password → Enable
+//  2. Build → Firestore Database → Create database → Start in TEST MODE
+// ══════════════════════════════════════════════════════════════
+const firebaseConfig = {
+    apiKey:            "AIzaSyCNKNgDHeWCGKcbZHXAI1GitG_AF6QCxI0",
+    authDomain:        "globalproblemsolvers-8bf60.firebaseapp.com",
+    databaseURL:       "https://globalproblemsolvers-8bf60-default-rtdb.firebaseio.com",
+    projectId:         "globalproblemsolvers-8bf60",
+    storageBucket:     "globalproblemsolvers-8bf60.firebasestorage.app",
+    messagingSenderId: "978915462924",
+    appId:             "1:978915462924:web:50f885f01f6227404b4329"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth  = firebase.auth();
+const db    = firebase.firestore();   // Firestore — messages stored here
+const rtdb  = firebase.database();   // Realtime DB — online presence only
+
+// ══════════════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════════════
+let currentUser    = null;
+let myDisplayName  = '';
+let myInitials     = '';
+let currentRoom    = null;
+let currentEmoji   = '';
+let unsubMessages  = null;   // Firestore onSnapshot unsubscribe
+let presenceRef    = null;   // RTDB presence ref
+let authMode       = 'login';
+let lastRenderedDate = '';
+let myReadLang     = 'en';   // user's preferred reading language (for translation)
+
+// ══════════════════════════════════════════════════════════════
+//  AUTH — TAB SWITCHER
+// ══════════════════════════════════════════════════════════════
+function switchAuthTab(mode) {
+    authMode = mode;
+    document.getElementById('tab-login').classList.toggle('active',  mode === 'login');
+    document.getElementById('tab-signup').classList.toggle('active', mode === 'signup');
+    document.getElementById('field-name').style.display  = mode === 'signup' ? 'block' : 'none';
+    document.getElementById('forgot-link').style.display = mode === 'login'  ? 'block' : 'none';
+    document.getElementById('auth-btn-label').innerText  = mode === 'login'  ? 'Sign In' : 'Create Account';
+    clearAuthError();
+}
+
+function showAuthError(msg) {
+    const el = document.getElementById('auth-error');
+    el.innerText = msg; el.style.color = ''; el.classList.add('show');
+}
+function clearAuthError() {
+    const el = document.getElementById('auth-error');
+    el.innerText = ''; el.classList.remove('show');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  AUTH — SUBMIT (sign in OR register)
+// ══════════════════════════════════════════════════════════════
+async function submitAuth() {
+    clearAuthError();
+    const email    = document.getElementById('auth-email').value.trim();
+    const password = document.getElementById('auth-password').value;
+    const nameVal  = document.getElementById('auth-name').value.trim();
+    const btn      = document.getElementById('auth-submit-btn');
+
+    if (!email)    { showAuthError('Please enter your email address.'); return; }
+    if (password.length < 6) { showAuthError('Password must be at least 6 characters.'); return; }
+    if (authMode === 'signup' && nameVal.length < 2) { showAuthError('Please enter your display name (min 2 characters).'); return; }
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Please wait…';
+
+    try {
+        if (authMode === 'signup') {
+            // ── REGISTER ──────────────────────────────────────────
+            const cred = await auth.createUserWithEmailAndPassword(email, password);
+
+            // Save display name to Firebase Auth profile
+            await cred.user.updateProfile({ displayName: nameVal });
+
+            // Save user record to Firestore — each user has their own document
+            await db.collection('users').doc(cred.user.uid).set({
+                displayName: nameVal,
+                email:       email,
+                createdAt:   firebase.firestore.FieldValue.serverTimestamp()
+            });
+        } else {
+            // ── SIGN IN ───────────────────────────────────────────
+            await auth.signInWithEmailAndPassword(email, password);
+        }
+        // onAuthStateChanged handles everything from here
+    } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-arrow-right"></i> <span id="auth-btn-label">' +
+            (authMode === 'login' ? 'Sign In' : 'Create Account') + '</span>';
+        showAuthError(friendlyAuthError(err.code));
+    }
+}
+
+// ── Password reset ────────────────────────────────────────────
+async function sendPasswordReset() {
+    const email = document.getElementById('auth-email').value.trim();
+    if (!email) { showAuthError('Enter your email above, then click Forgot password.'); return; }
+    try {
+        await auth.sendPasswordResetEmail(email);
+        const el = document.getElementById('auth-error');
+        el.innerText = '✅ Reset email sent! Check your inbox.';
+        el.style.color = 'var(--accent)'; el.classList.add('show');
+    } catch(e) { showAuthError(friendlyAuthError(e.code)); }
+}
+
+// ── Human-readable error messages ────────────────────────────
+function friendlyAuthError(code) {
+    const map = {
+        'auth/user-not-found':       'No account found with this email.',
+        'auth/wrong-password':       'Incorrect password. Try again.',
+        'auth/invalid-credential':   'Incorrect email or password.',
+        'auth/email-already-in-use': 'This email is already registered. Sign in instead.',
+        'auth/invalid-email':        'Please enter a valid email address.',
+        'auth/weak-password':        'Password must be at least 6 characters.',
+        'auth/too-many-requests':    'Too many attempts. Wait a minute and try again.',
+        'auth/network-request-failed':'Network error. Check your internet connection.',
+    };
+    return map[code] || 'Something went wrong. Please try again. (' + code + ')';
+}
+
+// ── Sign out ──────────────────────────────────────────────────
+function signOutUser() {
+    if (presenceRef) presenceRef.remove();
+    auth.signOut();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  AUTH STATE OBSERVER — fires on every page load automatically
+// ══════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
+//  LOADING SCREEN DISMISS
+// ══════════════════════════════════════════════════════════════
+function dismissLoadingScreen(callback) {
+    const el = document.getElementById('firebase-loading');
+    if (!el || el.style.display === 'none') {
+        if (callback) callback();
+        return;
+    }
+    el.classList.add('fade-out');
+    setTimeout(() => {
+        el.style.display = 'none';
+        if (callback) callback();
+    }, 500);
+}
+
+// ── AUTO-DISMISS: if Firebase takes too long on Netlify, dismiss after 3s ──
+setTimeout(() => dismissLoadingScreen(), 3000);
+
+auth.onAuthStateChanged(user => {
+    if (user) {
+        // User is logged in
+        currentUser   = user;
+        myDisplayName = user.displayName || user.email.split('@')[0];
+        myInitials    = myDisplayName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+
+        // Dismiss loading screen, show dashboard
+        dismissLoadingScreen();
+        document.getElementById('auth-overlay').style.display = 'none';
+
+        // Update dashboard UI
+        document.getElementById('greeting-name').innerText    = myDisplayName;
+        document.getElementById('topbar-name').innerText      = myDisplayName;
+        document.getElementById('topbar-avatar').innerText    = myInitials;
+        document.getElementById('dash-chip-avatar').innerText = myInitials;
+        document.getElementById('dash-chip-name').innerText   = myDisplayName;
+        document.getElementById('dash-user-chip').style.display = 'flex';
+
+        // Show language picker if user hasn't chosen yet
+        // Hide loading screen
+        hideLoadingScreen();
+
+        const savedReadLang = localStorage.getItem('gps_read_lang');
+        if (savedReadLang) {
+            myReadLang = savedReadLang;
+        } else {
+            document.getElementById('lang-pick-overlay').classList.add('show');
+        }
+
+    } else {
+        // Dismiss loading screen, show auth form
+        currentUser   = null;
+        myDisplayName = '';
+        dismissLoadingScreen(() => {
+            document.getElementById('auth-overlay').style.display = 'flex';
+        });
+        document.getElementById('dash-user-chip').style.display = 'none';
+
+        // Reset button state
+        const btn = document.getElementById('auth-submit-btn');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-arrow-right"></i> <span id="auth-btn-label">Sign In</span>';
+    }
+});
+
+// ══════════════════════════════════════════════════════════════
+//  OPEN A ROOM
+// ══════════════════════════════════════════════════════════════
+function openRoom(roomId, emoji) {
+    if (!currentUser) return;
+
+    const displayName = communityLang.rooms[roomId] || roomId;
+    currentRoom  = roomId;
+    currentEmoji = emoji;
+
+    document.getElementById('room-emoji').innerText = emoji;
+    document.getElementById('room-name').innerText  = displayName;
+
+    // Highlight active sidebar button
+    document.querySelectorAll('.sidebar-room-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.sidebarRoom === roomId);
+    });
+
+    // Page transition
+    const dash = document.getElementById('dashboard');
+    const hub  = document.getElementById('hub-page');
+    dash.style.opacity = '0';
+    setTimeout(() => {
+        dash.style.display = 'none';
+        hub.style.display  = 'block';
+        setTimeout(() => hub.style.opacity = '1', 20);
+        window.scrollTo(0,0);
+    }, 280);
+
+    clearMessages();
+    if (unsubMessages) { unsubMessages(); unsubMessages = null; }
+    if (presenceRef)   { presenceRef.remove(); }
+
+    loadMessagesFromFirestore(roomId);
+    registerPresence(roomId);
+
+    document.getElementById('send-btn').disabled = false;
+    document.getElementById('user-input').focus();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  GO BACK TO DASHBOARD
+// ══════════════════════════════════════════════════════════════
+function goBack() {
+    if (presenceRef)   { presenceRef.remove(); }
+    if (unsubMessages) { unsubMessages(); unsubMessages = null; }
+
+    const dash = document.getElementById('dashboard');
+    const hub  = document.getElementById('hub-page');
+    hub.style.opacity = '0';
+    setTimeout(() => {
+        hub.style.display  = 'none';
+        dash.style.display = 'flex'; dash.style.flexDirection = 'column'; dash.style.alignItems = 'center';
+        setTimeout(() => dash.style.opacity = '1', 20);
+    }, 280);
+    currentRoom = null;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  FIRESTORE — LOAD & LISTEN TO MESSAGES
+//
+//  Data structure:
+//    Firestore → rooms/{roomId}/messages/{auto-id}
+//    Each message document:
+//      uid:       string  — Firebase Auth user UID (unique per account)
+//      author:    string  — display name
+//      initials:  string  — 2-letter initials
+//      text:      string  — message content
+//      timestamp: Timestamp — server timestamp
+//
+//  This separates each user's messages by UID, so the teacher
+//  can see exactly who wrote what from the Firebase Console.
+// ══════════════════════════════════════════════════════════════
+function loadMessagesFromFirestore(roomId) {
+    clearMessages();
+    lastRenderedDate = '';
+    document.getElementById('loading-indicator').style.display = 'flex';
+    document.getElementById('setup-banner').style.display = 'none';
+
+    // Real-time listener — ordered by time, last 80 messages
+    const msgsRef = db
+        .collection('rooms').doc(roomId)
+        .collection('messages')
+        .orderBy('timestamp', 'asc')
+        .limitToLast(80);
+
+    unsubMessages = msgsRef.onSnapshot(snapshot => {
+        document.getElementById('loading-indicator').style.display = 'none';
+
+        if (snapshot.empty) {
+            addSystemMsg('No messages yet — be the first to share an idea! 💡');
+            return;
+        }
+
+        // Only process newly added documents (not modified/removed)
+        snapshot.docChanges().forEach(change => {
+            if (change.type === 'added') {
+                const msg = change.doc.data();
+                if (!msg.timestamp) msg.timestamp = { toDate: () => new Date() }; // use current time while server timestamp resolves
+
+                const dateObj = msg.timestamp.toDate();
+                const dateLabel = formatDate(dateObj);
+                if (dateLabel !== lastRenderedDate) {
+                    addDateSeparator(dateLabel);
+                    lastRenderedDate = dateLabel;
+                }
+                renderMessage(msg, change.doc.id);
+                scrollToBottom();
+            }
+        });
+
+    }, err => {
+        document.getElementById('loading-indicator').style.display = 'none';
+        document.getElementById('setup-banner').style.display = 'block';
+        addSystemMsg('⚠️ Firestore error: ' + err.message);
+        console.error('Firestore error:', err);
+    });
+}
+
+// ══════════════════════════════════════════════════════════════
+//  FIRESTORE — SEND MESSAGE
+// ══════════════════════════════════════════════════════════════
+async function sendMessage() {
+    const input = document.getElementById('user-input');
+    const text  = input.value.trim();
+    if (!text || text.length > 500) return;
+    if (!currentUser || !currentRoom) return;
+
+    input.value = '';
+    updateCharCount(500);
+    document.getElementById('send-btn').disabled = true;
+    setTimeout(() => { document.getElementById('send-btn').disabled = false; }, 500);
+
+    try {
+        // Each message is a document in rooms/{roomId}/messages
+        // uid field = currentUser.uid — unique identifier per registered user
+        await db.collection('rooms').doc(currentRoom).collection('messages').add({
+            uid:       currentUser.uid,    // ← ties message to specific registered account
+            email:     currentUser.email,  // ← stored for admin reference
+            author:    myDisplayName,
+            initials:  myInitials,
+            text:      sanitize(text),
+            lang:      activeLang,   // sender's language — used for auto-translation
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    } catch(err) {
+        console.error('Firestore write error:', err);
+        addSystemMsg('⚠️ Message not saved. Check Firestore rules — make sure TEST MODE is on.');
+    }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  REALTIME DATABASE — ONLINE PRESENCE (lightweight, not messages)
+// ══════════════════════════════════════════════════════════════
+function registerPresence(roomId) {
+    const key         = sanitizeKey(currentUser.uid);
+    const onlineRef   = rtdb.ref('rooms/' + roomId + '/online');
+    const myRef       = rtdb.ref('rooms/' + roomId + '/online/' + key);
+
+    // ① Detach any previous listener on this path
+    onlineRef.off('value');
+
+    // ② Attach listener FIRST so it catches our own write below
+    onlineRef.on('value', snap => {
+        const users = [];
+        if (snap.exists()) {
+            snap.forEach(child => {
+                const d = child.val();
+                if (d && d.name) users.push(d.name);
+            });
+        }
+        document.getElementById('online-count').innerText = users.length;
+        const el = document.getElementById('online-users-list');
+        el.innerHTML = users.slice(0, 12).map(u =>
+            `<div class="online-user-row"><div class="online-user-dot"></div><span>${escapeHtml(u)}</span></div>`
+        ).join('');
+    });
+
+    // ③ Write OUR presence (listener above will fire and count us)
+    presenceRef = myRef;
+    myRef.set({ name: myDisplayName, joined: firebase.database.ServerValue.TIMESTAMP });
+    myRef.onDisconnect().remove();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  RENDER A MESSAGE BUBBLE
+// ══════════════════════════════════════════════════════════════
+function renderMessage(msg, key) {
+    const isMe   = msg.uid === currentUser.uid;
+    const box    = document.getElementById('chat-box');
+    const ts     = msg.timestamp
+        ? (msg.timestamp.toDate ? msg.timestamp.toDate() : new Date(msg.timestamp))
+        : new Date();
+    const group = document.createElement('div');
+    group.className = 'msg-group';
+    group.dataset.key = key;
+    group.innerHTML = `
+        <div class="msg-header ${isMe ? 'is-me' : ''}">
+            <span class="msg-author ${isMe ? 'is-me' : ''}">${escapeHtml(msg.author || '?')}</span>
+            <span class="msg-time">${formatTime(ts)}</span>
+        </div>
+        <div class="msg-row ${isMe ? 'is-me' : ''}">
+            <div class="msg-avatar ${isMe ? 'is-me' : ''}">${escapeHtml(msg.initials || '?')}</div>
+            <div class="msg-bubble ${isMe ? 'is-me' : ''}">${escapeHtml(msg.text)}</div>
+        </div>`;
+    box.appendChild(group);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  INPUT HANDLING
+// ══════════════════════════════════════════════════════════════
+function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+function handleInputChange() {
+    const len = document.getElementById('user-input').value.length;
+    updateCharCount(500 - len);
+    document.getElementById('send-btn').disabled = len === 0;
+}
+function updateCharCount(remaining) {
+    const el = document.getElementById('char-count');
+    el.innerText = remaining;
+    el.classList.toggle('warn', remaining < 50);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════════════════
+function clearMessages() {
+    const box = document.getElementById('chat-box');
+    while (box.firstChild) box.removeChild(box.firstChild);
+    const li = document.createElement('div');
+    li.className = 'loading-msgs'; li.id = 'loading-indicator';
+    li.innerHTML = '<div class="spinner"></div><span class="c-connecting-label">Connecting…</span>';
+    li.style.display = 'none';
+    box.appendChild(li);
+    lastRenderedDate = '';
+}
+function addDateSeparator(label) {
+    const sep = document.createElement('div');
+    sep.className = 'date-sep';
+    sep.innerHTML = `<span>${label}</span>`;
+    document.getElementById('chat-box').appendChild(sep);
+}
+function addSystemMsg(text) {
+    const el = document.createElement('div');
+    el.className = 'sys-msg'; el.innerText = text;
+    document.getElementById('chat-box').appendChild(el);
+}
+function scrollToBottom() {
+    const box = document.getElementById('chat-box');
+    box.scrollTo({ top: box.scrollHeight, behavior: 'smooth' });
+}
+function formatTime(d) {
+    return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+}
+function formatDate(d) {
+    const today     = new Date();
+    const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
+    if (d.toDateString() === today.toDateString())     return 'Today';
+    if (d.toDateString() === yesterday.toDateString()) return 'Yesterday';
+    return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+}
+function escapeHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function sanitize(s) { return s.replace(/<[^>]*>/g,'').slice(0,500); }
+function sanitizeKey(s) { return s.replace(/[.#$\[\]]/g,'_'); }
+
+// ══════════════════════════════════════════════════════════════
+//  LANGUAGE PICKER — SET READING LANGUAGE
+// ══════════════════════════════════════════════════════════════
+function setReadLang(lang) {
+    myReadLang = lang;
+    localStorage.setItem('gps_read_lang', lang);
+    // Also sync UI language
+    setCommunityLang(lang);
+    // Hide overlay
+    document.getElementById('lang-pick-overlay').classList.remove('show');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  AUTO-TRANSLATION — MyMemory Free API
+//  Free, no API key needed, supports EN/UZ/RU
+//  Limit: ~5000 words/day (more than enough for a school project)
+// ══════════════════════════════════════════════════════════════
+const translationCache = new Map(); // cache so same text is never translated twice
+
+// MyMemory language codes
+const langCodes = { en:'en', uz:'uz', ru:'ru', qr:'kk' };  // kk = Kazakh, closest to Karakalpak
+
+async function translateText(text, fromLang, toLang) {
+    if (!text || !text.trim()) return null;
+    if (fromLang === toLang) return null;
+
+    const from = langCodes[fromLang] || fromLang;
+    const to   = langCodes[toLang]   || toLang;
+    const cacheKey = from + '|' + to + '|' + text;
+
+    // Return cached result immediately
+    if (translationCache.has(cacheKey)) return translationCache.get(cacheKey);
+
+    try {
+        const url = 'https://api.mymemory.translated.net/get?q=' +
+                    encodeURIComponent(text) + '&langpair=' + from + '|' + to;
+        const res  = await fetch(url);
+        const data = await res.json();
+
+        if (data.responseStatus === 200 && data.responseData.translatedText) {
+            const translated = data.responseData.translatedText;
+            translationCache.set(cacheKey, translated); // cache it
+            return translated;
+        }
+        return null;
+    } catch(e) {
+        console.warn('Translation failed:', e);
+        return null;
+    }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  MULTILINGUAL SYSTEM
+// ══════════════════════════════════════════════════════════════
+const communityLangData = {
+    en: {
+        back:"Back to Home", hubTitle:"Community Hub", hubSubtitle:"🌍 Live Global Brainstorm",
+        welcome:"Welcome, ", challengeText:"! Select a challenge to join the live discussion.",
+        livechat:"Live chat", roomsLabel:"Rooms", inRoom:"In this room", online:" online",
+        connecting:"Connecting to live chat…", placeholder:"Share your idea or solution…",
+        inputHint:"Press Enter to send · Be respectful · No spam", signout:"Sign out",
+        rooms:{'climate-change':'Climate Change','global-hunger':'Global Hunger','education':'Access to Education','water-scarcity':'Water Scarcity','air-pollution':'Air Pollution','deforestation':'Deforestation','ocean-plastic':'Ocean Plastic','healthcare':'Healthcare Access','corruption':'Corruption','gender-inequality':'Gender Inequality'}
+    },
+    uz: {
+        back:"Bosh sahifaga qaytish", hubTitle:"Hamjamiyat Markazi", hubSubtitle:"🌍 Jonli Global Muhokama",
+        welcome:"Xush kelibsiz, ", challengeText:"! Muammoni tanlang.",
+        livechat:"Jonli chat", roomsLabel:"Xonalar", inRoom:"Bu xonada", online:" onlayn",
+        connecting:"Ulanmoqda…", placeholder:"G'oyangizni yoki yechimingizni ulashing…",
+        inputHint:"Yuborish uchun Enter bosing · Hurmat saqlang", signout:"Chiqish",
+        rooms:{'climate-change':"Iqlim O'zgarishi",'global-hunger':'Global Ochlik','education':"Ta'limga Yo'l",'water-scarcity':'Suv Tanqisligi','air-pollution':'Havo Ifloslanishi','deforestation':"O'rmonlar Kesilishi",'ocean-plastic':'Okean Plastiklari','healthcare':'Tibbiy Xizmat','corruption':'Korrupsiya','gender-inequality':'Gender Tengsizligi'}
+    },
+    ru: {
+        back:"На главную", hubTitle:"Центр Сообщества", hubSubtitle:"🌍 Живой Мозговой Штурм",
+        welcome:"Добро пожаловать, ", challengeText:"! Выберите тему.",
+        livechat:"Живой чат", roomsLabel:"Комнаты", inRoom:"В этой комнате", online:" онлайн",
+        connecting:"Подключение…", placeholder:"Поделитесь идеей или решением…",
+        inputHint:"Enter — отправить · Будьте вежливы", signout:"Выйти",
+        rooms:{'climate-change':'Климатические Изменения','global-hunger':'Мировой Голод','education':'Доступ к Образованию','water-scarcity':'Нехватка Воды','air-pollution':'Загрязнение Воздуха','deforestation':'Вырубка Лесов','ocean-plastic':'Пластик в Океане','healthcare':'Доступ к Медицине','corruption':'Коррупция','gender-inequality':'Гендерное Неравенство'}
+    },
+    qr: {
+        back:"Bas betke qaytıw", hubTitle:"Jámiyet Oraylı", hubSubtitle:"🌍 Jonlı Global Talqılasıw",
+        welcome:"Qosh keldin, ", challengeText:"! Mashqalanı tańlań.",
+        livechat:"Jonlı chat", roomsLabel:"Bólmeler", inRoom:"Bul bólmede", online:" onlayn",
+        connecting:"Jalǵanıw…", placeholder:"Ideyańız yamasa sheshimińizdi bólisin…",
+        inputHint:"Jiberiw ushın Enter basıń · Húrmet saqlań", signout:"Shıǵıw",
+        rooms:{'climate-change':'Iqlım Ózgerisi','global-hunger':'Global Asharshılıq','education':'Bilimge Jol','water-scarcity':'Suw Tanqıslıǵı','air-pollution':'Hawa Buljanıwı','deforestation':'Orman Kesiliwi','ocean-plastic':'Okean Plastikleri','healthcare':'Medicinalıq Xızmet','corruption':'Korrupsiya','gender-inequality':'Gender Teńsizligi'}
+    }
+};
+
+let communityLang = communityLangData.en;
+let activeLang    = 'en';
+
+function setCommunityLang(lang) {
+    if (!communityLangData[lang]) return;
+    activeLang    = lang;
+    communityLang = communityLangData[lang];
+    localStorage.setItem('gps_lang', lang);
+    applyLang();
+}
+
+function applyLang() {
+    const d = communityLang;
+    document.querySelectorAll('.c-lang-btn').forEach(b => b.classList.remove('active'));
+    const ab = document.getElementById('clb-' + activeLang);
+    if (ab) ab.classList.add('active');
+
+    const qs = (sel,txt) => document.querySelectorAll(sel).forEach(el => el.innerText = txt);
+    qs('.c-back-label', d.back);
+    const ht = document.querySelector('.c-hub-title');    if(ht) ht.innerText = d.hubTitle;
+    const hs = document.querySelector('.c-hub-subtitle'); if(hs) hs.innerText = d.hubSubtitle;
+    qs('.c-welcome-text',        d.welcome);
+    qs('.c-challenge-text',      d.challengeText);
+    qs('.c-livechat-label',      d.livechat);
+    qs('.c-sidebar-rooms-label', d.roomsLabel);
+    qs('.c-in-room-label',       d.inRoom);
+    qs('.c-rooms-label',         d.roomsLabel);
+    qs('.c-online-label',        d.online);
+    qs('.c-connecting-label',    d.connecting);
+    qs('.c-input-hint',          d.inputHint);
+    qs('.c-signout-label',       d.signout);
+    const inp = document.getElementById('user-input');
+    if (inp) inp.placeholder = d.placeholder;
+
+    document.querySelectorAll('[data-room-name]').forEach(el => {
+        const rid = el.getAttribute('data-room-name');
+        if (d.rooms[rid]) el.innerText = d.rooms[rid];
+    });
+    document.querySelectorAll('[data-room-label]').forEach(el => {
+        const rid = el.getAttribute('data-room-label');
+        if (d.rooms[rid]) el.innerText = d.rooms[rid];
+    });
+    if (currentRoom && d.rooms[currentRoom]) {
+        document.getElementById('room-name').innerText = d.rooms[currentRoom];
+    }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  LOADING SCREEN HELPER
+// ══════════════════════════════════════════════════════════════
+function hideLoadingScreen(callback) {
+    const el = document.getElementById('gps-loading');
+    if (!el) { if (callback) callback(); return; }
+    el.classList.add('fade-out');
+    setTimeout(() => {
+        el.style.display = 'none';
+        if (callback) callback();
+    }, 500);
+}
+
+// Init language from localStorage
+(function(){ setCommunityLang(localStorage.getItem('gps_lang') || 'en'); })();
+</script>
+</body>
+</html>

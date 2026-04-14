@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlobalProblemSolvers | Otabek</title>
+    <meta name="description" content="GlobalProblemSolvers — a crowdsourced platform where people worldwide submit solutions to the 10 biggest global challenges.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Baxtiyorov Otabek">
+    <link rel="canonical" href="https://yourwebsite.com/">
+    <meta property="og:title" content="GlobalProblemSolvers | Crowdsourced Solutions">
+    <meta property="og:description" content="Submit your ideas to solve Climate Change, Hunger, Inequality and 7 more global crises.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="gps2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dark-mode">
+
+    <a class="kofi-float" href="https://ko-fi.com/baxtiyorovotabek" target="_blank" rel="noopener" title="Support GPS on Ko-fi">
+        <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Ko-fi"> Support GPS ☕
+    </a>
+
+    <div id="particles-js" style="position:fixed;width:100%;height:100%;z-index:-1;top:0;left:0;"></div>
+
+    <!-- ══════════════════════════════════════════
+         LOGIN MODAL
+    ══════════════════════════════════════════ -->
+    <div id="loginModal" class="login-modal-overlay" role="dialog" aria-modal="true">
+        <div class="login-modal-bg-glow"></div>
+        <div class="login-modal-box">
+            <button class="login-close-btn" onclick="closeLoginModal()"><i class="fas fa-times"></i></button>
+            <div class="login-modal-header">
+                <div class="login-globe-icon"><i class="fas fa-globe-americas"></i></div>
+                <h2 class="login-modal-title">Join <span>GPS</span></h2>
+                <p class="login-modal-subtitle">Create your profile to submit solutions and shape the future.</p>
+            </div>
+            <div class="login-progress">
+                <span class="login-dot active" id="dot-1"></span>
+                <span class="login-dot" id="dot-2"></span>
+                <span class="login-dot" id="dot-3"></span>
+            </div>
+
+            <!-- Step 1 -->
+            <div class="login-step active" id="step-1">
+                <h3 class="login-step-title">Who are you?</h3>
+                <div class="login-field-group">
+                    <label class="login-label"><i class="fas fa-user"></i> Full Name</label>
+                    <input type="text" id="login-name" class="login-input" placeholder="e.g. Baxtiyorov Otabek" autocomplete="name">
+                    <span class="login-field-error" id="err-name"></span>
+                </div>
+                <div class="login-field-group">
+                    <label class="login-label"><i class="fas fa-birthday-cake"></i> Age</label>
+                    <input type="number" id="login-age" class="login-input" placeholder="Your age" min="10" max="120">
+                    <span class="login-field-error" id="err-age"></span>
+                </div>
+                <button class="login-next-btn" onclick="goToStep(2)">Continue <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="login-step" id="step-2">
+                <h3 class="login-step-title">Where are you from?</h3>
+                <div class="login-field-group">
+                    <label class="login-label"><i class="fas fa-phone"></i> Phone Number</label>
+                    <input type="tel" id="login-phone" class="login-input" placeholder="+998 90 123 45 67" autocomplete="tel">
+                    <span class="login-field-error" id="err-phone"></span>
+                </div>
+                <div class="login-field-group">
+                    <label class="login-label"><i class="fas fa-flag"></i> Country</label>
+                    <select id="login-country" class="login-input login-select">
+                        <option value="" disabled selected>Select your country…</option>
+                        <option>Afghanistan</option><option>Albania</option><option>Algeria</option><option>Angola</option><option>Argentina</option><option>Armenia</option><option>Australia</option><option>Austria</option><option>Azerbaijan</option><option>Bangladesh</option><option>Belarus</option><option>Belgium</option><option>Bolivia</option><option>Brazil</option><option>Bulgaria</option><option>Cambodia</option><option>Canada</option><option>Chile</option><option>China</option><option>Colombia</option><option>Croatia</option><option>Cuba</option><option>Czech Republic</option><option>Denmark</option><option>Ecuador</option><option>Egypt</option><option>Ethiopia</option><option>Finland</option><option>France</option><option>Germany</option><option>Ghana</option><option>Greece</option><option>Hungary</option><option>India</option><option>Indonesia</option><option>Iran</option><option>Iraq</option><option>Ireland</option><option>Italy</option><option>Japan</option><option>Jordan</option><option>Kazakhstan</option><option>Kenya</option><option>Kuwait</option><option>Kyrgyzstan</option><option>Malaysia</option><option>Mexico</option><option>Morocco</option><option>Myanmar</option><option>Nepal</option><option>Netherlands</option><option>New Zealand</option><option>Nigeria</option><option>Norway</option><option>Pakistan</option><option>Palestine</option><option>Peru</option><option>Philippines</option><option>Poland</option><option>Portugal</option><option>Qatar</option><option>Romania</option><option>Russia</option><option>Saudi Arabia</option><option>Serbia</option><option>Singapore</option><option>South Africa</option><option>South Korea</option><option>Spain</option><option>Sri Lanka</option><option>Sweden</option><option>Switzerland</option><option>Syria</option><option>Taiwan</option><option>Tajikistan</option><option>Tanzania</option><option>Thailand</option><option>Tunisia</option><option>Turkey</option><option>Turkmenistan</option><option>Uganda</option><option>Ukraine</option><option>United Arab Emirates</option><option>United Kingdom</option><option>United States</option><option>Uzbekistan</option><option>Venezuela</option><option>Vietnam</option><option>Yemen</option><option>Zambia</option><option>Zimbabwe</option>
+                    </select>
+                    <span class="login-field-error" id="err-country"></span>
+                </div>
+                <div class="login-btn-row">
+                    <button class="login-back-btn" onclick="goToStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button class="login-next-btn" onclick="goToStep(3)">Continue <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="login-step" id="step-3">
+                <h3 class="login-step-title">Almost there!</h3>
+                <div class="login-summary-card" id="login-summary"></div>
+                <div class="login-btn-row" style="margin-top:20px">
+                    <button class="login-back-btn" onclick="goToStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button class="login-confirm-btn" onclick="confirmLogin()"><i class="fas fa-check-circle"></i> Confirm & Join</button>
+                </div>
+            </div>
+
+            <!-- Success -->
+            <div class="login-step" id="step-success">
+                <div class="login-success-anim">
+                    <div class="login-success-ring"></div>
+                    <i class="fas fa-check login-success-check"></i>
+                </div>
+                <h3 class="login-success-title">Welcome aboard!</h3>
+                <p class="login-success-sub" id="welcome-name-msg"></p>
+                <button class="login-confirm-btn" style="margin-top:30px;width:100%" onclick="closeLoginModal(); window.open('community.html','_blank')">
+                    Go to Community <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         NAV
+    ══════════════════════════════════════════ -->
+    <header id="home">
+        <div class="hero-overlay"></div>
+        <nav>
+            <div class="logo-container">
+                <i class="fas fa-globe-americas earth-logo"></i>
+                <h1 class="main-title"><span class="red-letter">G</span>lobal<span class="red-letter">P</span>roblem<span class="red-letter">S</span>olvers</h1>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu" onclick="toggleMobileNav()">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home"     class="nav-home">Home</a></li>
+                <li><a href="#problems" class="nav-probs">Problems</a></li>
+                <li><a href="#about"    class="nav-about">About</a></li>
+                <li><a href="#contact"  class="nav-contact">Contact</a></li>
+                <li><a href="community.html" class="nav-community">Community</a></li>
+            </ul>
+            <div class="nav-controls" style="display:flex;gap:10px;align-items:center;">
+                <div id="nav-login-area" style="display:flex;align-items:center;">
+                    <button class="nav-login-btn" id="nav-login-btn" onclick="openLoginModal()">
+                        <i class="fas fa-user-circle"></i> Log In
+                    </button>
+                    <div class="nav-user-badge" id="nav-user-badge" style="display:none;">
+                        <div class="nav-user-avatar" id="nav-user-avatar"></div>
+                        <span class="nav-user-name" id="nav-user-name"></span>
+                        <button class="nav-logout-btn" title="Log out" onclick="logOut()"><i class="fas fa-sign-out-alt"></i></button>
+                    </div>
+                </div>
+                <div class="theme-dropdown">
+                    <button class="theme-btn" onclick="toggleMenu('langMenu')"><i class="fas fa-language"></i> <span id="btn-lang-text">Lang</span></button>
+                    <div id="langMenu" class="theme-dropdown-content">
+                        <a href="javascript:void(0)" onclick="setLanguage('en')">English</a>
+                        <a href="javascript:void(0)" onclick="setLanguage('uz')">O'zbek</a>
+                        <a href="javascript:void(0)" onclick="setLanguage('ru')">Русский</a>
+                        <a href="javascript:void(0)" onclick="setLanguage('qr')">Qoraqalpog'iston</a>
+                    </div>
+                </div>
+                <div class="theme-dropdown">
+                    <button class="theme-btn" onclick="toggleMenu('themeMenu')"><i class="fas fa-circle-half-stroke"></i></button>
+                    <div id="themeMenu" class="theme-dropdown-content">
+                        <a href="javascript:void(0)" onclick="setTheme('light')"><i class="fas fa-sun"></i> Light</a>
+                        <a href="javascript:void(0)" onclick="setTheme('dark')"><i class="fas fa-moon"></i> Dark</a>
+                        <a href="javascript:void(0)" onclick="setTheme('auto')"><i class="fas fa-robot"></i> Auto</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="hero-content">
+            <h2 id="typed-hero"></h2>
+            <a href="#problems" class="cta-btn hero-cta" data-aos="zoom-in">Explore Challenges</a>
+        </div>
+    </header>
+
+    <!-- ══════════════════════════════════════════
+         PROBLEMS
+    ══════════════════════════════════════════ -->
+    <section id="problems" class="section">
+        <h2 class="section-title" data-aos="fade-down" id="main-section-title">10 Global Challenges</h2>
+        <div class="problem-grid">
+
+            <div class="problem-card" data-aos="fade-up" data-tilt>
+                <img src="https://t3.ftcdn.net/jpg/05/73/96/92/360_F_573969248_rkDRwe3jOYGENhrF8tlVw7GFHqSXxq3j.jpg" alt="Climate Change">
+                <div class="card-content">
+                    <h3 class="p-title">1. Climate Change</h3>
+                    <p><strong class="label-cause">Causes:</strong> <span class="p-cause">Greenhouse gas emissions and fossil fuel reliance.</span></p>
+                    <p><strong class="label-effect">Effects:</strong> <span class="p-effect">Rising temperatures and extreme weather.</span></p>
+                    <div class="form-wrapper">
+                        <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
+                            <input type="hidden" name="Problem" value="Climate Change">
+                            <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
+                            <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
+                            <button type="submit" class="btn p-submit">Submit</button>
+                        </form>
+                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-card" data-aos="fade-up" data-tilt>
+                <img src="https://static.vecteezy.com/system/resources/previews/031/608/655/non_2x/a-globe-on-top-of-a-grains-food-security-concept-ai-generated-photo.jpg" alt="Hunger">
+                <div class="card-content">
+                    <h3 class="p-title">2. Global Hunger</h3>
+                    <p><strong class="label-cause">Causes:</strong> <span class="p-cause">Poverty, war, and food waste.</span></p>
+                    <p><strong class="label-effect">Effects:</strong> <span class="p-effect">Chronic malnutrition and health crises.</span></p>
+                    <div class="form-wrapper">
+                        <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
+                            <input type="hidden" name="Problem" value="Global Hunger">
+                            <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
+                            <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
+                            <button type="submit" class="btn p-submit">Submit</button>
+                        </form>
+                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-card" data-aos="fade-up" data-tilt>
+                <img src="https://img.freepik.com/free-photo/graduation-cap-with-globe-digital-art-style-education-day_23-2151164274.jpg?semt=ais_hybrid&w=740" alt="Education">
+                <div class="card-content">
+                    <h3 class="p-title">3. Access To Education</h3>
+                    <p><strong class="label-cause">Causes:</strong> <span class="p-cause">Financial barriers and lack of infrastructure.</span></p>
+                    <p><strong class="label-effect">Effects:</strong> <span class="p-effect">Limited skills and lifelong poverty cycles.</span></p>
+                    <div class="form-wrapper">
+                        <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
+                            <input type="hidden" name="Problem" value="Education Access">
+                            <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
+                            <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
+                            <button type="submit" class="btn p-submit">Submit</button>
+                        </form>
+                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-card" data-aos="fade-up" data-tilt>
+                <img src="https://thumbs.dreamstime.com/b/drought-concept-last-drop-rusty-tap-single-precious-water-falls-corroded-faucet-onto-parched-cracked-earth-below-415394430.jpg" alt="Water">
+                <div class="card-content">
+                    <h3 class="p-title">4. Water Scarcity</h3>
+                    <p><strong class="label-cause">Causes:</strong> <span class="p-cause">Industrial pollution and droughts.</span></p>
+                    <p><strong class="label-effect">Effects:</strong> <span class="p-effect">Spread of diseases and crop failure.</span></p>
+                    <div class="form-wrapper">
+                        <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
+                            <input type="hidden" name="Problem" value="Water Scarcity">
+                            <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
+                            <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
+                            <button type="submit" class="btn p-submit">Submit</button>
+                        </form>
+                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-card" data-aos="fade-up" data-tilt>
+                <img src="https://rmis.jrc.ec.europa.eu/images/air-pollution-41a05f.jpg" alt="Air Pollution">
+                <div class="card-content">
+                    <h3 class="p-title">5. Air Pollution</h3>
+                    <p><strong class="label-cause">Causes:</strong> <span class="p-cause">Vehicle emissions and industrial smoke.</span></p>
+                    <p><strong class="label-effect">Effects:</strong> <span class="p-effect">Breathing illnesses and ozone damage.</span></p>
+                    <div class="form-wrapper">
+                        <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
+                            <input type="hidden" name="Problem" value="Air Pollution">
+                            <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
+                            <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
+                            <button type="submit" class="btn p-submit">Submit</button>
+                        </form>
+                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-card" data-aos="fade-up" data-tilt>
+                <img src="https://t3.ftcdn.net/jpg/08/15/60/88/360_F_815608853_QxgVdtynDdym9S6TYk3HiuvrdEwgRCtO.jpg" alt="Deforestation">
+                <div class="card-content">
+                    <h3 class="p-title">6. Deforestation</h3>
+                    <p><strong class="label-cause">Causes:</strong> <span class="p-cause">Agricultural expansion and logging.</span></p>
+                    <p><strong class="label-effect">Effects:</strong> <span class="p-effect">Wildlife extinction and climate imbalance.</span></p>
+                    <div class="form-wrapper">
+                        <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
+                            <input type="hidden" name="Problem" value="Deforestation">
+                            <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
+                            <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
+                            <button type="submit" class="btn p-submit">Submit</button>
+                        </form>
+                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-card" data-aos="fade-up" data-tilt>
+                <img src="https://thumbs.dreamstime.com/b/plastic-trash-plastic-bottle-floating-sea-sunset-plastic-pollution-ocean-ecological-crisis-say-no-to-plastic-430510161.jpg" alt="Plastic">
+                <div class="card-content">
+                    <h3 class="p-title">7. Ocean Plastic</h3>
+                    <p><strong class="label-cause">Causes:</strong> <span class="p-cause">Over-production of single-use plastics.</span></p>
+                    <p><strong class="label-effect">Effects:</strong> <span class="p-effect">Toxic oceans and marine death.</span></p>
+                    <div class="form-wrapper">
+                        <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
+                            <input type="hidden" name="Problem" value="Ocean Plastic">
+                            <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
+                            <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
+                            <button type="submit" class="btn p-submit">Submit</button>
+                        </form>
+                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-card" data-aos="fade-up" data-tilt>
+                <img src="https://media.istockphoto.com/id/921644532/photo/stack-of-medical-student-textbooks.jpg?s=612x612&w=0&k=20&c=ZNnQJVkJgWbWekY8V7xL7es0KI0tmqUZDrLdXjZ9zr8=" alt="Health">
+                <div class="card-content">
+                    <h3 class="p-title">8. Healthcare Access</h3>
+                    <p><strong class="label-cause">Causes:</strong> <span class="p-cause">Economic inequality and rural distance.</span></p>
+                    <p><strong class="label-effect">Effects:</strong> <span class="p-effect">Untreated illness and lower life expectancy.</span></p>
+                    <div class="form-wrapper">
+                        <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
+                            <input type="hidden" name="Problem" value="Healthcare Access">
+                            <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
+                            <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
+                            <button type="submit" class="btn p-submit">Submit</button>
+                        </form>
+                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-card" data-aos="fade-up" data-tilt>
+                <img src="https://media.istockphoto.com/id/1309186924/photo/businessmen-were-offered-us-dollars-the-operator-refused-the-envelope-as-a-bribe-anti.jpg?s=612x612&w=0&k=20&c=f12hwu7ow_XAVK1K5bB4l2-dpVIlq-iXlnj7-8ge_N0=" alt="Corruption">
+                <div class="card-content">
+                    <h3 class="p-title">9. Corruption</h3>
+                    <p><strong class="label-cause">Causes:</strong> <span class="p-cause">Bribery and lack of transparency.</span></p>
+                    <p><strong class="label-effect">Effects:</strong> <span class="p-effect">Economic stagnation and social injustice.</span></p>
+                    <div class="form-wrapper">
+                        <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
+                            <input type="hidden" name="Problem" value="Corruption">
+                            <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
+                            <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
+                            <button type="submit" class="btn p-submit">Submit</button>
+                        </form>
+                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-card" data-aos="fade-up" data-tilt>
+                <img src="https://thumbs.dreamstime.com/b/concept-gender-inequality-discrimination-career-women-silhouette-big-hand-employer-prefers-male-employees-111861575.jpg" alt="Gender">
+                <div class="card-content">
+                    <h3 class="p-title">10. Gender Inequality</h3>
+                    <p><strong class="label-cause">Causes:</strong> <span class="p-cause">Social norms and unequal opportunities.</span></p>
+                    <p><strong class="label-effect">Effects:</strong> <span class="p-effect">Reduced growth and human rights violations.</span></p>
+                    <div class="form-wrapper">
+                        <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
+                            <input type="hidden" name="Problem" value="Gender Inequality">
+                            <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
+                            <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
+                            <button type="submit" class="btn p-submit">Submit</button>
+                        </form>
+                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section about-bg">
+        <h2 class="section-title about-title" data-aos="fade-right">About GPS</h2>
+        <div class="about-flex">
+            <div class="about-img-container" data-aos="zoom-in">
+                <img class="img-profile" src="images/images.jpg" alt="Otabek">
+            </div>
+            <div class="about-card" data-aos="fade-up">
+                <h3 class="vision-title">The Vision</h3>
+                <p class="vision-text">GlobalProblemSolvers is an open-source hub for innovation. We believe the internet allows us to bypass borders and connect the world's brightest minds to the world's deepest crises.</p>
+            </div>
+            <div class="about-card" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="creator-title">The Creator</h3>
+                <p class="creator-text creator-text-1">I am Baxtiyorov Otabek, a student at the Presidential School. I use software engineering to build tools that tackle ten global challenges and inspire bold action for our planet.</p>
+                <p class="creator-text creator-text-2">I am planning to expand this project to include more global problems and solutions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DONATION -->
+    <section class="donation-section section">
+        <h2 class="section-title" data-aos="fade-up">Support the Mission 💚</h2>
+        <p class="donation-subtitle" data-aos="fade-up" data-aos-delay="100">GPS is free for everyone, forever. If you find it valuable, a small contribution keeps the servers running and helps a 13-year-old developer from Uzbekistan keep building.</p>
+        <div class="donation-grid" data-aos="fade-up" data-aos-delay="150">
+            <div class="donation-tier" onclick="window.open('https://ko-fi.com/baxtiyorovotabek','_blank')"><span class="tier-icon">☕</span><div class="tier-name">Buy a Coffee</div><div class="tier-amount">$3</div><div class="tier-desc">Fuel one coding session!</div><span class="tier-btn">Donate $3</span></div>
+            <div class="donation-tier featured" onclick="window.open('https://ko-fi.com/baxtiyorovotabek','_blank')"><div class="tier-badge">⭐ Most Popular</div><span class="tier-icon">🚀</span><div class="tier-name">Supporter</div><div class="tier-amount">$10</div><div class="tier-desc">Help keep GPS online for a month!</div><span class="tier-btn">Donate $10</span></div>
+            <div class="donation-tier" onclick="window.open('https://ko-fi.com/baxtiyorovotabek','_blank')"><span class="tier-icon">🌍</span><div class="tier-name">Champion</div><div class="tier-amount">$25</div><div class="tier-desc">Sponsor a new problem category!</div><span class="tier-btn">Donate $25</span></div>
+            <div class="donation-tier" onclick="window.open('https://ko-fi.com/baxtiyorovotabek','_blank')"><span class="tier-icon">🏆</span><div class="tier-name">Hero</div><div class="tier-amount">$50+</div><div class="tier-desc">Fund AI features and global outreach.</div><span class="tier-btn">Donate $50+</span></div>
+        </div>
+        <div class="donation-kofi-box" data-aos="zoom-in" data-aos-delay="200">
+            <p>All donations go directly to server costs, domain renewal, and future development. Every dollar counts — thank you! 🙏</p>
+            <a class="kofi-big-btn" href="https://ko-fi.com/baxtiyorovotabek" target="_blank" rel="noopener">
+                <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Ko-fi"> Support on Ko-fi
+            </a>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+        <h2 class="section-title contact-title" data-aos="fade-up">Join the Movement</h2>
+        <div class="contact-card" data-aos="zoom-in">
+            <p><i class="fas fa-envelope" style="font-size:27px"></i> <strong class="gmail-label" style="font-size:27px">Gmail:</strong> <a style="font-size:27px" href="/cdn-cgi/l/email-protection#5436352c203d2d3b263b223b203536313f646461143339353d387a373b39"><span class="__cf_email__" data-cfemail="1674776e627f6f7964796079627774737d26262356717b777f7a3875797b">[email&#160;protected]</span></a></p>
+            <p><i class="fab fa-telegram" style="font-size:27px"></i> <strong class="telegram-label" style="font-size:27px">Telegram:</strong> <a style="font-size:27px" href="https://t.me/globalproblemsolvers" target="_blank">Join our Telegram Community</a></p>
+        </div>
+    </section>
+
+    <footer><p class="footer-text">© 2026 GlobalProblemSolvers | Created by Baxtiyorov Otabek</p></footer>
+
+    <!-- AI MODAL -->
+    <div class="ai-modal-overlay" id="aiModal" onclick="closeAiModal(event)">
+        <div class="ai-modal" id="aiModalBox">
+            <div class="ai-modal-header">
+                <div class="ai-modal-title">🤖 <span>AI</span> Solution Evaluator</div>
+                <button class="ai-modal-close" onclick="closeAiModalDirect()">✕</button>
+            </div>
+            <div id="aiLoading" class="ai-loading"><div class="ai-spinner"></div><p id="aiLoadingText">Analysing your solution...</p></div>
+            <div id="aiResult" style="display:none">
+                <div class="ai-score-ring">
+                    <div class="score-circle" id="scoreCircle"><span class="score-num" id="scoreNum">0</span></div>
+                    <div class="score-info"><div class="score-label">Overall Score</div><div class="score-verdict" id="scoreVerdict">—</div><div class="score-summary" id="scoreSummary">—</div></div>
+                </div>
+                <div class="ai-sub-scores">
+                    <div class="sub-score"><span class="ss-label">Impact</span><span class="ss-val" id="ssImpact">—</span><div class="ss-bar"><div class="ss-fill" id="ssImpactBar" style="width:0%"></div></div></div>
+                    <div class="sub-score"><span class="ss-label">Feasibility</span><span class="ss-val" id="ssFeasibility">—</span><div class="ss-bar"><div class="ss-fill" id="ssFeasibilityBar" style="width:0%"></div></div></div>
+                    <div class="sub-score"><span class="ss-label">Innovation</span><span class="ss-val" id="ssInnovation">—</span><div class="ss-bar"><div class="ss-fill" id="ssInnovationBar" style="width:0%"></div></div></div>
+                </div>
+                <div class="ai-feedback-section"><h4>✅ Strengths</h4><ul class="feedback-list strengths" id="aiStrengths"></ul></div>
+                <div class="ai-feedback-section"><h4>⚠️ Areas to Improve</h4><ul class="feedback-list weaknesses" id="aiWeaknesses"></ul></div>
+                <div class="ai-feedback-section"><h4>💡 Suggestions</h4><ul class="feedback-list suggestions" id="aiSuggestions"></ul></div>
+            </div>
+            <div id="aiError" style="display:none" class="ai-error-box"><p id="aiErrorMsg">⚠️ Could not evaluate.</p></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script>
+    AOS.init({ duration:1000, once:true });
+    particlesJS('particles-js',{particles:{number:{value:80},color:{value:'#00e9fa'},shape:{type:'circle'},opacity:{value:0.5},size:{value:3},line_linked:{enable:true,distance:150,color:'#00e9fa',opacity:0.2,width:1},move:{enable:true,speed:2}}});
+
+    function toggleMobileNav() { document.getElementById('navLinks').classList.toggle('mobile-open'); document.getElementById('hamburger').classList.toggle('active'); }
+    function toggleMenu(menuId) { const menu=document.getElementById(menuId),other=menuId==='themeMenu'?'langMenu':'themeMenu'; document.getElementById(other).classList.remove('show'); menu.classList.toggle('show'); }
+    window.onclick = e => { if(!e.target.matches('.theme-btn')&&!e.target.closest('.theme-btn')) document.querySelectorAll('.theme-dropdown-content').forEach(d=>d.classList.remove('show')); };
+    function setTheme(t) { const b=document.body; if(t==='light'){b.classList.add('light-mode');b.classList.remove('dark-mode');}else if(t==='dark'){b.classList.add('dark-mode');b.classList.remove('light-mode');}else{window.matchMedia('(prefers-color-scheme:dark)').matches?b.classList.add('dark-mode'):b.classList.add('light-mode');} }
+
+    // ── LOGIN ──────────────────────────────────────
+    let isLoggedIn=false, currentUser=null;
+    function openLoginModal() { goToStep(1); document.getElementById('loginModal').classList.add('active'); document.body.style.overflow='hidden'; }
+    function closeLoginModal() { document.getElementById('loginModal').classList.remove('active'); document.body.style.overflow=''; }
+    document.getElementById('loginModal').addEventListener('click',function(e){if(e.target===this)closeLoginModal();});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLoginModal();});
+
+    function goToStep(n) {
+        if(n===2){ const name=document.getElementById('login-name').value.trim(),age=parseInt(document.getElementById('login-age').value); document.getElementById('err-name').innerText=''; document.getElementById('err-age').innerText=''; let ok=true; if(name.length<2){document.getElementById('err-name').innerText='Please enter your full name (min 2 chars).';ok=false;} if(!age||age<10||age>120){document.getElementById('err-age').innerText='Enter a valid age between 10 and 120.';ok=false;} if(!ok)return; }
+        if(n===3){ const phone=document.getElementById('login-phone').value.trim(),country=document.getElementById('login-country').value; document.getElementById('err-phone').innerText=''; document.getElementById('err-country').innerText=''; let ok=true; if(phone.length<6){document.getElementById('err-phone').innerText='Enter a valid phone number.';ok=false;} if(!country){document.getElementById('err-country').innerText='Please select your country.';ok=false;} if(!ok)return; buildSummary(); }
+        document.querySelectorAll('.login-step').forEach(s=>s.classList.remove('active'));
+        document.querySelectorAll('.login-dot').forEach(d=>d.classList.remove('active'));
+        const t=document.getElementById('step-'+n); if(t)t.classList.add('active');
+        const dt=document.getElementById('dot-'+n); if(dt)dt.classList.add('active');
+    }
+    function buildSummary() {
+        const name=document.getElementById('login-name').value.trim(),age=document.getElementById('login-age').value,phone=document.getElementById('login-phone').value.trim(),country=document.getElementById('login-country').value;
+        document.getElementById('login-summary').innerHTML=`<div class="summary-row"><i class="fas fa-user"></i><span>${name}</span></div><div class="summary-row"><i class="fas fa-birthday-cake"></i><span>${age} years old</span></div><div class="summary-row"><i class="fas fa-phone"></i><span>${phone}</span></div><div class="summary-row"><i class="fas fa-flag"></i><span>${country}</span></div>`;
+    }
+    function confirmLogin() { currentUser={name:document.getElementById('login-name').value.trim(),country:document.getElementById('login-country').value}; finishLogin(); }
+    function finishLogin() {
+        isLoggedIn=true;
+        const session={name:currentUser.name,country:currentUser.country,via:currentUser.via||'manual',expiresAt:Date.now()+(30*24*60*60*1000)};
+        localStorage.setItem('gps_user',JSON.stringify(session));
+        document.querySelectorAll('.login-step').forEach(s=>s.classList.remove('active'));
+        document.querySelectorAll('.login-dot').forEach(d=>d.classList.remove('active'));
+        document.getElementById('step-success').classList.add('active');
+        document.getElementById('welcome-name-msg').innerText='Hello, '+currentUser.name+' from '+currentUser.country+'! You can now submit solutions to any challenge.';
+        updateNavForLogin(); unlockForms();
+    }
+    function updateNavForLogin() {
+        document.getElementById('nav-login-btn').style.display='none';
+        const badge=document.getElementById('nav-user-badge'); badge.style.display='flex';
+        const initials=currentUser.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+        document.getElementById('nav-user-avatar').innerText=initials;
+        document.getElementById('nav-user-name').innerText=currentUser.name.split(' ')[0];
+    }
+    function logOut() { isLoggedIn=false; currentUser=null; localStorage.removeItem('gps_user'); document.getElementById('nav-login-btn').style.display='inline-flex'; document.getElementById('nav-user-badge').style.display='none'; lockForms(); }
+    function unlockForms() { document.querySelectorAll('.form-lock-overlay').forEach(el=>el.style.display='none'); setTimeout(injectAiButtons,300); }
+    function lockForms()   { document.querySelectorAll('.form-lock-overlay').forEach(el=>el.style.display='flex'); }
+
+    function restoreSession() {
+        try {
+            const saved=localStorage.getItem('gps_user'); if(!saved)return;
+            const session=JSON.parse(saved);
+            if(session.expiresAt&&Date.now()>session.expiresAt){localStorage.removeItem('gps_user');return;}
+            currentUser={name:session.name,country:session.country,via:session.via};
+            isLoggedIn=true; updateNavForLogin(); unlockForms();
+        } catch(e){localStorage.removeItem('gps_user');}
+    }
+
+    // ── TRANSLATION ENGINE ─────────────────────────
+    const langData = {
+        'en': {
+            nav:["Home","Problems","About","Contact","Community"],
+            hero:['Solutions from the people.','Crowdsourcing for a better planet.','Your ideas can change the world.'],
+            exploreBtn:"Explore Challenges", sectionTitle:"10 Global Challenges",
+            labels:["Causes","Effects","Submit"], placeholders:["Your Gmail","Your Solution..."],
+            about:{title:"About GPS",v_title:"The Vision",v_text:"GlobalProblemSolvers is an open-source hub for innovation. We believe the internet allows us to bypass borders and connect the world's brightest minds to the world's deepest crises.",c_title:"The Creator",c_text1:"I am Baxtiyorov Otabek, a student at the Presidential School. I use software engineering to build tools that tackle ten global challenges and inspire bold action for our planet.",c_text2:"I am planning to expand this project to include more global problems and solutions."},
+            contact:{title:"Join the Movement",gmail:"Gmail",telegram:"Telegram"},
+            footer:"© 2026 GlobalProblemSolvers | Created by Baxtiyorov Otabek",
+            donation:{title:"Support the Mission 💚",subtitle:"GPS is free for everyone, forever. A small contribution helps a 13-year-old developer from Uzbekistan keep building.",tiers:[{name:"Buy a Coffee",amount:"$3",desc:"Fuel one coding session!",btn:"Donate $3"},{name:"Supporter",amount:"$10",desc:"Help keep GPS online for a month!",btn:"Donate $10"},{name:"Champion",amount:"$25",desc:"Sponsor a new problem category!",btn:"Donate $25"},{name:"Hero",amount:"$50+",desc:"Fund AI features and global outreach.",btn:"Donate $50+"}],boxText:"All donations go to server costs and future development. Every dollar counts — thank you! 🙏",kofiBtn:"Support on Ko-fi",popular:"⭐ Most Popular"},
+            kofiFloat:"Support GPS ☕", aiBtn:"Evaluate with AI",
+            problems:[{t:"Climate Change",c:"Greenhouse gas emissions and fossil fuel reliance.",e:"Rising temperatures and extreme weather."},{t:"Global Hunger",c:"Poverty, war, and food waste.",e:"Chronic malnutrition and health crises."},{t:"Access To Education",c:"Financial barriers and lack of infrastructure.",e:"Limited skills and lifelong poverty cycles."},{t:"Water Scarcity",c:"Industrial pollution and droughts.",e:"Spread of diseases and crop failure."},{t:"Air Pollution",c:"Vehicle emissions and industrial smoke.",e:"Breathing illnesses and ozone damage."},{t:"Deforestation",c:"Agricultural expansion and logging.",e:"Wildlife extinction and climate imbalance."},{t:"Ocean Plastic",c:"Over-production of single-use plastics.",e:"Toxic oceans and marine death."},{t:"Healthcare Access",c:"Economic inequality and rural distance.",e:"Untreated illness and lower life expectancy."},{t:"Corruption",c:"Bribery and lack of transparency.",e:"Economic stagnation and social injustice."},{t:"Gender Inequality",c:"Social norms and unequal opportunities.",e:"Reduced growth and human rights violations."}]
+        },
+        'uz': {
+            nav:["Bosh sahifa","Muammolar","Biz haqimizda","Aloqa","Hamjamiyat"],
+            hero:["Xalqdan yechimlar.","Sayyoramiz uchun kraudsorsing.","Sizning g'oyangiz dunyoni o'zgartiradi."],
+            exploreBtn:"Muammolarni ko'rish",sectionTitle:"10 ta Global Muammo",
+            labels:["Sabablar","Oqibatlar","Yuborish"],placeholders:["Sizning Gmailingiz","Sizning yechimingiz..."],
+            about:{title:"GPS Haqida",v_title:"Maqsad",v_text:"GlobalProblemSolvers - innovatsiyalar uchun ochiq markazdir.",c_title:"Yaratuvchi",c_text1:"Men Baxtiyorov Otabek, Prezident maktabi o'quvchisiman.",c_text2:"Bu loyihani kengaytirishni rejalashtirmoqdaman."},
+            contact:{title:"Harakatga qo'shiling",gmail:"Gmail",telegram:"Telegram"},
+            footer:"© 2026 GlobalProblemSolvers | Baxtiyorov Otabek tomonidan yaratilgan",
+            donation:{title:"Missiyani qo'llab-quvvatlang 💚",subtitle:"GPS hamma uchun bepul.",tiers:[{name:"Qahva",amount:"$3",desc:"Bir kodlash seansini moliyalashtiring!",btn:"$3 xayriya"},{name:"Qo'llovchi",amount:"$10",desc:"GPS ni bir oy onlayn ushlab turing!",btn:"$10 xayriya"},{name:"Chempion",amount:"$25",desc:"Yangi muammo kategoriyasiga homiylik!",btn:"$25 xayriya"},{name:"Qahramon",amount:"$50+",desc:"AI va global rivojlanish.",btn:"$50+ xayriya"}],boxText:"Barcha xayriyalar server xarajatlari va GPS rivojlanishiga sarflanadi. Rahmat! 🙏",kofiBtn:"Ko-fi da qo'llab-quvvatlang",popular:"⭐ Eng mashhur"},
+            kofiFloat:"GPS ni qo'llab-quvvatlang ☕",aiBtn:"AI bilan baholash",
+            problems:[{t:"Iqlim O'zgarishi",c:"Issiqxona gazlari.",e:"Harorat ko'tarilishi."},{t:"Global Ochlik",c:"Kambag'allik, urush.",e:"Surunkali to'yib ovqatlanmaslik."},{t:"Ta'limga Yo'l",c:"Moliyaviy to'siqlar.",e:"Kambag'allik tsikli."},{t:"Suv Tanqisligi",c:"Sanoat ifloslanishi.",e:"Kasalliklar tarqalishi."},{t:"Havo Ifloslanishi",c:"Avtomobil tutunlari.",e:"Nafas olish kasalliklari."},{t:"O'rmonlar Kesilishi",c:"Qishloq xo'jaligi.",e:"Yovvoyi tabiat yo'qolishi."},{t:"Okean Plastiklari",c:"Plastik ishlab chiqarish.",e:"Okean zaharlanishi."},{t:"Tibbiy Xizmat",c:"Iqtisodiy tengsizlik.",e:"Davolanmagan kasalliklar."},{t:"Korrupsiya",c:"Pora olish.",e:"Iqtisodiy turg'unlik."},{t:"Gender Tengsizligi",c:"Ijtimoiy normalar.",e:"Inson huquqlari buzilishi."}]
+        },
+        'ru': {
+            nav:["Главная","Проблемы","О нас","Контакт","Сообщество"],
+            hero:["Решения от людей.","Краудсорсинг для планеты.","Ваши идеи меняют мир."],
+            exploreBtn:"Исследовать задачи",sectionTitle:"10 Глобальных Проблем",
+            labels:["Причины","Следствия","Отправить"],placeholders:["Ваш Gmail","Ваше решение..."],
+            about:{title:"О проекте GPS",v_title:"Видение",v_text:"GlobalProblemSolvers — это хаб инноваций.",c_title:"Создатель",c_text1:"Я Бахтиёров Отабек, ученик Президентской школы.",c_text2:"Планирую расширить проект."},
+            contact:{title:"Присоединяйтесь",gmail:"Почта",telegram:"Телеграм"},
+            footer:"© 2026 GlobalProblemSolvers | Создано Бахтиёровым Отабеком",
+            donation:{title:"Поддержите миссию 💚",subtitle:"GPS бесплатен для всех.",tiers:[{name:"Кофе",amount:"$3",desc:"Оплатите сессию разработки!",btn:"Донат $3"},{name:"Сторонник",amount:"$10",desc:"Держите GPS онлайн месяц!",btn:"Донат $10"},{name:"Чемпион",amount:"$25",desc:"Спонсируйте новую категорию!",btn:"Донат $25"},{name:"Герой",amount:"$50+",desc:"Финансируйте ИИ и развитие.",btn:"Донат $50+"}],boxText:"Спасибо! 🙏",kofiBtn:"Поддержать на Ko-fi",popular:"⭐ Популярнее всего"},
+            kofiFloat:"Поддержать GPS ☕",aiBtn:"Оценить с ИИ",
+            problems:[{t:"Климат",c:"Выбросы газов.",e:"Глобальное потепление."},{t:"Голод",c:"Бедность, войны.",e:"Хроническое недоедание."},{t:"Образование",c:"Барьеры.",e:"Цикл бедности."},{t:"Вода",c:"Промышленность.",e:"Болезни."},{t:"Воздух",c:"Выхлопы.",e:"Болезни легких."},{t:"Леса",c:"Вырубка.",e:"Исчезновение видов."},{t:"Пластик",c:"Перепроизводство.",e:"Гибель океана."},{t:"Медицина",c:"Неравенство.",e:"Низкая жизнь."},{t:"Коррупция",c:"Взятки.",e:"Застой."},{t:"Гендер",c:"Социальные нормы.",e:"Нарушение прав."}]
+        },
+        'qr': {
+            nav:["Bas bet","Mashqalalar","Biz haqqımızda","Baylanıs","Jámiyet"],
+            hero:["Xalıqtan sheshimler.","Planetamız ushın ideyalar.","Siziń g'oyańız dúnyanı ózgertedi."],
+            exploreBtn:"Mashqalalardı kóriw",sectionTitle:"10 Global Mashqala",
+            labels:["Sebepter","Aqıbetler","Jiberiw"],placeholders:["Siziń Gmailıńız","Siziń sheshimińiz..."],
+            about:{title:"GPS Haqqında",v_title:"Maqset",v_text:"GlobalProblemSolvers - innovatsiyalar ushın ashıq oray.",c_title:"Yaratıwshı",c_text1:"Men Baxtiyorov Otabek, Prezident mektebi oquvshısıman.",c_text2:"Bul loyihanı keńeytiw niyetindemen."},
+            contact:{title:"Háreketke qosılıń",gmail:"Gmail",telegram:"Telegram"},
+            footer:"© 2026 GlobalProblemSolvers | Baxtiyorov Otabek tárepinen jaratılǵan",
+            donation:{title:"Missiyani qollap-quwwatlań 💚",subtitle:"GPS hámme ushın tegin.",tiers:[{name:"Qáhwa",amount:"$3",desc:"Bir kodlaw seansın maliyelestiriń!",btn:"$3 xayriya"},{name:"Qollawshı",amount:"$10",desc:"GPS ti bir ay onlayn ushlab turıń!",btn:"$10 xayriya"},{name:"Chempion",amount:"$25",desc:"Jańa mashqala kategoriyasına homiylik!",btn:"$25 xayriya"},{name:"Qahırman",amount:"$50+",desc:"AI hám global rawajlanıw.",btn:"$50+ xayriya"}],boxText:"Raxmet! 🙏",kofiBtn:"Ko-fi da qollap-quwwatlaw",popular:"⭐ Eń mashxur"},
+            kofiFloat:"GPS ti qollań ☕",aiBtn:"AI menen bahalaw",
+            problems:[{t:"Iqlım Ózgerisi",c:"Gazlar.",e:"Temperaturanıń kóteriliwi."},{t:"Global Asharshılıq",c:"Kambaǵallıq.",e:"Malnutritsiya."},{t:"Bilimge Jol",c:"Tosqınlıqlar.",e:"Kambaǵallıq tsikli."},{t:"Suw Tanqıslıǵı",c:"Bulyanıw.",e:"Kesellikler."},{t:"Hawa Buljanıwı",c:"Tútinler.",e:"Dem alıw kesellikleri."},{t:"Orman Kesiliwi",c:"Tereklerdi kesiw.",e:"Jabayı tábiattıń joqlıǵı."},{t:"Okean Plastikleri",c:"Plastik shıǵındı.",e:"Teńiz haywanları ólimi."},{t:"Medicinalıq Xızmet",c:"Teńsizlik.",e:"Keselliklerdiń kóbeyiwi."},{t:"Korrupsiya",c:"Para alıw.",e:"Adalatsızlıq."},{t:"Gender Teńsizligi",c:"Teń emes imkan.",e:"Huqıq buzılıwı."}]
+        }
+    };
+
+    let currentTyped;
+    function setLanguage(lang) {
+        localStorage.setItem('gps_lang', lang);
+        const d=langData[lang]; if(!d)return;
+        document.querySelector('.nav-home').innerText=d.nav[0]; document.querySelector('.nav-probs').innerText=d.nav[1]; document.querySelector('.nav-about').innerText=d.nav[2]; document.querySelector('.nav-contact').innerText=d.nav[3]; document.querySelector('.nav-community').innerText=d.nav[4];
+        if(currentTyped)currentTyped.destroy();
+        currentTyped=new Typed('#typed-hero',{strings:d.hero,typeSpeed:50,backSpeed:30,loop:true});
+        document.querySelector('.hero-cta').innerText=d.exploreBtn;
+        document.getElementById('main-section-title').innerText=d.sectionTitle;
+        document.querySelectorAll('.label-cause').forEach(el=>el.innerText=d.labels[0]+':');
+        document.querySelectorAll('.label-effect').forEach(el=>el.innerText=d.labels[1]+':');
+        document.querySelectorAll('.p-submit').forEach(el=>el.innerText=d.labels[2]);
+        document.querySelectorAll('.p-email-label').forEach(el=>el.placeholder=d.placeholders[0]);
+        document.querySelectorAll('.p-text').forEach(el=>el.placeholder=d.placeholders[1]);
+        const titles=document.querySelectorAll('.p-title'),causes=document.querySelectorAll('.p-cause'),effects=document.querySelectorAll('.p-effect');
+        d.problems.forEach((p,i)=>{if(titles[i])titles[i].innerText=(i+1)+'. '+p.t;if(causes[i])causes[i].innerText=p.c;if(effects[i])effects[i].innerText=p.e;});
+        document.querySelector('.about-title').innerText=d.about.title; document.querySelector('.vision-title').innerText=d.about.v_title; document.querySelector('.vision-text').innerText=d.about.v_text; document.querySelector('.creator-title').innerText=d.about.c_title; document.querySelector('.creator-text-1').innerText=d.about.c_text1; document.querySelector('.creator-text-2').innerText=d.about.c_text2;
+        document.querySelector('.contact-title').innerText=d.contact.title; document.querySelector('.gmail-label').innerText=d.contact.gmail+':'; document.querySelector('.telegram-label').innerText=d.contact.telegram+':'; document.querySelector('.footer-text').innerText=d.footer;
+        if(d.donation){const dn=d.donation;const dt=document.querySelector('.donation-section .section-title');if(dt)dt.innerText=dn.title;const ds=document.querySelector('.donation-subtitle');if(ds)ds.innerText=dn.subtitle;document.querySelectorAll('.donation-tier').forEach((t,i)=>{if(!dn.tiers[i])return;const n=t.querySelector('.tier-name'),a=t.querySelector('.tier-amount'),d2=t.querySelector('.tier-desc'),b=t.querySelector('.tier-btn');if(n)n.innerText=dn.tiers[i].name;if(a)a.innerText=dn.tiers[i].amount;if(d2)d2.innerText=dn.tiers[i].desc;if(b)b.innerText=dn.tiers[i].btn;});const badge=document.querySelector('.tier-badge');if(badge)badge.innerText=dn.popular;const boxText=document.querySelector('.donation-kofi-box p');if(boxText)boxText.innerText=dn.boxText;const kofiBtn=document.querySelector('.kofi-big-btn');if(kofiBtn){const img=kofiBtn.querySelector('img');kofiBtn.innerHTML='';if(img)kofiBtn.appendChild(img);kofiBtn.appendChild(document.createTextNode(' '+dn.kofiBtn));}}
+        const kf=document.querySelector('.kofi-float');if(kf&&d.kofiFloat){const img=kf.querySelector('img');kf.innerHTML='';if(img)kf.appendChild(img);kf.appendChild(document.createTextNode(d.kofiFloat));}
+        if(d.aiBtn){document.querySelectorAll('.ai-eval-btn').forEach(b=>b.innerHTML='<span class="ai-icon">🤖</span> '+d.aiBtn);window._currentAiLabel=d.aiBtn;}
+    }
+
+    // ── AI EVALUATOR ────────────────────────────────
+    const AI_API_KEY = 'YOUR_ANTHROPIC_API_KEY_HERE';
+    function injectAiButtons() {
+        document.querySelectorAll('.solution-box').forEach(form=>{
+            if(form.querySelector('.ai-eval-btn'))return;
+            const problemInput=form.querySelector('input[name="Problem"]');
+            const problemName=problemInput?problemInput.value:'Global Problem';
+            const btn=document.createElement('button');
+            btn.type='button'; btn.className='ai-eval-btn';
+            btn.innerHTML='<span class="ai-icon">🤖</span> '+(window._currentAiLabel||'Evaluate with AI');
+            btn.onclick=function(){const ta=form.querySelector('.p-text');if(!ta||ta.value.trim().length<20){alert('Please write at least 20 characters.');if(ta)ta.focus();return;}openAiEvaluator(problemName,ta.value.trim());};
+            form.appendChild(btn);
+        });
+    }
+    function openAiEvaluator(problem,solution){document.getElementById('aiLoading').style.display='block';document.getElementById('aiResult').style.display='none';document.getElementById('aiError').style.display='none';document.getElementById('aiModal').classList.add('open');document.body.style.overflow='hidden';evaluateSolution(problem,solution);}
+    function closeAiModal(e){if(e.target===document.getElementById('aiModal'))closeAiModalDirect();}
+    function closeAiModalDirect(){document.getElementById('aiModal').classList.remove('open');document.body.style.overflow='';}
+    async function evaluateSolution(problem,solution){
+        const texts=['Analysing your solution...','Checking feasibility...','Evaluating global impact...','Generating feedback...'];
+        let li=0;const iv=setInterval(()=>{li=(li+1)%texts.length;const el=document.getElementById('aiLoadingText');if(el)el.textContent=texts[li];},1400);
+        const prompt=`You are an expert evaluator for GlobalProblemSolvers.\n\nEvaluate this solution for: "${problem}"\n\nSolution:\n"""\n${solution}\n"""\n\nRespond ONLY with valid JSON:\n{"overallScore":<1-10>,"verdict":"<Poor|Below Average|Average|Good|Excellent>","summary":"<1-2 sentences>","impact":<1-10>,"feasibility":<1-10>,"innovation":<1-10>,"strengths":["...","..."],"weaknesses":["...","..."],"suggestions":["...","...","..."]}`;
+        try{
+            if(!AI_API_KEY||AI_API_KEY==='YOUR_ANTHROPIC_API_KEY_HERE')throw new Error('NO_KEY');
+            const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':AI_API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:800,messages:[{role:'user',content:prompt}]})});
+            clearInterval(iv);
+            if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'API error '+res.status);}
+            const data=await res.json();
+            const result=JSON.parse(data.content[0].text.replace(/^```json|^```|```$/gm,'').trim());
+            displayAiResult(result);
+        }catch(err){clearInterval(iv);document.getElementById('aiLoading').style.display='none';document.getElementById('aiError').style.display='block';document.getElementById('aiErrorMsg').innerHTML=err.message==='NO_KEY'?'🔑 No API key set. Find AI_API_KEY in the script.':'⚠️ '+err.message;}
+    }
+    function displayAiResult(r){
+        document.getElementById('aiLoading').style.display='none';document.getElementById('aiResult').style.display='block';
+        const pct=(r.overallScore/10)*100,accent=r.overallScore>=8?'#4caf7d':r.overallScore>=6?'#64ffda':r.overallScore>=4?'#f4c542':'#ff7043';
+        const circle=document.getElementById('scoreCircle');circle.style.background=`conic-gradient(${accent} ${pct}%, rgba(100,255,218,0.08) 0%)`;
+        document.getElementById('scoreNum').style.color=accent;document.getElementById('scoreNum').textContent=r.overallScore+'/10';
+        document.getElementById('scoreVerdict').textContent=r.verdict;document.getElementById('scoreSummary').textContent=r.summary;
+        function ss(id,bid,v){document.getElementById(id).textContent=v+'/10';document.getElementById(id).style.color=accent;setTimeout(()=>{document.getElementById(bid).style.width=(v*10)+'%';document.getElementById(bid).style.background=accent;},100);}
+        ss('ssImpact','ssImpactBar',r.impact);ss('ssFeasibility','ssFeasibilityBar',r.feasibility);ss('ssInnovation','ssInnovationBar',r.innovation);
+        function fl(id,items){document.getElementById(id).innerHTML=(items||[]).map(i=>`<li>${i}</li>`).join('');}
+        fl('aiStrengths',r.strengths);fl('aiWeaknesses',r.weaknesses);fl('aiSuggestions',r.suggestions);
+    }
+
+    document.addEventListener('DOMContentLoaded',()=>setTimeout(injectAiButtons,600));
+    setLanguage(localStorage.getItem('gps_lang')||'en');
+    restoreSession();
+    setTimeout(injectAiButtons,600);
+    </script>
+</body>
+</html>
