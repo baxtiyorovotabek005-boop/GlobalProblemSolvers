@@ -103,6 +103,46 @@
                     Go to Community <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
+</div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         PROFILE EDIT MODAL
+    ══════════════════════════════════════════ -->
+    <div class="profile-modal-overlay" id="profileModal" onclick="closeProfileModal(event)">
+        <div class="profile-modal" id="profileModalBox">
+            <div class="profile-modal-header">
+                <div class="profile-modal-title">Edit <span>Profile</span></div>
+                <button class="profile-modal-close" onclick="closeProfileModalDirect()">✕</button>
+            </div>
+            <div class="profile-preview-row">
+                <div class="profile-preview-avatar" id="profilePreviewAvatar"></div>
+                <div class="profile-preview-info">
+                    <div class="profile-preview-name" id="profilePreviewName">Your Name</div>
+                    <div class="profile-preview-desc" id="profilePreviewDesc">No description yet</div>
+                    <button class="profile-change-photo-btn" onclick="document.getElementById('profilePhotoInput').click()">
+                        <i class="fas fa-camera"></i> Change Photo
+                    </button>
+                </div>
+                <input type="file" id="profilePhotoInput" accept="image/*" style="display:none" onchange="handleProfilePhotoChange(event)">
+                <input type="text" id="profilePhotoUrl" class="profile-form-input" placeholder="Or paste image URL..." style="display:none" oninput="handleProfilePhotoUrlInput(event)">
+            </div>
+            <div class="profile-form-group">
+                <label class="profile-form-label"><i class="fas fa-user"></i> Full Name</label>
+                <input type="text" id="editName" class="profile-form-input" placeholder="Your full name">
+            </div>
+            <div class="profile-form-group">
+                <label class="profile-form-label"><i class="fas fa-align-left"></i> Description / Bio</label>
+                <textarea id="editDescription" class="profile-form-input profile-form-textarea" placeholder="Tell us about yourself, your expertise, interests..."></textarea>
+            </div>
+            <div class="profile-form-group">
+                <label class="profile-form-label"><i class="fas fa-image"></i> Profile Photo URL</label>
+                <input type="text" id="editPhotoUrl" class="profile-form-input" placeholder="https://example.com/your-photo.jpg" oninput="updateProfilePreview()">
+            </div>
+            <div class="profile-modal-actions">
+                <button class="profile-cancel-btn" onclick="closeProfileModalDirect()">Cancel</button>
+                <button class="profile-save-btn" onclick="saveProfile()"><i class="fas fa-check"></i> Save Changes</button>
+            </div>
         </div>
     </div>
 
@@ -134,6 +174,7 @@
                     <div class="nav-user-badge" id="nav-user-badge" style="display:none;">
                         <div class="nav-user-avatar" id="nav-user-avatar"></div>
                         <span class="nav-user-name" id="nav-user-name"></span>
+                        <button class="nav-edit-profile-btn" title="Edit Profile" onclick="openProfileModal()"><i class="fas fa-pencil-alt"></i></button>
                         <button class="nav-logout-btn" title="Log out" onclick="logOut()"><i class="fas fa-sign-out-alt"></i></button>
                     </div>
                 </div>
@@ -458,10 +499,17 @@
         const name=document.getElementById('login-name').value.trim(),age=document.getElementById('login-age').value,phone=document.getElementById('login-phone').value.trim(),country=document.getElementById('login-country').value;
         document.getElementById('login-summary').innerHTML=`<div class="summary-row"><i class="fas fa-user"></i><span>${name}</span></div><div class="summary-row"><i class="fas fa-birthday-cake"></i><span>${age} years old</span></div><div class="summary-row"><i class="fas fa-phone"></i><span>${phone}</span></div><div class="summary-row"><i class="fas fa-flag"></i><span>${country}</span></div>`;
     }
-    function confirmLogin() { currentUser={name:document.getElementById('login-name').value.trim(),country:document.getElementById('login-country').value}; finishLogin(); }
+    function confirmLogin() { currentUser={name:document.getElementById('login-name').value.trim(),country:document.getElementById('login-country').value,description:'',photoUrl:''}; finishLogin(); }
     function finishLogin() {
         isLoggedIn=true;
-        const session={name:currentUser.name,country:currentUser.country,via:currentUser.via||'manual',expiresAt:Date.now()+(30*24*60*60*1000)};
+        const session={
+            name:currentUser.name,
+            country:currentUser.country,
+            via:currentUser.via||'manual',
+            description:currentUser.description||'',
+            photoUrl:currentUser.photoUrl||'',
+            expiresAt:Date.now()+(30*24*60*60*1000)
+        };
         localStorage.setItem('gps_user',JSON.stringify(session));
         document.querySelectorAll('.login-step').forEach(s=>s.classList.remove('active'));
         document.querySelectorAll('.login-dot').forEach(d=>d.classList.remove('active'));
@@ -472,9 +520,21 @@
     function updateNavForLogin() {
         document.getElementById('nav-login-btn').style.display='none';
         const badge=document.getElementById('nav-user-badge'); badge.style.display='flex';
-        const initials=currentUser.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-        document.getElementById('nav-user-avatar').innerText=initials;
-        document.getElementById('nav-user-name').innerText=currentUser.name.split(' ')[0];
+        const name=currentUser.name||'User';
+        const initials=name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+        
+        const avatarEl=document.getElementById('nav-user-avatar');
+        if(currentUser.photoUrl) {
+            const img=document.createElement('img');
+            img.src=currentUser.photoUrl;
+            img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%;';
+            img.onerror=function(){ avatarEl.innerText=initials; };
+            avatarEl.innerHTML='';
+            avatarEl.appendChild(img);
+        } else {
+            avatarEl.innerText=initials;
+        }
+        document.getElementById('nav-user-name').innerText=name.split(' ')[0];
     }
     function logOut() { isLoggedIn=false; currentUser=null; localStorage.removeItem('gps_user'); document.getElementById('nav-login-btn').style.display='inline-flex'; document.getElementById('nav-user-badge').style.display='none'; lockForms(); }
     function unlockForms() { document.querySelectorAll('.form-lock-overlay').forEach(el=>el.style.display='none'); setTimeout(injectAiButtons,300); }
@@ -485,10 +545,96 @@
             const saved=localStorage.getItem('gps_user'); if(!saved)return;
             const session=JSON.parse(saved);
             if(session.expiresAt&&Date.now()>session.expiresAt){localStorage.removeItem('gps_user');return;}
-            currentUser={name:session.name,country:session.country,via:session.via};
+            currentUser={name:session.name,country:session.country,via:session.via,description:session.description||'',photoUrl:session.photoUrl||''};
             isLoggedIn=true; updateNavForLogin(); unlockForms();
         } catch(e){localStorage.removeItem('gps_user');}
     }
+
+    // ── PROFILE EDIT MODAL ─────────────────────────
+    function openProfileModal() {
+        if(!currentUser) return;
+        document.getElementById('editName').value=currentUser.name||'';
+        document.getElementById('editDescription').value=currentUser.description||'';
+        document.getElementById('editPhotoUrl').value=currentUser.photoUrl||'';
+        updateProfilePreview();
+        document.getElementById('profileModal').classList.add('open');
+        document.body.style.overflow='hidden';
+    }
+    function closeProfileModal(event) {
+        if(event && event.target!==event.currentTarget) return;
+        closeProfileModalDirect();
+    }
+    function closeProfileModalDirect() {
+        document.getElementById('profileModal').classList.remove('open');
+        document.body.style.overflow='';
+    }
+    function updateProfilePreview() {
+        const name=document.getElementById('editName').value.trim()||'Your Name';
+        const desc=document.getElementById('editDescription').value.trim()||'No description yet';
+        const photoUrl=document.getElementById('editPhotoUrl').value.trim();
+        
+        document.getElementById('profilePreviewName').innerText=name;
+        document.getElementById('profilePreviewDesc').innerText=desc;
+        
+        const avatar=document.getElementById('profilePreviewAvatar');
+        if(photoUrl) {
+            avatar.innerHTML=`<img src="${photoUrl}" alt="Profile" onerror="this.parentElement.innerHTML=this.parentElement.dataset.initials">`;
+            avatar.dataset.initials=name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+        } else {
+            const initials=name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+            avatar.innerText=initials;
+        }
+    }
+    function handleProfilePhotoChange(event) {
+        const file=event.target.files[0];
+        if(file) {
+            const reader=new FileReader();
+            reader.onload=function(e) {
+                document.getElementById('editPhotoUrl').value=e.target.result;
+                updateProfilePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    function handleProfilePhotoUrlInput(event) {
+        const url=event.target.value.trim();
+        if(url) {
+            document.getElementById('editPhotoUrl').value=url;
+            updateProfilePreview();
+        }
+    }
+    function saveProfile() {
+        const name=document.getElementById('editName').value.trim();
+        const description=document.getElementById('editDescription').value.trim();
+        const photoUrl=document.getElementById('editPhotoUrl').value.trim();
+        
+        if(!name) {
+            document.getElementById('editName').focus();
+            return;
+        }
+        
+        if(currentUser) {
+            currentUser.name=name;
+            currentUser.description=description;
+            currentUser.photoUrl=photoUrl;
+            
+            const session={
+                name:currentUser.name,
+                country:currentUser.country,
+                via:currentUser.via||'manual',
+                description:currentUser.description,
+                photoUrl:currentUser.photoUrl,
+                expiresAt:Date.now()+(30*24*60*60*1000)
+            };
+            localStorage.setItem('gps_user',JSON.stringify(session));
+            
+            updateNavForLogin();
+            document.getElementById('profileModal').classList.remove('open');
+            document.body.style.overflow='';
+        }
+    }
+    document.getElementById('profileModal').addEventListener('click',function(e){if(e.target===this)closeProfileModalDirect();});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeProfileModalDirect();});
 
     // ── TRANSLATION ENGINE ─────────────────────────
     const langData = {
