@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlobalProblemSolvers | Otabek</title>
-    <meta name="description" content="GlobalProblemSolvers — a crowdsourced platform where people worldwide submit solutions to the 10 biggest global challenges.">
+    <title>GlobySolve | Otabek</title>
+    <meta name="description" content="GlobySolve — a crowdsourced platform where people worldwide submit solutions to the 10 biggest global challenges.">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Baxtiyorov Otabek">
     <link rel="canonical" href="https://yourwebsite.com/">
-    <meta property="og:title" content="GlobalProblemSolvers | Crowdsourced Solutions">
+    <meta property="og:title" content="GlobySolve | Crowdsourced Solutions">
     <meta property="og:description" content="Submit your ideas to solve Climate Change, Hunger, Inequality and 7 more global crises.">
     <meta property="og:type" content="website">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
@@ -152,9 +152,8 @@
     <header id="home">
         <div class="hero-overlay"></div>
         <nav>
-            <div class="logo-container">
-                <i class="fas fa-globe-americas earth-logo"></i>
-                <h1 class="main-title"><span class="red-letter">G</span>lobal<span class="red-letter">P</span>roblem<span class="red-letter">S</span>olvers</h1>
+<div class="logo-container">
+                <h1 class="main-title"><span class="globy-text">Gl</span><span class="globy-o1"><svg xmlns="http://www.w3.org/2000/svg" width="1.2rem" height="1.2rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="globe-spin-icon"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span><span class="globy-s">by</span><span class="globy-o2">S</span>olve</h1>
             </div>
             <button class="hamburger" id="hamburger" aria-label="Toggle menu" onclick="toggleMobileNav()">
                 <span></span><span></span><span></span>
@@ -420,7 +419,7 @@
         </div>
     </section>
 
-    <footer><p class="footer-text">© 2026 GlobalProblemSolvers | Created by Baxtiyorov Otabek</p></footer>
+    <footer><p class="footer-text">© 2026 GlobySolve | Created by Baxtiyorov Otabek</p></footer>
 
     <!-- AI MODAL -->
     <div class="ai-modal-overlay" id="aiModal" onclick="closeAiModal(event)">
@@ -460,6 +459,26 @@
     function toggleMenu(menuId) { const menu=document.getElementById(menuId),other=menuId==='themeMenu'?'langMenu':'themeMenu'; document.getElementById(other).classList.remove('show'); menu.classList.toggle('show'); }
     window.onclick = e => { if(!e.target.matches('.theme-btn')&&!e.target.closest('.theme-btn')) document.querySelectorAll('.theme-dropdown-content').forEach(d=>d.classList.remove('show')); };
     function setTheme(t) { const b=document.body; if(t==='light'){b.classList.add('light-mode');b.classList.remove('dark-mode');}else if(t==='dark'){b.classList.add('dark-mode');b.classList.remove('light-mode');}else{window.matchMedia('(prefers-color-scheme:dark)').matches?b.classList.add('dark-mode'):b.classList.add('light-mode');} }
+
+    // Globe rotation on scroll
+    (function() {
+        const icons = document.querySelectorAll('.globe-spin-icon');
+        let lastScrollY = window.scrollY;
+        let rotation = 0;
+        
+        window.addEventListener('scroll', function() {
+            const currentScrollY = window.scrollY;
+            const delta = currentScrollY - lastScrollY;
+            
+            if (Math.abs(delta) > 0) {
+                rotation += delta * 0.5;
+                icons.forEach(icon => {
+                    icon.style.transform = `rotate(${rotation}deg)`;
+                });
+            }
+            lastScrollY = currentScrollY;
+        }, { passive: true });
+    })();
 
     // ── LOGIN ──────────────────────────────────────
     let isLoggedIn=false, currentUser=null;
@@ -624,9 +643,9 @@
             hero:['Solutions from the people.','Crowdsourcing for a better planet.','Your ideas can change the world.'],
             exploreBtn:"Explore Challenges", sectionTitle:"10 Global Challenges",
             labels:["Causes","Effects","Submit"], placeholders:["Your Gmail","Your Solution..."],
-            about:{title:"About GPS",v_title:"The Vision",v_text:"GlobalProblemSolvers is an open-source hub for innovation. We believe the internet allows us to bypass borders and connect the world's brightest minds to the world's deepest crises.",c_title:"The Creator",c_text1:"I am Baxtiyorov Otabek, a student at the Presidential School. I use software engineering to build tools that tackle ten global challenges and inspire bold action for our planet.",c_text2:"I am planning to expand this project to include more global problems and solutions."},
+            about:{title:"About GPS",v_title:"The Vision",v_text:"GlobySolve is an open-source hub for innovation. We believe the internet allows us to bypass borders and connect the world's brightest minds to the world's deepest crises.",c_title:"The Creator",c_text1:"I am Baxtiyorov Otabek, a student at the Presidential School. I use software engineering to build tools that tackle ten global challenges and inspire bold action for our planet.",c_text2:"I am planning to expand this project to include more global problems and solutions."},
             contact:{title:"Join the Movement",gmail:"Gmail",telegram:"Telegram"},
-            footer:"© 2026 GlobalProblemSolvers | Created by Baxtiyorov Otabek",
+            footer:"© 2026 GlobySolve | Created by Baxtiyorov Otabek",
             donation:{title:"Support the Mission 💚",subtitle:"GPS is free for everyone, forever. A small contribution helps a 13-year-old developer from Uzbekistan keep building.",tiers:[{name:"Buy a Coffee",amount:"$3",desc:"Fuel one coding session!",btn:"Donate $3"},{name:"Supporter",amount:"$10",desc:"Help keep GPS online for a month!",btn:"Donate $10"},{name:"Champion",amount:"$25",desc:"Sponsor a new problem category!",btn:"Donate $25"},{name:"Hero",amount:"$50+",desc:"Fund AI features and global outreach.",btn:"Donate $50+"}],boxText:"All donations go to server costs and future development. Every dollar counts — thank you! 🙏",kofiBtn:"Support on Ko-fi",popular:"⭐ Most Popular"},
             kofiFloat:"Support GPS ☕", aiBtn:"Evaluate with AI",
             problems:[{t:"Climate Change",c:"Greenhouse gas emissions and fossil fuel reliance.",e:"Rising temperatures and extreme weather."},{t:"Global Hunger",c:"Poverty, war, and food waste.",e:"Chronic malnutrition and health crises."},{t:"Access To Education",c:"Financial barriers and lack of infrastructure.",e:"Limited skills and lifelong poverty cycles."},{t:"Water Scarcity",c:"Industrial pollution and droughts.",e:"Spread of diseases and crop failure."},{t:"Air Pollution",c:"Vehicle emissions and industrial smoke.",e:"Breathing illnesses and ozone damage."},{t:"Deforestation",c:"Agricultural expansion and logging.",e:"Wildlife extinction and climate imbalance."},{t:"Ocean Plastic",c:"Over-production of single-use plastics.",e:"Toxic oceans and marine death."},{t:"Healthcare Access",c:"Economic inequality and rural distance.",e:"Untreated illness and lower life expectancy."},{t:"Corruption",c:"Bribery and lack of transparency.",e:"Economic stagnation and social injustice."},{t:"Gender Inequality",c:"Social norms and unequal opportunities.",e:"Reduced growth and human rights violations."}]
@@ -636,9 +655,9 @@
             hero:["Xalqdan yechimlar.","Sayyoramiz uchun kraudsorsing.","Sizning g'oyangiz dunyoni o'zgartiradi."],
             exploreBtn:"Muammolarni ko'rish",sectionTitle:"10 ta Global Muammo",
             labels:["Sabablar","Oqibatlar","Yuborish"],placeholders:["Sizning Gmailingiz","Sizning yechimingiz..."],
-            about:{title:"GPS Haqida",v_title:"Maqsad",v_text:"GlobalProblemSolvers - innovatsiyalar uchun ochiq markazdir.",c_title:"Yaratuvchi",c_text1:"Men Baxtiyorov Otabek, Prezident maktabi o'quvchisiman.",c_text2:"Bu loyihani kengaytirishni rejalashtirmoqdaman."},
+            about:{title:"GPS Haqida",v_title:"Maqsad",v_text:"GlobySolve - innovatsiyalar uchun ochiq markazdir.",c_title:"Yaratuvchi",c_text1:"Men Baxtiyorov Otabek, Prezident maktabi o'quvchisiman.",c_text2:"Bu loyihani kengaytirishni rejalashtirmoqdaman."},
             contact:{title:"Harakatga qo'shiling",gmail:"Gmail",telegram:"Telegram"},
-            footer:"© 2026 GlobalProblemSolvers | Baxtiyorov Otabek tomonidan yaratilgan",
+            footer:"© 2026 GlobySolve | Baxtiyorov Otabek tomonidan yaratilgan",
             donation:{title:"Missiyani qo'llab-quvvatlang 💚",subtitle:"GPS hamma uchun bepul.",tiers:[{name:"Qahva",amount:"$3",desc:"Bir kodlash seansini moliyalashtiring!",btn:"$3 xayriya"},{name:"Qo'llovchi",amount:"$10",desc:"GPS ni bir oy onlayn ushlab turing!",btn:"$10 xayriya"},{name:"Chempion",amount:"$25",desc:"Yangi muammo kategoriyasiga homiylik!",btn:"$25 xayriya"},{name:"Qahramon",amount:"$50+",desc:"AI va global rivojlanish.",btn:"$50+ xayriya"}],boxText:"Barcha xayriyalar server xarajatlari va GPS rivojlanishiga sarflanadi. Rahmat! 🙏",kofiBtn:"Ko-fi da qo'llab-quvvatlang",popular:"⭐ Eng mashhur"},
             kofiFloat:"GPS ni qo'llab-quvvatlang ☕",aiBtn:"AI bilan baholash",
             problems:[{t:"Iqlim O'zgarishi",c:"Issiqxona gazlari.",e:"Harorat ko'tarilishi."},{t:"Global Ochlik",c:"Kambag'allik, urush.",e:"Surunkali to'yib ovqatlanmaslik."},{t:"Ta'limga Yo'l",c:"Moliyaviy to'siqlar.",e:"Kambag'allik tsikli."},{t:"Suv Tanqisligi",c:"Sanoat ifloslanishi.",e:"Kasalliklar tarqalishi."},{t:"Havo Ifloslanishi",c:"Avtomobil tutunlari.",e:"Nafas olish kasalliklari."},{t:"O'rmonlar Kesilishi",c:"Qishloq xo'jaligi.",e:"Yovvoyi tabiat yo'qolishi."},{t:"Okean Plastiklari",c:"Plastik ishlab chiqarish.",e:"Okean zaharlanishi."},{t:"Tibbiy Xizmat",c:"Iqtisodiy tengsizlik.",e:"Davolanmagan kasalliklar."},{t:"Korrupsiya",c:"Pora olish.",e:"Iqtisodiy turg'unlik."},{t:"Gender Tengsizligi",c:"Ijtimoiy normalar.",e:"Inson huquqlari buzilishi."}]
@@ -648,9 +667,9 @@
             hero:["Решения от людей.","Краудсорсинг для планеты.","Ваши идеи меняют мир."],
             exploreBtn:"Исследовать задачи",sectionTitle:"10 Глобальных Проблем",
             labels:["Причины","Следствия","Отправить"],placeholders:["Ваш Gmail","Ваше решение..."],
-            about:{title:"О проекте GPS",v_title:"Видение",v_text:"GlobalProblemSolvers — это хаб инноваций.",c_title:"Создатель",c_text1:"Я Бахтиёров Отабек, ученик Президентской школы.",c_text2:"Планирую расширить проект."},
+            about:{title:"О проекте GPS",v_title:"Видение",v_text:"GlobySolve — это хаб инноваций.",c_title:"Создатель",c_text1:"Я Бахтиёров Отабек, ученик Президентской школы.",c_text2:"Планирую расширить проект."},
             contact:{title:"Присоединяйтесь",gmail:"Почта",telegram:"Телеграм"},
-            footer:"© 2026 GlobalProblemSolvers | Создано Бахтиёровым Отабеком",
+            footer:"© 2026 GlobySolve | Создано Бахтиёровым Отабеком",
             donation:{title:"Поддержите миссию 💚",subtitle:"GPS бесплатен для всех.",tiers:[{name:"Кофе",amount:"$3",desc:"Оплатите сессию разработки!",btn:"Донат $3"},{name:"Сторонник",amount:"$10",desc:"Держите GPS онлайн месяц!",btn:"Донат $10"},{name:"Чемпион",amount:"$25",desc:"Спонсируйте новую категорию!",btn:"Донат $25"},{name:"Герой",amount:"$50+",desc:"Финансируйте ИИ и развитие.",btn:"Донат $50+"}],boxText:"Спасибо! 🙏",kofiBtn:"Поддержать на Ko-fi",popular:"⭐ Популярнее всего"},
             kofiFloat:"Поддержать GPS ☕",aiBtn:"Оценить с ИИ",
             problems:[{t:"Климат",c:"Выбросы газов.",e:"Глобальное потепление."},{t:"Голод",c:"Бедность, войны.",e:"Хроническое недоедание."},{t:"Образование",c:"Барьеры.",e:"Цикл бедности."},{t:"Вода",c:"Промышленность.",e:"Болезни."},{t:"Воздух",c:"Выхлопы.",e:"Болезни легких."},{t:"Леса",c:"Вырубка.",e:"Исчезновение видов."},{t:"Пластик",c:"Перепроизводство.",e:"Гибель океана."},{t:"Медицина",c:"Неравенство.",e:"Низкая жизнь."},{t:"Коррупция",c:"Взятки.",e:"Застой."},{t:"Гендер",c:"Социальные нормы.",e:"Нарушение прав."}]
@@ -660,9 +679,9 @@
             hero:["Xalıqtan sheshimler.","Planetamız ushın ideyalar.","Siziń g'oyańız dúnyanı ózgertedi."],
             exploreBtn:"Mashqalalardı kóriw",sectionTitle:"10 Global Mashqala",
             labels:["Sebepter","Aqıbetler","Jiberiw"],placeholders:["Siziń Gmailıńız","Siziń sheshimińiz..."],
-            about:{title:"GPS Haqqında",v_title:"Maqset",v_text:"GlobalProblemSolvers - innovatsiyalar ushın ashıq oray.",c_title:"Yaratıwshı",c_text1:"Men Baxtiyorov Otabek, Prezident mektebi oquvshısıman.",c_text2:"Bul loyihanı keńeytiw niyetindemen."},
+            about:{title:"GPS Haqqında",v_title:"Maqset",v_text:"GlobySolve - innovatsiyalar ushın ashıq oray.",c_title:"Yaratıwshı",c_text1:"Men Baxtiyorov Otabek, Prezident mektebi oquvshısıman.",c_text2:"Bul loyihanı keńeytiw niyetindemen."},
             contact:{title:"Háreketke qosılıń",gmail:"Gmail",telegram:"Telegram"},
-            footer:"© 2026 GlobalProblemSolvers | Baxtiyorov Otabek tárepinen jaratılǵan",
+            footer:"© 2026 GlobySolve | Baxtiyorov Otabek tárepinen jaratılǵan",
             donation:{title:"Missiyani qollap-quwwatlań 💚",subtitle:"GPS hámme ushın tegin.",tiers:[{name:"Qáhwa",amount:"$3",desc:"Bir kodlaw seansın maliyelestiriń!",btn:"$3 xayriya"},{name:"Qollawshı",amount:"$10",desc:"GPS ti bir ay onlayn ushlab turıń!",btn:"$10 xayriya"},{name:"Chempion",amount:"$25",desc:"Jańa mashqala kategoriyasına homiylik!",btn:"$25 xayriya"},{name:"Qahırman",amount:"$50+",desc:"AI hám global rawajlanıw.",btn:"$50+ xayriya"}],boxText:"Raxmet! 🙏",kofiBtn:"Ko-fi da qollap-quwwatlaw",popular:"⭐ Eń mashxur"},
             kofiFloat:"GPS ti qollań ☕",aiBtn:"AI menen bahalaw",
             problems:[{t:"Iqlım Ózgerisi",c:"Gazlar.",e:"Temperaturanıń kóteriliwi."},{t:"Global Asharshılıq",c:"Kambaǵallıq.",e:"Malnutritsiya."},{t:"Bilimge Jol",c:"Tosqınlıqlar.",e:"Kambaǵallıq tsikli."},{t:"Suw Tanqıslıǵı",c:"Bulyanıw.",e:"Kesellikler."},{t:"Hawa Buljanıwı",c:"Tútinler.",e:"Dem alıw kesellikleri."},{t:"Orman Kesiliwi",c:"Tereklerdi kesiw.",e:"Jabayı tábiattıń joqlıǵı."},{t:"Okean Plastikleri",c:"Plastik shıǵındı.",e:"Teńiz haywanları ólimi."},{t:"Medicinalıq Xızmet",c:"Teńsizlik.",e:"Keselliklerdiń kóbeyiwi."},{t:"Korrupsiya",c:"Para alıw.",e:"Adalatsızlıq."},{t:"Gender Teńsizligi",c:"Teń emes imkan.",e:"Huqıq buzılıwı."}]
@@ -712,7 +731,7 @@
     async function evaluateSolution(problem,solution){
         const texts=['Analysing your solution...','Checking feasibility...','Evaluating global impact...','Generating feedback...'];
         let li=0;const iv=setInterval(()=>{li=(li+1)%texts.length;const el=document.getElementById('aiLoadingText');if(el)el.textContent=texts[li];},1400);
-        const prompt=`You are an expert evaluator for GlobalProblemSolvers.\n\nEvaluate this solution for: "${problem}"\n\nSolution:\n"""\n${solution}\n"""\n\nRespond ONLY with valid JSON:\n{"overallScore":<1-10>,"verdict":"<Poor|Below Average|Average|Good|Excellent>","summary":"<1-2 sentences>","impact":<1-10>,"feasibility":<1-10>,"innovation":<1-10>,"strengths":["...","..."],"weaknesses":["...","..."],"suggestions":["...","...","..."]}`;
+        const prompt=`You are an expert evaluator for GlobySolve.\n\nEvaluate this solution for: "${problem}"\n\nSolution:\n"""\n${solution}\n"""\n\nRespond ONLY with valid JSON:\n{"overallScore":<1-10>,"verdict":"<Poor|Below Average|Average|Good|Excellent>","summary":"<1-2 sentences>","impact":<1-10>,"feasibility":<1-10>,"innovation":<1-10>,"strengths":["...","..."],"weaknesses":["...","..."],"suggestions":["...","...","..."]}`;
         try{
             if(!AI_API_KEY||AI_API_KEY==='YOUR_ANTHROPIC_API_KEY_HERE')throw new Error('NO_KEY');
             const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':AI_API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:800,messages:[{role:'user',content:prompt}]})});

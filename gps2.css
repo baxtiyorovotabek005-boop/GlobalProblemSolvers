@@ -56,14 +56,27 @@ nav {
     border-bottom: 1px solid rgba(100, 255, 218, 0.1);
 }
 
-.logo-container { display: flex; align-items: center; }
-.earth-logo {
-    font-size: 2.5rem;
+.logo-container { display: flex; align-items: center; gap: 10px; }
+.globe-spin-icon {
     color: var(--accent);
-    margin-right: 15px;
-    animation: globeRotate 10s linear infinite;
+    transition: transform 0.1s ease-out;
 }
-@keyframes globeRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.globy-text { font-weight: 900; }
+.globy-o1 {
+    display: inline-flex;
+    align-items: center;
+    color: var(--accent);
+    margin-left: -2px;
+}
+.globy-o1 svg {
+    width: 1.3rem;
+    height: 1.3rem;
+}
+.globy-s { font-weight: 900; }
+.globy-o2 {
+    color: var(--accent);
+    font-weight: 900;
+}
 
 .main-title { font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase; }
 .red-letter { color: var(--gps-aqua); font-weight: 900; }

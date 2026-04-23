@@ -1,5 +1,5 @@
 {
-  "name": "globalproblemsolvers",
+  "name": "globysolve",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -279,14 +279,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/baxtiyorovotabek005-boop/GlobalProblemSolvers.git"
+    "url": "git+https://github.com/baxtiyorovotabek005-boop/GlobySolve.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/baxtiyorovotabek005-boop/GlobalProblemSolvers/issues"
+    "url": "https://github.com/baxtiyorovotabek005-boop/GlobySolve/issues"
   },
-  "homepage": "https://github.com/baxtiyorovotabek005-boop/GlobalProblemSolvers#readme"
+  "homepage": "https://github.com/baxtiyorovotabek005-boop/GlobySolve#readme"
 }
