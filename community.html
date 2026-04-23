@@ -258,23 +258,13 @@
     <div class="fl-text">Global<span>Problem</span>Solvers</div>
     <div class="fl-ring"></div>
     <div class="fl-sub">Community Hub</div>
-    <button onclick="dismissLoadingScreen()" style="margin-top:18px;background:rgba(100,255,218,0.1);border:1px solid rgba(100,255,218,0.35);color:#64ffda;padding:10px 30px;border-radius:50px;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;letter-spacing:1px;transition:0.2s;" onmouseover="this.style.background='rgba(100,255,218,0.2)'" onmouseout="this.style.background='rgba(100,255,218,0.1)'">
+    <button onclick="forceEnterCommunity()" style="margin-top:18px;background:rgba(100,255,218,0.1);border:1px solid rgba(100,255,218,0.35);color:#64ffda;padding:10px 30px;border-radius:50px;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;letter-spacing:1px;transition:0.2s;" onmouseover="this.style.background='rgba(100,255,218,0.2)'" onmouseout="this.style.background='rgba(100,255,218,0.1)'">
         Press to Enter &nbsp;→
     </button>
 </div>
 
-<!-- ════ GPS LOADING SCREEN — shown while Firebase checks auth ════ -->
-<div id="gps-loading">
-    <div class="gps-loader-logo">
-        <i class="fas fa-globe-americas"></i>
-    </div>
-    <div class="gps-loader-bar">
-        <div class="gps-loader-fill"></div>
-    </div>
-    <div class="gps-loader-text">Connecting to GPS…</div>
-</div>
-
-<div id="auth-overlay">
+<!-- Always show auth overlay for non-authenticated users -->
+<div id="auth-overlay" style="display:flex;">
     <div class="auth-box">
         <div class="auth-globe"><i class="fas fa-globe-americas"></i></div>
         <h2>Enter the <span>Hub</span></h2>
@@ -628,8 +618,24 @@ function dismissLoadingScreen(callback) {
     }, 500);
 }
 
-// ── AUTO-DISMISS: if Firebase takes too long on Netlify, dismiss after 3s ──
-setTimeout(() => dismissLoadingScreen(), 3000);
+// ── AUTO-DISMISS: if Firebase takes too long, dismiss after 2s ──
+setTimeout(() => dismissLoadingScreen(), 2000);
+
+// Manual dismiss button - always visible if needed
+window.forceEnterCommunity = function() {
+    dismissLoadingScreen();
+    // Force auth overlay to show for login
+    document.getElementById('auth-overlay').style.display = 'flex';
+    currentUser = null;
+    myDisplayName = '';
+    
+    // Reset button state
+    const btn = document.getElementById('auth-submit-btn');
+    if(btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-arrow-right"></i> <span id="auth-btn-label">Sign In</span>';
+    }
+}
 
 auth.onAuthStateChanged(user => {
     if (user) {

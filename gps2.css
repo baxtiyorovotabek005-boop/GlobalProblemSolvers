@@ -1,8 +1,8 @@
 /* ========================================
-   GLOBALPROBLEMSOLVERS — MAIN STYLESHEET
-   + LOGIN SYSTEM STYLES
-   Developed by Baxtiyorov Otabek
-   ========================================
+    GLOBALPROBLEMSOLVERS — MAIN STYLESHEET
+    Professional Grade (80/20 UI Principles)
+    Developed by Baxtiyorov Otabek
+    ========================================
 */
 
 * {
@@ -10,6 +10,52 @@
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
     scroll-behavior: smooth;
+}
+
+:root {
+    /* 80/20 UI: HSL-based colors */
+    --gps-aqua:   #00e9fa;
+    --gps-red:    #ff4d4d;
+    --bg-dark:    #020c1b;
+    --bg-card:    #0a192f;
+    --text-main:  hsl(215, 20%, 85%);      /* L=85% for dark mode */
+    --text-dim:   hsl(215, 20%, 60%);    /* L=60% secondary */
+    --accent:     hsl(170, 80%, 55%);
+    --input-bg:   #020c1b;
+    --transition: all 0.3s ease;        /* Smooth theming */
+}
+
+/* Base: 14px rule */
+html {
+    font-size: 14px;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow-x: hidden;
+    line-height: 1.6;                  /* Minimum 1.5 line height */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light Mode - HSL inverted */
+body.light-mode {
+    --bg-dark:   #f5f7fa;
+    --bg-card:  #ffffff;
+    --text-main: hsl(215, 20%, 15%);      /* L=15% for light mode */
+    --text-dim:  hsl(215, 20%, 45%);    /* L=45% secondary */
+    --input-bg:  #e8edf5;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Typography: Headings use Plus Jakarta Sans */
+h1, h2, h3, h4, h5, h6,
+.main-title, .section-title,
+.login-modal-title, .login-step-title,
+.p-title, .vision-title, .creator-title,
+.donation-tier .tier-name, .profile-modal-title,
+.ai-modal-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 :root {
@@ -218,6 +264,18 @@ header {
 }
 .cta-btn:hover { background: rgba(100,255,218,0.1); transform: translateY(-5px); box-shadow: 0 10px 20px -10px var(--accent); }
 
+.hero-btns {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.hero-community {
+    background: rgba(100,255,218,0.08);
+    border-color: rgba(100,255,218,0.4);
+}
+
 /* =============================================
    DROPDOWNS
 ============================================= */
@@ -276,10 +334,51 @@ header {
     position: relative;
 }
 .problem-card:hover { transform: translateY(-10px); border-bottom: 4px solid var(--accent); }
-.problem-card img { width: 100%; height: 250px; object-fit: cover; transition: 0.5s; }
-.problem-card:hover img { transform: scale(1.05); }
+
+/* Image Standardization: 16:9, unified style */
+.problem-card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transition: transform 0.4s ease, filter 0.4s ease;
+    filter: grayscale(20%) brightness(0.9);
+}
+.problem-card:hover img {
+    transform: scale(1.05);
+    filter: grayscale(0%) brightness(1);
+}
 .card-content { padding: 30px; }
-.card-content h3 { font-size: 1.5rem; margin-bottom: 15px; color: white; }
+
+/* Proximity: Group Causes/Effects closer, more space from title */
+.card-content .p-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;                    /* More separation from metadata */
+    color: var(--text-main);
+    font-weight: 700;
+}
+.card-content p {
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+.card-content .label-cause,
+.card-content .label-effect {
+    font-weight: 600;
+    color: var(--accent);
+}
+.card-content .p-cause,
+.card-content .p-effect {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+/* Metadata block - grouped closer */
+.card-content > p + p {
+    margin-top: 0;                         /* Tight grouping */
+    display: block;
+}
+.card-content > p:first-of-type + p {
+    margin-top: 0;
+}
 
 /* =============================================
    FORM LOCK SYSTEM (NEW)
@@ -349,12 +448,61 @@ header {
     letter-spacing: 0.5px;
     text-align: center;
     padding: 0 15px;
+    line-height: 1.5;
+}
+
+/* Custom Tooltip: Login link styling */
+.form-lock-overlay .login-tooltip-link {
+    color: var(--accent);
+    text-decoration: underline;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.form-lock-overlay .login-tooltip-link:hover {
+    color: var(--gps-aqua);
 }
 
 /* =============================================
-   ABOUT & CONTACT
-============================================= */
-.about-flex { display: flex; gap: 50px; align-items: flex-start; margin-top: 40px; }
+    ABOUT & CONTACT - 75ch limit
+ ============================================= */
+.about-flex {
+    display: grid;
+    grid-template-columns: 280px 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    margin-top: 40px;
+}
+
+.about-card {
+    max-width: 75ch;                    /* Improved readability */
+}
+
+.about-card p,
+.vision-text,
+.creator-text {
+    max-width: 75ch;
+    line-height: 1.7;
+}
+
+@media (max-width: 1024px) {
+    .about-flex {
+        grid-template-columns: 1fr 1fr;
+    }
+    .about-img-container {
+        grid-column: 1 / -1;
+        justify-self: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-flex {
+        grid-template-columns: 1fr;
+    }
+    .about-img-container {
+        grid-column: 1;
+    }
+}
 
 .img-profile {
     width: 250px; height: 250px; border-radius: 20px;
@@ -551,6 +699,51 @@ footer {
 }
 .login-input::placeholder { color: #445577; }
 
+.optional-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.field-action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.skip-btn {
+    background: transparent;
+    border: 1px dashed rgba(100,255,218,0.3);
+    color: var(--text-dim);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+}
+.skip-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.text-dim {
+    color: var(--text-dim);
+    font-style: italic;
+}
+
+.login-link {
+    color: var(--accent);
+    text-decoration: underline;
+    font-weight: 600;
+}
+.login-link:hover {
+    color: var(--gps-aqua);
+}
+
 .login-select {
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2364ffda' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
@@ -566,6 +759,21 @@ footer {
     display: block;
     margin-top: 5px;
     min-height: 16px;
+}
+
+.login-field-error:not(:empty) {
+    animation: shakeError 0.4s ease;
+}
+
+@keyframes shakeError {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.login-input.error {
+    border-color: #ff6b6b !important;
+    box-shadow: 0 0 0 3px rgba(255,107,107,0.15);
 }
 
 /* Buttons */
@@ -745,6 +953,15 @@ footer {
 
     .login-modal-box { padding: 36px 24px; }
     .login-modal-title { font-size: 1.6rem; }
+
+    .hero-btns {
+        flex-direction: column;
+        align-items: center;
+    }
+    .hero-btns .cta-btn {
+        width: 100%;
+        max-width: 280px;
+    }
 }
 
 /* Shimmer on cards */
@@ -912,9 +1129,13 @@ footer {
     background: rgba(1,7,16,0.92);
     backdrop-filter: blur(14px);
     display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none;
+    opacity: 0;
+    pointer-events: none;
     transition: opacity 0.3s;
     padding: 20px;
+}
+.ai-modal-overlay.hidden {
+    display: none;
 }
 .ai-modal-overlay.open { opacity: 1; pointer-events: all; }
 

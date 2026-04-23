@@ -12,7 +12,7 @@
     <meta property="og:description" content="Submit your ideas to solve Climate Change, Hunger, Inequality and 7 more global crises.">
     <meta property="og:type" content="website">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="gps2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -63,9 +63,12 @@
             <div class="login-step" id="step-2">
                 <h3 class="login-step-title">Where are you from?</h3>
                 <div class="login-field-group">
-                    <label class="login-label"><i class="fas fa-phone"></i> Phone Number</label>
+                    <label class="login-label"><i class="fas fa-phone"></i> Phone Number <span class="optional-label">(Optional)</span></label>
                     <input type="tel" id="login-phone" class="login-input" placeholder="+998 90 123 45 67" autocomplete="tel">
-                    <span class="login-field-error" id="err-phone"></span>
+                    <div class="field-action-row">
+                        <span class="login-field-error" id="err-phone"></span>
+                        <button type="button" class="skip-btn" onclick="skipPhone()">Skip</button>
+                    </div>
                 </div>
                 <div class="login-field-group">
                     <label class="login-label"><i class="fas fa-flag"></i> Country</label>
@@ -76,7 +79,7 @@
                     <span class="login-field-error" id="err-country"></span>
                 </div>
                 <div class="login-btn-row">
-                    <button class="login-back-btn" onclick="goToStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button class="login-back-btn" onclick="showStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
                     <button class="login-next-btn" onclick="goToStep(3)">Continue <i class="fas fa-arrow-right"></i></button>
                 </div>
             </div>
@@ -86,7 +89,7 @@
                 <h3 class="login-step-title">Almost there!</h3>
                 <div class="login-summary-card" id="login-summary"></div>
                 <div class="login-btn-row" style="margin-top:20px">
-                    <button class="login-back-btn" onclick="goToStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button class="login-back-btn" onclick="showStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
                     <button class="login-confirm-btn" onclick="confirmLogin()"><i class="fas fa-check-circle"></i> Confirm & Join</button>
                 </div>
             </div>
@@ -199,7 +202,10 @@
         </nav>
         <div class="hero-content">
             <h2 id="typed-hero"></h2>
-            <a href="#problems" class="cta-btn hero-cta" data-aos="zoom-in">Explore Challenges</a>
+            <div class="hero-btns">
+                <a href="#problems" class="cta-btn hero-cta" data-aos="zoom-in">Explore Challenges</a>
+                <a href="community.html" class="cta-btn hero-community" data-aos="zoom-in" data-aos-delay="100">View Community</a>
+            </div>
         </div>
     </header>
 
@@ -223,7 +229,10 @@
                             <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
                             <button type="submit" class="btn p-submit">Submit</button>
                         </form>
-                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                        <div class="form-lock-overlay">
+                            <i class="fas fa-lock"></i>
+                            <span>Log in to submit your solution<br><a href="#" class="login-tooltip-link" onclick="openLoginModal(); return false;">Log in</a> now</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -241,7 +250,10 @@
                             <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
                             <button type="submit" class="btn p-submit">Submit</button>
                         </form>
-                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                        <div class="form-lock-overlay">
+                            <i class="fas fa-lock"></i>
+                            <span>Log in to submit your solution<br><a href="#" class="login-tooltip-link" onclick="openLoginModal(); return false;">Log in</a> now</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -259,7 +271,10 @@
                             <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
                             <button type="submit" class="btn p-submit">Submit</button>
                         </form>
-                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                        <div class="form-lock-overlay">
+                            <i class="fas fa-lock"></i>
+                            <span>Log in to submit your solution<br><a href="#" class="login-tooltip-link" onclick="openLoginModal(); return false;">Log in</a> now</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -277,7 +292,10 @@
                             <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
                             <button type="submit" class="btn p-submit">Submit</button>
                         </form>
-                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                        <div class="form-lock-overlay">
+                            <i class="fas fa-lock"></i>
+                            <span>Log in to submit your solution<br><a href="#" class="login-tooltip-link" onclick="openLoginModal(); return false;">Log in</a> now</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -295,7 +313,10 @@
                             <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
                             <button type="submit" class="btn p-submit">Submit</button>
                         </form>
-                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                        <div class="form-lock-overlay">
+                            <i class="fas fa-lock"></i>
+                            <span>Log in to submit your solution<br><a href="#" class="login-tooltip-link" onclick="openLoginModal(); return false;">Log in</a> now</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -313,7 +334,10 @@
                             <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
                             <button type="submit" class="btn p-submit">Submit</button>
                         </form>
-                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                        <div class="form-lock-overlay">
+                            <i class="fas fa-lock"></i>
+                            <span>Log in to submit your solution<br><a href="#" class="login-tooltip-link" onclick="openLoginModal(); return false;">Log in</a> now</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -331,7 +355,10 @@
                             <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
                             <button type="submit" class="btn p-submit">Submit</button>
                         </form>
-                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                        <div class="form-lock-overlay">
+                            <i class="fas fa-lock"></i>
+                            <span>Log in to submit your solution<br><a href="#" class="login-tooltip-link" onclick="openLoginModal(); return false;">Log in</a> now</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -349,7 +376,10 @@
                             <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
                             <button type="submit" class="btn p-submit">Submit</button>
                         </form>
-                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                        <div class="form-lock-overlay">
+                            <i class="fas fa-lock"></i>
+                            <span>Log in to submit your solution<br><a href="#" class="login-tooltip-link" onclick="openLoginModal(); return false;">Log in</a> now</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -367,7 +397,10 @@
                             <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
                             <button type="submit" class="btn p-submit">Submit</button>
                         </form>
-                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                        <div class="form-lock-overlay">
+                            <i class="fas fa-lock"></i>
+                            <span>Log in to submit your solution<br><a href="#" class="login-tooltip-link" onclick="openLoginModal(); return false;">Log in</a> now</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -385,7 +418,10 @@
                             <textarea name="solution" class="p-text" placeholder="Your Solution..." minlength="50" required></textarea>
                             <button type="submit" class="btn p-submit">Submit</button>
                         </form>
-                        <div class="form-lock-overlay" onclick="openLoginModal()"><i class="fas fa-lock"></i><span>Log in to submit your solution</span></div>
+                        <div class="form-lock-overlay">
+                            <i class="fas fa-lock"></i>
+                            <span>Log in to submit your solution<br><a href="#" class="login-tooltip-link" onclick="openLoginModal(); return false;">Log in</a> now</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -439,7 +475,7 @@
         </div>
     </section>
 
-    <footer><p class="footer-text">© 2026 GlobalProblemSolvers | Created by Baxtiyorov Otabek</p></footer>
+    <footer><p class="footer-text">&copy; <span id="footer-year"></span> GlobalProblemSolvers | Created by Baxtiyorov Otabek</p></footer>
 
     <!-- AI MODAL -->
     <div class="ai-modal-overlay" id="aiModal" onclick="closeAiModal(event)">
@@ -488,16 +524,20 @@
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLoginModal();});
 
     function goToStep(n) {
-        if(n===2){ const name=document.getElementById('login-name').value.trim(),age=parseInt(document.getElementById('login-age').value); document.getElementById('err-name').innerText=''; document.getElementById('err-age').innerText=''; let ok=true; if(name.length<2){document.getElementById('err-name').innerText='Please enter your full name (min 2 chars).';ok=false;} if(!age||age<10||age>120){document.getElementById('err-age').innerText='Enter a valid age between 10 and 120.';ok=false;} if(!ok)return; }
-        if(n===3){ const phone=document.getElementById('login-phone').value.trim(),country=document.getElementById('login-country').value; document.getElementById('err-phone').innerText=''; document.getElementById('err-country').innerText=''; let ok=true; if(phone.length<6){document.getElementById('err-phone').innerText='Enter a valid phone number.';ok=false;} if(!country){document.getElementById('err-country').innerText='Please select your country.';ok=false;} if(!ok)return; buildSummary(); }
+        if(n===2){ const name=document.getElementById('login-name').value.trim(),age=parseInt(document.getElementById('login-age').value); document.getElementById('err-name').innerText=''; document.getElementById('err-age').innerText=''; let ok=true; if(name.length<2){document.getElementById('err-name').innerText='Please enter your full name (min 2 chars).';ok=false;} if(!age||age<10||age>120){document.getElementById('err-age').innerText='Enter a valid age between 10 and 120.';ok=false;} if(!ok)return; showStep(n); }
+        if(n===3){ const country=document.getElementById('login-country').value; if(!country){document.getElementById('err-country').innerText='⚠️ Please select your country to continue.'; const sel=document.getElementById('login-country'); sel.classList.add('error'); setTimeout(()=>sel.classList.remove('error'),500); sel.focus(); return; } document.getElementById('err-country').innerText=''; buildSummary(); showStep(n); }
+    }
+    function showStep(n) {
         document.querySelectorAll('.login-step').forEach(s=>s.classList.remove('active'));
         document.querySelectorAll('.login-dot').forEach(d=>d.classList.remove('active'));
-        const t=document.getElementById('step-'+n); if(t)t.classList.add('active');
-        const dt=document.getElementById('dot-'+n); if(dt)dt.classList.add('active');
+        document.getElementById('step-'+n).classList.add('active');
+        document.getElementById('dot-'+n).classList.add('active');
     }
+    function skipPhone() { document.getElementById('login-phone').value='-'; showStep(3); buildSummary(); }
     function buildSummary() {
         const name=document.getElementById('login-name').value.trim(),age=document.getElementById('login-age').value,phone=document.getElementById('login-phone').value.trim(),country=document.getElementById('login-country').value;
-        document.getElementById('login-summary').innerHTML=`<div class="summary-row"><i class="fas fa-user"></i><span>${name}</span></div><div class="summary-row"><i class="fas fa-birthday-cake"></i><span>${age} years old</span></div><div class="summary-row"><i class="fas fa-phone"></i><span>${phone}</span></div><div class="summary-row"><i class="fas fa-flag"></i><span>${country}</span></div>`;
+        const phoneDisplay=phone&&phone!=='-'?phone:'<span class="text-dim">Not provided</span>';
+        document.getElementById('login-summary').innerHTML=`<div class="summary-row"><i class="fas fa-user"></i><span>${name}</span></div><div class="summary-row"><i class="fas fa-birthday-cake"></i><span>${age} years old</span></div><div class="summary-row"><i class="fas fa-phone"></i><span>${phoneDisplay}</span></div><div class="summary-row"><i class="fas fa-flag"></i><span>${country}</span></div>`;
     }
     function confirmLogin() { currentUser={name:document.getElementById('login-name').value.trim(),country:document.getElementById('login-country').value,description:'',photoUrl:''}; finishLogin(); }
     function finishLogin() {
@@ -705,7 +745,8 @@
         const titles=document.querySelectorAll('.p-title'),causes=document.querySelectorAll('.p-cause'),effects=document.querySelectorAll('.p-effect');
         d.problems.forEach((p,i)=>{if(titles[i])titles[i].innerText=(i+1)+'. '+p.t;if(causes[i])causes[i].innerText=p.c;if(effects[i])effects[i].innerText=p.e;});
         document.querySelector('.about-title').innerText=d.about.title; document.querySelector('.vision-title').innerText=d.about.v_title; document.querySelector('.vision-text').innerText=d.about.v_text; document.querySelector('.creator-title').innerText=d.about.c_title; document.querySelector('.creator-text-1').innerText=d.about.c_text1; document.querySelector('.creator-text-2').innerText=d.about.c_text2;
-        document.querySelector('.contact-title').innerText=d.contact.title; document.querySelector('.gmail-label').innerText=d.contact.gmail+':'; document.querySelector('.telegram-label').innerText=d.contact.telegram+':'; document.querySelector('.footer-text').innerText=d.footer;
+        document.querySelector('.contact-title').innerText=d.contact.title; document.querySelector('.gmail-label').innerText=d.contact.gmail+':'; document.querySelector('.telegram-label').innerText=d.contact.telegram+':';
+        document.getElementById('footer-year').innerText = new Date().getFullYear();
         if(d.donation){const dn=d.donation;const dt=document.querySelector('.donation-section .section-title');if(dt)dt.innerText=dn.title;const ds=document.querySelector('.donation-subtitle');if(ds)ds.innerText=dn.subtitle;document.querySelectorAll('.donation-tier').forEach((t,i)=>{if(!dn.tiers[i])return;const n=t.querySelector('.tier-name'),a=t.querySelector('.tier-amount'),d2=t.querySelector('.tier-desc'),b=t.querySelector('.tier-btn');if(n)n.innerText=dn.tiers[i].name;if(a)a.innerText=dn.tiers[i].amount;if(d2)d2.innerText=dn.tiers[i].desc;if(b)b.innerText=dn.tiers[i].btn;});const badge=document.querySelector('.tier-badge');if(badge)badge.innerText=dn.popular;const boxText=document.querySelector('.donation-kofi-box p');if(boxText)boxText.innerText=dn.boxText;const kofiBtn=document.querySelector('.kofi-big-btn');if(kofiBtn){const img=kofiBtn.querySelector('img');kofiBtn.innerHTML='';if(img)kofiBtn.appendChild(img);kofiBtn.appendChild(document.createTextNode(' '+dn.kofiBtn));}}
         const kf=document.querySelector('.kofi-float');if(kf&&d.kofiFloat){const img=kf.querySelector('img');kf.innerHTML='';if(img)kf.appendChild(img);kf.appendChild(document.createTextNode(d.kofiFloat));}
         if(d.aiBtn){document.querySelectorAll('.ai-eval-btn').forEach(b=>b.innerHTML='<span class="ai-icon">🤖</span> '+d.aiBtn);window._currentAiLabel=d.aiBtn;}
@@ -754,7 +795,10 @@
         fl('aiStrengths',r.strengths);fl('aiWeaknesses',r.weaknesses);fl('aiSuggestions',r.suggestions);
     }
 
-    document.addEventListener('DOMContentLoaded',()=>setTimeout(injectAiButtons,600));
+    document.addEventListener('DOMContentLoaded',()=>{
+        document.getElementById('year').textContent = new Date().getFullYear();
+        setTimeout(injectAiButtons,600);
+    });
     setLanguage(localStorage.getItem('gps_lang')||'en');
     restoreSession();
     setTimeout(injectAiButtons,600);
