@@ -460,7 +460,7 @@
     window.onclick = e => { if(!e.target.matches('.theme-btn')&&!e.target.closest('.theme-btn')) document.querySelectorAll('.theme-dropdown-content').forEach(d=>d.classList.remove('show')); };
     function setTheme(t) { const b=document.body; if(t==='light'){b.classList.add('light-mode');b.classList.remove('dark-mode');}else if(t==='dark'){b.classList.add('dark-mode');b.classList.remove('light-mode');}else{window.matchMedia('(prefers-color-scheme:dark)').matches?b.classList.add('dark-mode'):b.classList.add('light-mode');} }
 
-    // Globe rotation on scroll
+    // Globe rotation on scroll (horizontal 3D spin)
     (function() {
         const icons = document.querySelectorAll('.globe-spin-icon');
         let lastScrollY = window.scrollY;
@@ -473,7 +473,7 @@
             if (Math.abs(delta) > 0) {
                 rotation += delta * 0.5;
                 icons.forEach(icon => {
-                    icon.style.transform = `rotate(${rotation}deg)`;
+                    icon.style.transform = `perspective(100px) rotateY(${rotation}deg)`;
                 });
             }
             lastScrollY = currentScrollY;
