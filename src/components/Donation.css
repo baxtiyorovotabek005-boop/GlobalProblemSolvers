@@ -1,0 +1,119 @@
+.donation-section {
+  padding: 6rem 0;
+}
+
+.donation-subtitle {
+  text-align: center;
+  color: var(--text-dim);
+  max-width: 600px;
+  margin: -2rem auto 3rem;
+}
+
+.donation-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto 3rem;
+}
+
+.donation-tier {
+  background: var(--bg-card);
+  border: 1px solid rgba(100, 255, 218, 0.1);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: var(--transition);
+  position: relative;
+}
+
+.donation-tier:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+}
+
+.donation-tier.featured {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, rgba(100, 255, 218, 0.08), var(--bg-card));
+}
+
+.popular-badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--accent);
+  color: var(--bg-dark);
+  padding: 0.25rem 1rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tier-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.tier-name {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.tier-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.tier-desc {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+}
+
+.donation-tier .btn {
+  width: 100%;
+}
+
+.donation-box {
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  border: 1px solid rgba(100, 255, 218, 0.15);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.donation-box p {
+  color: var(--text-dim);
+  margin-bottom: 1.5rem;
+}
+
+.donation-box .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.donation-box img {
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 1024px) {
+  .donation-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .donation-grid {
+    grid-template-columns: 1fr;
+  }
+}

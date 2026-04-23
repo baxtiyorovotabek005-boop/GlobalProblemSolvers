@@ -1,0 +1,98 @@
+.xp-display {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(100, 255, 218, 0.08);
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  border-radius: 50px;
+}
+
+.xp-level {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.level-badge {
+  background: var(--accent);
+  color: var(--bg-dark);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.level-title {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.xp-progress {
+  flex: 1;
+  min-width: 150px;
+}
+
+.xp-bar {
+  height: 6px;
+  background: rgba(100, 255, 218, 0.15);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--gps-aqua));
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.xp-numbers {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  margin-top: 0.25rem;
+}
+
+.xp-stats {
+  display: flex;
+  gap: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.stat-item i {
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+
+.stat-value {
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.stat-label {
+  color: var(--text-dim);
+  font-size: 0.7rem;
+}
+
+@media (max-width: 768px) {
+  .xp-display {
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 12px;
+    padding: 1rem;
+  }
+  
+  .xp-progress {
+    order: 3;
+    min-width: 100%;
+  }
+}

@@ -1,0 +1,206 @@
+.login-modal {
+  background: linear-gradient(145deg, #0d1f3c, #071221);
+  border: 1px solid rgba(100, 255, 218, 0.15);
+  border-radius: 20px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-dim);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.close-btn:hover {
+  background: rgba(255, 77, 77, 0.15);
+  color: var(--gps-red);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.login-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(0, 233, 250, 0.15), rgba(100, 255, 218, 0.1));
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.login-icon i {
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+.login-header h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.login-header h2 span {
+  color: var(--accent);
+}
+
+.login-header p {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.login-progress {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.login-progress .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: var(--transition);
+}
+
+.login-progress .dot.active {
+  width: 24px;
+  border-radius: 4px;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.login-step {
+  animation: fadeIn 0.3s ease;
+}
+
+.login-step h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.field {
+  margin-bottom: 1rem;
+}
+
+.field label {
+  display: block;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.field label i {
+  margin-right: 0.5rem;
+  color: var(--accent);
+}
+
+.field label .optional {
+  color: var(--text-dim);
+  font-weight: 400;
+  font-size: 0.7rem;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
+}
+
+.field .error {
+  display: block;
+  color: #ff6b6b;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.field .skip-btn {
+  background: transparent;
+  border: 1px dashed rgba(100, 255, 218, 0.3);
+  color: var(--text-dim);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: var(--transition);
+}
+
+.field .skip-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.login-step .btn {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.btn-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-row .btn {
+  flex: 1;
+}
+
+.summary {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(100, 255, 218, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.summary-row:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.summary-row i {
+  color: var(--accent);
+  width: 16px;
+  text-align: center;
+}

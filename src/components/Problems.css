@@ -1,0 +1,193 @@
+.problems-section {
+  background: linear-gradient(to bottom, var(--bg-dark), rgba(10,25,47,0.3), var(--bg-dark));
+  padding: 6rem 0;
+}
+
+.problems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.problem-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(100, 255, 218, 0.1);
+  transition: var(--transition);
+}
+
+.problem-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent);
+}
+
+.problem-image {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.problem-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+  filter: grayscale(20%) brightness(0.9);
+}
+
+.problem-card:hover .problem-image img {
+  transform: scale(1.05);
+  filter: grayscale(0%) brightness(1);
+}
+
+.problem-content {
+  padding: 1.5rem;
+}
+
+.problem-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.problem-meta {
+  margin-bottom: 1.5rem;
+}
+
+.problem-meta p {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.problem-meta strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.problem-meta .cause,
+.problem-meta .effect {
+  color: var(--text-dim);
+}
+
+/* Form Lock */
+.form-lock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  background: rgba(2, 12, 27, 0.8);
+  border: 1px dashed rgba(100, 255, 218, 0.25);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.form-lock:hover {
+  background: rgba(2, 12, 27, 0.9);
+  border-color: var(--accent);
+}
+
+.form-lock i {
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+.form-lock span {
+  color: var(--text-dim);
+  font-size: 0.875rem;
+}
+
+/* Solution Form */
+.solution-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.solution-form input,
+.solution-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--input-bg);
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  border-radius: 8px;
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.solution-form input:focus,
+.solution-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
+}
+
+.solution-form input::placeholder,
+.solution-form textarea::placeholder {
+  color: var(--text-dim);
+}
+
+.solution-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.solution-form .btn {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* Success Message */
+.submission-success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background: rgba(100, 255, 218, 0.1);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  color: var(--accent);
+  animation: fadeIn 0.5s ease;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .problems-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .problems-section {
+    padding: 4rem 0;
+  }
+
+  .problems-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .problem-content {
+    padding: 1.25rem;
+  }
+
+  .problem-title {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .problems-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .problem-meta p {
+    font-size: 0.85rem;
+  }
+}
