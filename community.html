@@ -193,12 +193,6 @@
         @keyframes spinA { to{transform:rotate(360deg)} }
         /* LOADING SCREEN — shown immediately while Firebase checks auth */
         #gps-loading {
-            position:fixed; inset:0; background:var(--dark);
-            z-index:99999; display:flex; flex-direction:column;
-            align-items:center; justify-content:center; gap:20px;
-            transition: opacity 0.5s ease;
-        }
-        #gps-loading {
             position: fixed; inset: 0;
             background: #020c1b;
             z-index: 99998;
@@ -207,6 +201,7 @@
             align-items: center;
             justify-content: center;
             gap: 20px;
+            transition: opacity 0.5s ease;
         }
         #gps-loading.show {
             display: flex;
@@ -731,6 +726,7 @@ function checkSession() {
             currentUser   = null;
             myDisplayName = '';
             dismissLoadingScreen(() => {
+                hideLoadingScreen();
                 document.getElementById('auth-overlay').style.display = 'flex';
             });
             document.getElementById('dash-user-chip').style.display = 'none';
@@ -931,7 +927,6 @@ async function sendMessage() {
         console.error('Firestore write error:', err);
         addSystemMsg('⚠️ Message not saved. Check Firestore rules — make sure TEST MODE is on.');
     }
-}
 }
 
 // ══════════════════════════════════════════════════════════════
