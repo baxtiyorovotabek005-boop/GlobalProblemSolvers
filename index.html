@@ -160,9 +160,9 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home"     class="nav-home">Home</a></li>
                 <li><a href="#problems" class="nav-probs">Problems</a></li>
-                <li><a href="#about"    class="nav-about">About</a></li>
                 <li><a href="#contact"  class="nav-contact">Contact</a></li>
                 <li><a href="community.html" class="nav-community">Community</a></li>
+                <li><a href="community.html" class="nav-streak" id="streak-link"><i class="fas fa-bolt" style="color:#ffd700;"></i> <span id="streak-count">0</span></a></li>
             </ul>
             <div class="nav-controls" style="display:flex;gap:10px;align-items:center;">
                 <div id="nav-login-area" style="display:flex;align-items:center;">
@@ -637,7 +637,7 @@
     // ── TRANSLATION ENGINE ─────────────────────────
     const langData = {
         'en': {
-            nav:["Home","Problems","About","Contact","Community"],
+            nav:["Home","Problems","Contact","Community"],
             hero:['Solutions from the people.','Crowdsourcing for a better planet.','Your ideas can change the world.'],
             exploreBtn:"Explore Challenges", sectionTitle:"10 Global Challenges",
             labels:["Causes","Effects","Submit"], placeholders:["Your Gmail","Your Solution..."],
@@ -649,7 +649,7 @@
             problems:[{t:"Climate Change",c:"Greenhouse gas emissions and fossil fuel reliance.",e:"Rising temperatures and extreme weather."},{t:"Global Hunger",c:"Poverty, war, and food waste.",e:"Chronic malnutrition and health crises."},{t:"Access To Education",c:"Financial barriers and lack of infrastructure.",e:"Limited skills and lifelong poverty cycles."},{t:"Water Scarcity",c:"Industrial pollution and droughts.",e:"Spread of diseases and crop failure."},{t:"Air Pollution",c:"Vehicle emissions and industrial smoke.",e:"Breathing illnesses and ozone damage."},{t:"Deforestation",c:"Agricultural expansion and logging.",e:"Wildlife extinction and climate imbalance."},{t:"Ocean Plastic",c:"Over-production of single-use plastics.",e:"Toxic oceans and marine death."},{t:"Healthcare Access",c:"Economic inequality and rural distance.",e:"Untreated illness and lower life expectancy."},{t:"Corruption",c:"Bribery and lack of transparency.",e:"Economic stagnation and social injustice."},{t:"Gender Inequality",c:"Social norms and unequal opportunities.",e:"Reduced growth and human rights violations."}]
         },
         'uz': {
-            nav:["Bosh sahifa","Muammolar","Biz haqimizda","Aloqa","Hamjamiyat"],
+            nav:["Bosh sahifa","Muammolar","Aloqa","Hamjamiyat"],
             hero:["Xalqdan yechimlar.","Sayyoramiz uchun kraudsorsing.","Sizning g'oyangiz dunyoni o'zgartiradi."],
             exploreBtn:"Muammolarni ko'rish",sectionTitle:"10 ta Global Muammo",
             labels:["Sabablar","Oqibatlar","Yuborish"],placeholders:["Sizning Gmailingiz","Sizning yechimingiz..."],
@@ -661,7 +661,7 @@
             problems:[{t:"Iqlim O'zgarishi",c:"Issiqxona gazlari.",e:"Harorat ko'tarilishi."},{t:"Global Ochlik",c:"Kambag'allik, urush.",e:"Surunkali to'yib ovqatlanmaslik."},{t:"Ta'limga Yo'l",c:"Moliyaviy to'siqlar.",e:"Kambag'allik tsikli."},{t:"Suv Tanqisligi",c:"Sanoat ifloslanishi.",e:"Kasalliklar tarqalishi."},{t:"Havo Ifloslanishi",c:"Avtomobil tutunlari.",e:"Nafas olish kasalliklari."},{t:"O'rmonlar Kesilishi",c:"Qishloq xo'jaligi.",e:"Yovvoyi tabiat yo'qolishi."},{t:"Okean Plastiklari",c:"Plastik ishlab chiqarish.",e:"Okean zaharlanishi."},{t:"Tibbiy Xizmat",c:"Iqtisodiy tengsizlik.",e:"Davolanmagan kasalliklar."},{t:"Korrupsiya",c:"Pora olish.",e:"Iqtisodiy turg'unlik."},{t:"Gender Tengsizligi",c:"Ijtimoiy normalar.",e:"Inson huquqlari buzilishi."}]
         },
         'ru': {
-            nav:["Главная","Проблемы","О нас","Контакт","Сообщество"],
+            nav:["Главная","Проблемы","Контакт","Сообщество"],
             hero:["Решения от людей.","Краудсорсинг для планеты.","Ваши идеи меняют мир."],
             exploreBtn:"Исследовать задачи",sectionTitle:"10 Глобальных Проблем",
             labels:["Причины","Следствия","Отправить"],placeholders:["Ваш Gmail","Ваше решение..."],
@@ -673,7 +673,7 @@
             problems:[{t:"Климат",c:"Выбросы газов.",e:"Глобальное потепление."},{t:"Голод",c:"Бедность, войны.",e:"Хроническое недоедание."},{t:"Образование",c:"Барьеры.",e:"Цикл бедности."},{t:"Вода",c:"Промышленность.",e:"Болезни."},{t:"Воздух",c:"Выхлопы.",e:"Болезни легких."},{t:"Леса",c:"Вырубка.",e:"Исчезновение видов."},{t:"Пластик",c:"Перепроизводство.",e:"Гибель океана."},{t:"Медицина",c:"Неравенство.",e:"Низкая жизнь."},{t:"Коррупция",c:"Взятки.",e:"Застой."},{t:"Гендер",c:"Социальные нормы.",e:"Нарушение прав."}]
         },
         'qr': {
-            nav:["Bas bet","Mashqalalar","Biz haqqımızda","Baylanıs","Jámiyet"],
+            nav:["Bas bet","Mashqalalar","Baylanıs","Jámiyet"],
             hero:["Xalıqtan sheshimler.","Planetamız ushın ideyalar.","Siziń g'oyańız dúnyanı ózgertedi."],
             exploreBtn:"Mashqalalardı kóriw",sectionTitle:"10 Global Mashqala",
             labels:["Sebepter","Aqıbetler","Jiberiw"],placeholders:["Siziń Gmailıńız","Siziń sheshimińiz..."],
@@ -690,7 +690,7 @@
     function setLanguage(lang) {
         localStorage.setItem('gps_lang', lang);
         const d=langData[lang]; if(!d)return;
-        document.querySelector('.nav-home').innerText=d.nav[0]; document.querySelector('.nav-probs').innerText=d.nav[1]; document.querySelector('.nav-about').innerText=d.nav[2]; document.querySelector('.nav-contact').innerText=d.nav[3]; document.querySelector('.nav-community').innerText=d.nav[4];
+        document.querySelector('.nav-home').innerText=d.nav[0]; document.querySelector('.nav-probs').innerText=d.nav[1]; document.querySelector('.nav-contact').innerText=d.nav[2]; document.querySelector('.nav-community').innerText=d.nav[3];
         if(currentTyped)currentTyped.destroy();
         currentTyped=new Typed('#typed-hero',{strings:d.hero,typeSpeed:50,backSpeed:30,loop:true});
         document.querySelector('.hero-cta').innerText=d.exploreBtn;
@@ -756,6 +756,30 @@
     setLanguage(localStorage.getItem('gps_lang')||'en');
     restoreSession();
     setTimeout(injectAiButtons,600);
+
+    // ── STREAK COUNTER ─────────────────────────
+    function updateStreak() {
+        const today = new Date().toDateString();
+        const streakData = JSON.parse(localStorage.getItem('gps_streak') || '{}');
+        const lastVisit = streakData.lastVisit;
+        let streak = streakData.streak || 0;
+
+        if (lastVisit === today) {
+            // Already visited today, keep streak
+        } else {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            if (lastVisit === yesterday.toDateString()) {
+                streak++;
+            } else if (lastVisit !== today) {
+                streak = 1;
+            }
+        }
+
+        localStorage.setItem('gps_streak', JSON.stringify({lastVisit: today, streak: streak}));
+        document.getElementById('streak-count').innerText = streak;
+    }
+    updateStreak();
     </script>
 </body>
 </html>

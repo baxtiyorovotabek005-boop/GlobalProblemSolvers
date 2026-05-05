@@ -26,12 +26,15 @@
             position: fixed; inset: 0;
             background: #020c1b;
             z-index: 99999;
-            display: flex;
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 24px;
             transition: opacity 0.5s ease;
+        }
+        #firebase-loading.show {
+            display: flex;
         }
         #firebase-loading.fade-out {
             opacity: 0;
@@ -195,6 +198,19 @@
             align-items:center; justify-content:center; gap:20px;
             transition: opacity 0.5s ease;
         }
+        #gps-loading {
+            position: fixed; inset: 0;
+            background: #020c1b;
+            z-index: 99998;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        #gps-loading.show {
+            display: flex;
+        }
         #gps-loading.fade-out { opacity:0; pointer-events:none; }
         .gps-loader-logo {
             width:80px; height:80px; border-radius:50%;
@@ -258,9 +274,6 @@
     <div class="fl-text">Global<span>Problem</span>Solvers</div>
     <div class="fl-ring"></div>
     <div class="fl-sub">Community Hub</div>
-    <button onclick="dismissLoadingScreen()" style="margin-top:18px;background:rgba(100,255,218,0.1);border:1px solid rgba(100,255,218,0.35);color:#64ffda;padding:10px 30px;border-radius:50px;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;letter-spacing:1px;transition:0.2s;" onmouseover="this.style.background='rgba(100,255,218,0.2)'" onmouseout="this.style.background='rgba(100,255,218,0.1)'">
-        Press to Enter &nbsp;→
-    </button>
 </div>
 
 <!-- ════ GPS LOADING SCREEN — shown while Firebase checks auth ════ -->
@@ -273,6 +286,13 @@
     </div>
     <div class="gps-loader-text">Connecting to GPS…</div>
 </div>
+<script>
+    // Show gps-loading if user is not logged in
+    setTimeout(() => {
+        const gpsLoading = document.getElementById('gps-loading');
+        if (gpsLoading) gpsLoading.classList.add('show');
+    }, 100);
+</script>
 
 <div id="auth-overlay">
     <div class="auth-box">
@@ -617,19 +637,26 @@ function signOutUser() {
 // ══════════════════════════════════════════════════════════════
 function dismissLoadingScreen(callback) {
     const el = document.getElementById('firebase-loading');
-    if (!el || el.style.display === 'none') {
+    if (!el || !el.classList.contains('show')) {
         if (callback) callback();
         return;
     }
     el.classList.add('fade-out');
     setTimeout(() => {
-        el.style.display = 'none';
+        el.classList.remove('show');
+        el.classList.remove('fade-out');
         if (callback) callback();
     }, 500);
 }
 
-// ── AUTO-DISMISS: if Firebase takes too long on Netlify, dismiss after 3s ──
-setTimeout(() => dismissLoadingScreen(), 3000);
+// ── Show loading screen on page load ──
+document.getElementById('firebase-loading').classList.add('show');
+
+// ── AUTO-DISMISS: if Firebase takes too long on Netlify, dismiss after 5s ──
+setTimeout(() => {
+    dismissLoadingScreen();
+    hideLoadingScreen();
+}, 5000);
 
 auth.onAuthStateChanged(user => {
     if (user) {
@@ -1087,10 +1114,11 @@ function applyLang() {
 // ══════════════════════════════════════════════════════════════
 function hideLoadingScreen(callback) {
     const el = document.getElementById('gps-loading');
-    if (!el) { if (callback) callback(); return; }
+    if (!el || !el.classList.contains('show')) { if (callback) callback(); return; }
     el.classList.add('fade-out');
     setTimeout(() => {
-        el.style.display = 'none';
+        el.classList.remove('show');
+        el.classList.remove('fade-out');
         if (callback) callback();
     }, 500);
 }
