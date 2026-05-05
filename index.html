@@ -540,15 +540,53 @@
     function unlockForms() { document.querySelectorAll('.form-lock-overlay').forEach(el=>el.style.display='none'); setTimeout(injectAiButtons,300); }
     function lockForms()   { document.querySelectorAll('.form-lock-overlay').forEach(el=>el.style.display='flex'); }
 
-    function restoreSession() {
-        try {
-            const saved=localStorage.getItem('gps_user'); if(!saved)return;
-            const session=JSON.parse(saved);
-            if(session.expiresAt&&Date.now()>session.expiresAt){localStorage.removeItem('gps_user');return;}
-            currentUser={name:session.name,country:session.country,via:session.via,description:session.description||'',photoUrl:session.photoUrl||''};
-            isLoggedIn=true; updateNavForLogin(); unlockForms();
-        } catch(e){localStorage.removeItem('gps_user');}
-    }
+function restoreSession() {
+    try {
+        const saved=localStorage.getItem('gps_user'); if(!saved)return;
+        const session=JSON.parse(saved);
+        if(session.expiresAt&&Date.now()>session.expiresAt){localStorage.removeItem('gps_user');return;}
+        currentUser={name:session.name,country:session.country,via:session.via,description:session.description||'',photoUrl:session.photoUrl||''};
+        isLoggedIn=true;
+
+        // Calculate streak
+        const today = new Date().toISOString().split('T')[0];
+        let streakCount = 1;
+        let lastVisit = today;
+
+        if (session.streak && session.streak.lastVisit) {
+            const lastDate = new Date(session.streak.lastVisit);
+            const todayDate = new Date(today);
+            const diffDays = Math.floor((todayDate - lastDate) / (1000 * 60 * 60 * 24));
+
+            if (diffDays === 0) {
+                streakCount = session.streak.count || 1;
+                lastVisit = session.streak.lastVisit;
+            } else if (diffDays === 1) {
+                streakCount = (session.streak.count || 0) + 1;
+                lastVisit = today;
+            } else {
+                streakCount = 1;
+                lastVisit = today;
+            }
+        }
+
+        session.streak = { count: streakCount, lastVisit: lastVisit };
+        localStorage.setItem('gps_user', JSON.stringify(session));
+        currentUser.streak = session.streak;
+
+        updateNavForLogin(); unlockForms();
+
+        const streakCountEl = document.getElementById('streak-count');
+        if (streakCountEl) streakCountEl.innerText = streakCount;
+    } catch(e){localStorage.removeItem('gps_user');}
+}
+
+// Restore session on page load - call immediately if DOM is already ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', restoreSession);
+} else {
+    restoreSession();
+}
 
     // ── PROFILE EDIT MODAL ─────────────────────────
     function openProfileModal() {

@@ -522,6 +522,7 @@ const rtdb  = firebase.database();   // Realtime DB — online presence only
 let currentUser    = null;
 let myDisplayName  = '';
 let myInitials     = '';
+let myPhotoUrl     = '';     // Store user's photo URL
 let currentRoom    = null;
 let currentEmoji   = '';
 let unsubMessages  = null;   // Firestore onSnapshot unsubscribe
@@ -626,7 +627,19 @@ function friendlyAuthError(code) {
 // ── Sign out ──────────────────────────────────────────────────
 function signOutUser() {
     if (presenceRef) presenceRef.remove();
+    // Clear localStorage session
+    localStorage.removeItem('gps_user');
+    // Sign out from Firebase if signed in
     auth.signOut();
+    // Reset state
+    currentUser = null;
+    myDisplayName = '';
+    myPhotoUrl = '';
+    myInitials = '';
+    // Show auth overlay
+    document.getElementById('auth-overlay').style.display = 'flex';
+    document.getElementById('hub-page').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'none';
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -658,51 +671,114 @@ setTimeout(() => {
     hideLoadingScreen();
 }, 5000);
 
-auth.onAuthStateChanged(user => {
-    if (user) {
-        // User is logged in
-        currentUser   = user;
-        myDisplayName = user.displayName || user.email.split('@')[0];
-        myInitials    = myDisplayName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+// Check for existing session on page load (localStorage + Firebase)
+function checkSession() {
+    const saved = localStorage.getItem('gps_user');
+    if (saved) {
+        try {
+            const session = JSON.parse(saved);
+            if (session.expiresAt && Date.now() > session.expiresAt) {
+                localStorage.removeItem('gps_user');
+                showAuthOverlay();
+                return;
+            }
+            // Use localStorage session (from index.html login)
+            currentUser = { displayName: session.name, email: '' };
+            myDisplayName = session.name;
+            myPhotoUrl = session.photoUrl || '';
+            myInitials = myDisplayName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
 
-        // Dismiss loading screen, show dashboard
-        dismissLoadingScreen();
-        document.getElementById('auth-overlay').style.display = 'none';
+            dismissLoadingScreen();
+            hideLoadingScreen();
+            document.getElementById('auth-overlay').style.display = 'none';
 
-        // Update dashboard UI
-        document.getElementById('greeting-name').innerText    = myDisplayName;
-        document.getElementById('topbar-name').innerText      = myDisplayName;
-        document.getElementById('topbar-avatar').innerText    = myInitials;
-        document.getElementById('dash-chip-avatar').innerText = myInitials;
-        document.getElementById('dash-chip-name').innerText   = myDisplayName;
-        document.getElementById('dash-user-chip').style.display = 'flex';
+            // Update dashboard UI with photo or initials
+            updateUserUI();
 
-        // Show language picker if user hasn't chosen yet
-        // Hide loading screen
-        hideLoadingScreen();
-
-        const savedReadLang = localStorage.getItem('gps_read_lang');
-        if (savedReadLang) {
-            myReadLang = savedReadLang;
-        } else {
-            document.getElementById('lang-pick-overlay').classList.add('show');
+            const savedReadLang = localStorage.getItem('gps_read_lang');
+            if (savedReadLang) {
+                myReadLang = savedReadLang;
+            } else {
+                document.getElementById('lang-pick-overlay').classList.add('show');
+            }
+            return;
+        } catch(e) {
+            localStorage.removeItem('gps_user');
         }
-
-    } else {
-        // Dismiss loading screen, show auth form
-        currentUser   = null;
-        myDisplayName = '';
-        dismissLoadingScreen(() => {
-            document.getElementById('auth-overlay').style.display = 'flex';
-        });
-        document.getElementById('dash-user-chip').style.display = 'none';
-
-        // Reset button state
-        const btn = document.getElementById('auth-submit-btn');
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-arrow-right"></i> <span id="auth-btn-label">Sign In</span>';
     }
-});
+
+    // Fall back to Firebase auth
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            currentUser   = user;
+            myDisplayName = user.displayName || user.email.split('@')[0];
+            myPhotoUrl = user.photoURL || '';
+            myInitials    = myDisplayName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+
+            dismissLoadingScreen();
+            hideLoadingScreen();
+            document.getElementById('auth-overlay').style.display = 'none';
+
+            updateUserUI();
+
+            const savedReadLang = localStorage.getItem('gps_read_lang');
+            if (savedReadLang) {
+                myReadLang = savedReadLang;
+            } else {
+                document.getElementById('lang-pick-overlay').classList.add('show');
+            }
+        } else {
+            currentUser   = null;
+            myDisplayName = '';
+            dismissLoadingScreen(() => {
+                document.getElementById('auth-overlay').style.display = 'flex';
+            });
+            document.getElementById('dash-user-chip').style.display = 'none';
+
+            const btn = document.getElementById('auth-submit-btn');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-arrow-right"></i> <span id="auth-btn-label">Sign In</span>';
+        }
+    });
+}
+
+function updateUserUI() {
+    const greetingEl = document.getElementById('greeting-name');
+    const topbarNameEl = document.getElementById('topbar-name');
+    const topbarAvatarEl = document.getElementById('topbar-avatar');
+    const dashChipAvatarEl = document.getElementById('dash-chip-avatar');
+    const dashChipNameEl = document.getElementById('dash-chip-name');
+    const dashUserChipEl = document.getElementById('dash-user-chip');
+
+    if (greetingEl) greetingEl.innerText = myDisplayName;
+    if (topbarNameEl) topbarNameEl.innerText = myDisplayName;
+
+    // Handle avatar display (photo or initials)
+    if (myPhotoUrl) {
+        if (topbarAvatarEl) {
+            topbarAvatarEl.innerHTML = `<img src="${myPhotoUrl}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.parentElement.innerText='${myInitials}'">`;
+        }
+        if (dashChipAvatarEl) {
+            dashChipAvatarEl.innerHTML = `<img src="${myPhotoUrl}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.parentElement.innerText='${myInitials}'">`;
+        }
+    } else {
+        if (topbarAvatarEl) topbarAvatarEl.innerText = myInitials;
+        if (dashChipAvatarEl) dashChipAvatarEl.innerText = myInitials;
+    }
+
+    if (dashChipNameEl) dashChipNameEl.innerText = myDisplayName;
+    if (dashUserChipEl) dashUserChipEl.style.display = 'flex';
+}
+
+function showAuthOverlay() {
+    dismissLoadingScreen(() => {
+        document.getElementById('auth-overlay').style.display = 'flex';
+    });
+    hideLoadingScreen();
+}
+
+// Initialize session check
+checkSession();
 
 // ══════════════════════════════════════════════════════════════
 //  OPEN A ROOM
@@ -838,15 +914,17 @@ async function sendMessage() {
     setTimeout(() => { document.getElementById('send-btn').disabled = false; }, 500);
 
     try {
-        // Each message is a document in rooms/{roomId}/messages
-        // uid field = currentUser.uid — unique identifier per registered user
+        // Get user ID - use Firebase UID if available, otherwise use name from localStorage
+        const userId = currentUser.uid || myDisplayName;
+
         await db.collection('rooms').doc(currentRoom).collection('messages').add({
-            uid:       currentUser.uid,    // ← ties message to specific registered account
-            email:     currentUser.email,  // ← stored for admin reference
+            uid:       userId,
+            email:     currentUser.email || '',
             author:    myDisplayName,
             initials:  myInitials,
+            photoUrl:  myPhotoUrl || '',  // Store photo URL with message
             text:      sanitize(text),
-            lang:      activeLang,   // sender's language — used for auto-translation
+            lang:      activeLang,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
     } catch(err) {
@@ -854,12 +932,15 @@ async function sendMessage() {
         addSystemMsg('⚠️ Message not saved. Check Firestore rules — make sure TEST MODE is on.');
     }
 }
+}
 
 // ══════════════════════════════════════════════════════════════
 //  REALTIME DATABASE — ONLINE PRESENCE (lightweight, not messages)
 // ══════════════════════════════════════════════════════════════
 function registerPresence(roomId) {
-    const key         = sanitizeKey(currentUser.uid);
+    // Use uid if available (Firebase), otherwise use display name (localStorage session)
+    const userId = currentUser?.uid || myDisplayName || 'anonymous';
+    const key         = sanitizeKey(userId);
     const onlineRef   = rtdb.ref('rooms/' + roomId + '/online');
     const myRef       = rtdb.ref('rooms/' + roomId + '/online/' + key);
 
@@ -884,7 +965,7 @@ function registerPresence(roomId) {
 
     // ③ Write OUR presence (listener above will fire and count us)
     presenceRef = myRef;
-    myRef.set({ name: myDisplayName, joined: firebase.database.ServerValue.TIMESTAMP });
+    myRef.set({ name: myDisplayName, photoUrl: myPhotoUrl, joined: firebase.database.ServerValue.TIMESTAMP });
     myRef.onDisconnect().remove();
 }
 
@@ -892,11 +973,17 @@ function registerPresence(roomId) {
 //  RENDER A MESSAGE BUBBLE
 // ══════════════════════════════════════════════════════════════
 function renderMessage(msg, key) {
-    const isMe   = msg.uid === currentUser.uid;
+    const isMe   = msg.uid === (currentUser.uid || myDisplayName);
     const box    = document.getElementById('chat-box');
     const ts     = msg.timestamp
         ? (msg.timestamp.toDate ? msg.timestamp.toDate() : new Date(msg.timestamp))
         : new Date();
+
+    // Use photo if available, otherwise use initials
+    const avatarContent = msg.photoUrl
+        ? `<img src="${escapeHtml(msg.photoUrl)}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.parentElement.innerText='${escapeHtml(msg.initials || '?')}'">`
+        : escapeHtml(msg.initials || '?');
+
     const group = document.createElement('div');
     group.className = 'msg-group';
     group.dataset.key = key;
@@ -906,7 +993,7 @@ function renderMessage(msg, key) {
             <span class="msg-time">${formatTime(ts)}</span>
         </div>
         <div class="msg-row ${isMe ? 'is-me' : ''}">
-            <div class="msg-avatar ${isMe ? 'is-me' : ''}">${escapeHtml(msg.initials || '?')}</div>
+            <div class="msg-avatar ${isMe ? 'is-me' : ''}">${avatarContent}</div>
             <div class="msg-bubble ${isMe ? 'is-me' : ''}">${escapeHtml(msg.text)}</div>
         </div>`;
     box.appendChild(group);
