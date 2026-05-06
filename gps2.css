@@ -93,11 +93,22 @@ nav {
     text-decoration: none;
     color: var(--text-main);
     font-weight: 600;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     text-transform: uppercase;
     transition: var(--transition);
+    position: relative;
+    padding-bottom: 4px;
+}
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--gps-aqua));
+    transition: width 0.3s ease;
 }
 .nav-links a:hover { color: var(--accent); text-shadow: 0 0 10px rgba(100,255,218,0.5); }
+.nav-links a:hover::after { width: 100%; }
 
 /* =============================================
    NAV — WHITE LOG IN BUTTON (NEW)
