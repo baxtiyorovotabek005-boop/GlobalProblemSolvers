@@ -190,6 +190,49 @@
         #setup-banner { display:none; background:rgba(255,165,0,0.1); border:1px solid rgba(255,165,0,0.3); border-radius:12px; padding:16px 20px; margin:16px 24px; font-size:0.85rem; color:#ffa500; line-height:1.6; }
         #setup-banner strong { color:#ffcc44; display:block; margin-bottom:4px; }
         #setup-banner a { color:#ffcc44; }
+
+        /* ── BEAUTIFUL DELETE CONFIRMATION MODAL ──────────────── */
+        #delete-modal-overlay {
+            position:fixed; inset:0; background:rgba(1,7,18,0.92); backdrop-filter:blur(16px);
+            z-index:99990; display:none; align-items:center; justify-content:center; padding:20px;
+            animation: fadeIn 0.3s ease;
+        }
+        #delete-modal-overlay.show { display:flex; }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        .delete-modal-box {
+            background:linear-gradient(145deg,#0d1f3c,#071221);
+            border:1px solid rgba(255,77,77,0.25); border-radius:24px;
+            padding:44px 40px; width:100%; max-width:440px; text-align:center;
+            box-shadow:0 30px 80px rgba(255,0,0,0.15);
+            animation: delBoxIn 0.45s cubic-bezier(0.34,1.56,0.64,1) both;
+        }
+        @keyframes delBoxIn { from{opacity:0;transform:translateY(40px) scale(0.95)} to{opacity:1;transform:translateY(0) scale(1)} }
+        .delete-modal-icon {
+            width:72px; height:72px; border-radius:50%;
+            background:rgba(255,77,77,0.12); border:1px solid rgba(255,77,77,0.3);
+            display:flex; align-items:center; justify-content:center;
+            margin:0 auto 20px; animation: delPulse 2s ease-in-out infinite;
+        }
+        @keyframes delPulse { 0%,100%{box-shadow:0 0 0 0 rgba(255,77,77,0.3)} 50%{box-shadow:0 0 0 18px rgba(255,77,77,0)} }
+        .delete-modal-icon i { font-size:1.8rem; color:#ff4d4d; }
+        .delete-modal-title { font-family:'Poppins',sans-serif; font-size:1.5rem; color:white; margin-bottom:10px; }
+        .delete-modal-desc { color:var(--dim); font-size:0.88rem; line-height:1.6; margin-bottom:8px; }
+        .delete-modal-desc strong { color:var(--accent); }
+        .delete-modal-warn { color:#ff6b6b; font-size:0.78rem; margin-bottom:24px; display:flex; align-items:center; justify-content:center; gap:6px; }
+        .delete-modal-actions { display:flex; gap:12px; }
+        .del-cancel-btn {
+            flex:1; padding:13px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+            color:var(--dim); border-radius:50px; font-weight:700; font-size:0.9rem; cursor:pointer;
+            transition:0.2s; font-family:'Inter',sans-serif;
+        }
+        .del-cancel-btn:hover { background:rgba(255,255,255,0.1); color:white; }
+        .del-confirm-btn {
+            flex:1; padding:13px; background:linear-gradient(135deg,#ff4d4d,#ff6b6b);
+            border:none; color:white; border-radius:50px; font-weight:700; font-size:0.9rem; cursor:pointer;
+            transition:0.25s; font-family:'Inter',sans-serif; display:flex; align-items:center; justify-content:center; gap:6px;
+        }
+        .del-confirm-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(255,77,77,0.35); }
+        .del-confirm-btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
         .loading-msgs { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:60px 20px; color:var(--dim); }
         .spinner { width:32px; height:32px; border:3px solid rgba(100,255,218,0.15); border-top-color:var(--accent); border-radius:50%; animation:spinA 0.8s linear infinite; }
         @keyframes spinA { to{transform:rotate(360deg)} }
@@ -422,7 +465,7 @@
                 <span class="live-dot"></span>
                 <span id="online-count">0</span><span class="c-online-label"> online</span>
             </div>
-            <button class="delete-msgs-btn" onclick="deleteAllMessages()" title="Delete all messages">
+            <button class="delete-msgs-btn" onclick="showDeleteModal()" title="Delete your messages">
                 <i class="fas fa-trash-alt"></i>
             </button>
             <div class="user-me-badge">
@@ -432,12 +475,13 @@
         </div>
     </div>
 
-    <div id="setup-banner">
-        <strong>⚠️ Firestore not configured</strong>
-        Firebase Console → Build → Firestore Database → Create database → Start in TEST MODE.
-        Also enable Authentication → Email/Password.
-        <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a>
-    </div>
+        <div id="setup-banner">
+            <strong>⚠️ Firebase not fully configured</strong>
+            Firebase Console → ① Build → Firestore Database → Create database → Start in TEST MODE.<br>
+            ② Build → Realtime Database → Create database → Start in TEST MODE (for online presence).<br>
+            ③ Build → Authentication → Get started → Email/Password → Enable.
+            <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a>
+        </div>
 
     <div class="chat-layout">
         <div class="chat-sidebar">
@@ -480,6 +524,28 @@
                 </div>
                 <div class="input-hint c-input-hint">Press Enter to send · Be respectful · No spam</div>
             </div>
+        </div>
+        </div>
+    </div>
+
+<!-- ════════════════════════════════════════════
+     DELETE CONFIRMATION MODAL
+══════════════════════════════════════════════ -->
+<div id="delete-modal-overlay">
+    <div class="delete-modal-box">
+        <div class="delete-modal-icon"><i class="fas fa-trash-alt"></i></div>
+        <div class="delete-modal-title">Delete Your Messages</div>
+        <div class="delete-modal-desc">
+            This will delete <strong>only your messages</strong> from this room.<br>
+            Messages from other users will not be affected.<br>
+            This action cannot be undone.
+        </div>
+        <div class="delete-modal-warn"><i class="fas fa-exclamation-triangle"></i> This only removes your messages from your view and all users' mirrors.</div>
+        <div class="delete-modal-actions">
+            <button class="del-cancel-btn" onclick="hideDeleteModal()">Cancel</button>
+            <button class="del-confirm-btn" id="del-confirm-btn" onclick="confirmDeleteMyMessages()">
+                <i class="fas fa-trash-alt"></i> Delete Mine
+            </button>
         </div>
     </div>
 </div>
@@ -937,22 +1003,63 @@ async function sendMessage() {
 // ═════════════════════════════════════════════════════════════
 //  FIRESTORE — DELETE ALL MESSAGES IN CURRENT ROOM
 // ═════════════════════════════════════════════════════════════
-async function deleteAllMessages() {
+// ═════════════════════════════════════════
+//  DELETE MODAL — TELEGRAM-STYLE: only delete YOUR messages
+// ═════════════════════════════════════════
+function showDeleteModal() {
     if (!currentUser || !currentRoom) return;
-    if (!confirm('Delete ALL messages in this room? This cannot be undone.')) return;
+    document.getElementById('delete-modal-overlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+function hideDeleteModal() {
+    document.getElementById('delete-modal-overlay').classList.remove('show');
+    document.body.style.overflow = '';
+}
+// Close modal on overlay click or Escape
+document.addEventListener('keydown', e => { if(e.key==='Escape') hideDeleteModal(); });
+document.getElementById('delete-modal-overlay').addEventListener('click', function(e) {
+    if(e.target === this) hideDeleteModal();
+});
+
+async function confirmDeleteMyMessages() {
+    if (!currentUser || !currentRoom) return;
+    const btn = document.getElementById('del-confirm-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
 
     try {
-        const msgsRef = db.collection('rooms').doc(currentRoom).collection('messages');
+        const userId = currentUser.uid || myDisplayName;
+        const msgsRef = db.collection('rooms').doc(currentRoom).collection('messages')
+            .where('uid', '==', userId);
         const snapshot = await msgsRef.get();
+
+        if (snapshot.empty) {
+            addSystemMsg('You have no messages to delete in this room.');
+            hideDeleteModal();
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-trash-alt"></i> Delete Mine';
+            return;
+        }
+
         const batch = db.batch();
         snapshot.forEach(doc => batch.delete(doc.ref));
         await batch.commit();
-        clearMessages();
-        addSystemMsg('All messages deleted.');
+
+        // Remove deleted messages from current view
+        snapshot.forEach(doc => {
+            const el = document.querySelector('[data-key=\"' + doc.id + '\"]');
+            if (el) el.remove();
+        });
+
+        addSystemMsg('Your messages have been deleted from this room for all users.');
+        hideDeleteModal();
     } catch(err) {
-        console.error('Delete all error:', err);
-        addSystemMsg('⚠️ Could not delete messages: ' + err.message);
+        console.error('Delete my messages error:', err);
+        addSystemMsg('⚠️ Could not delete your messages: ' + err.message);
     }
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-trash-alt"></i> Delete Mine';
+    document.body.style.overflow = '';
 }
 
 // ═════════════════════════════════════════════════════════════
@@ -963,9 +1070,9 @@ let _presenceRoomId = null;
 function registerPresence(roomId) {
     // Use uid if available (Firebase), otherwise use display name (localStorage session)
     const userId = currentUser?.uid || myDisplayName || 'anonymous';
-    const key         = sanitizeKey(userId);
-    const onlineRef   = rtdb.ref('rooms/' + roomId + '/online');
-    const myRef       = rtdb.ref('rooms/' + roomId + '/online/' + key);
+    const key     = sanitizeKey(userId);
+    const onlineRef = rtdb.ref('rooms/' + roomId + '/online');
+    const myRef     = rtdb.ref('rooms/' + roomId + '/online/' + key);
 
     // ① Detach any previous listener on old room
     if (_presenceRoomId) {
@@ -985,17 +1092,25 @@ function registerPresence(roomId) {
                 if (d && d.name) users.push(d.name);
             });
         }
-        document.getElementById('online-count').innerText = users.length;
+        const onlineCount = users.length;
+        document.getElementById('online-count').innerText = onlineCount;
         const el = document.getElementById('online-users-list');
         el.innerHTML = users.slice(0, 12).map(u =>
             `<div class="online-user-row"><div class="online-user-dot"></div><span>${escapeHtml(u)}</span></div>`
         ).join('');
+    }, err => {
+        console.warn('Presence read error (RTDB may not be configured):', err);
+        document.getElementById('online-count').innerText = '?';
     });
 
     // ③ Write OUR presence (listener above will fire and count us)
     _presenceRoomId = roomId;
     presenceRef = myRef;
-    myRef.set({ name: myDisplayName, photoUrl: myPhotoUrl, joined: firebase.database.ServerValue.TIMESTAMP });
+    myRef.set({ name: myDisplayName, photoUrl: myPhotoUrl, joined: firebase.database.ServerValue.TIMESTAMP })
+        .catch(err => {
+            console.warn('RTDB write failed (check Realtime Database rules):', err);
+            document.getElementById('online-count').innerText = '1';
+        });
     myRef.onDisconnect().remove();
 }
 

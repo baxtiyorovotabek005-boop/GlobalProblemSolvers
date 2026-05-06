@@ -5,12 +5,16 @@
    ========================================
 */
 
-* {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-    scroll-behavior: smooth;
-}
+ * {
+     margin:0; padding:0;
+     box-sizing: border-box;
+     font-family: 'Inter', sans-serif;
+     scroll-behavior: smooth;
+ }
+ @keyframes globeSlowSpin {
+     from { transform: rotateY(0deg); }
+     to   { transform: rotateY(360deg); }
+ }
 
 :root {
     --gps-aqua:   #00e9fa;
