@@ -139,6 +139,8 @@
         .user-me-badge { display:flex; align-items:center; gap:7px; background:rgba(100,255,218,0.07); border:1px solid var(--border); padding:6px 14px 6px 6px; border-radius:50px; }
         .user-me-avatar { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--aqua)); color:#020c1b; font-size:0.7rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
         .user-me-name { color:var(--accent); font-size:0.82rem; font-weight:600; }
+        .delete-msgs-btn { background:rgba(255,77,77,0.1); border:1px solid rgba(255,77,77,0.25); color:#ff4d4d; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:0.8rem; display:flex; align-items:center; justify-content:center; transition:0.2s; }
+        .delete-msgs-btn:hover { background:rgba(255,77,77,0.25); transform:scale(1.1); }
         .chat-layout { display:flex; max-width:1200px; margin:0 auto; height:calc(100vh - 72px); }
         .chat-sidebar { width:260px; flex-shrink:0; background:rgba(7,18,33,0.7); border-right:1px solid var(--border); display:flex; flex-direction:column; overflow:hidden; }
         .sidebar-section-title { padding:20px 20px 10px; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--dim); }
@@ -420,6 +422,9 @@
                 <span class="live-dot"></span>
                 <span id="online-count">0</span><span class="c-online-label"> online</span>
             </div>
+            <button class="delete-msgs-btn" onclick="deleteAllMessages()" title="Delete all messages">
+                <i class="fas fa-trash-alt"></i>
+            </button>
             <div class="user-me-badge">
                 <div class="user-me-avatar" id="topbar-avatar"></div>
                 <span class="user-me-name"  id="topbar-name"></span>
@@ -929,9 +934,32 @@ async function sendMessage() {
     }
 }
 
-// ══════════════════════════════════════════════════════════════
+// ═════════════════════════════════════════════════════════════
+//  FIRESTORE — DELETE ALL MESSAGES IN CURRENT ROOM
+// ═════════════════════════════════════════════════════════════
+async function deleteAllMessages() {
+    if (!currentUser || !currentRoom) return;
+    if (!confirm('Delete ALL messages in this room? This cannot be undone.')) return;
+
+    try {
+        const msgsRef = db.collection('rooms').doc(currentRoom).collection('messages');
+        const snapshot = await msgsRef.get();
+        const batch = db.batch();
+        snapshot.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+        clearMessages();
+        addSystemMsg('All messages deleted.');
+    } catch(err) {
+        console.error('Delete all error:', err);
+        addSystemMsg('⚠️ Could not delete messages: ' + err.message);
+    }
+}
+
+// ═════════════════════════════════════════════════════════════
 //  REALTIME DATABASE — ONLINE PRESENCE (lightweight, not messages)
 // ══════════════════════════════════════════════════════════════
+let _presenceRoomId = null;
+
 function registerPresence(roomId) {
     // Use uid if available (Firebase), otherwise use display name (localStorage session)
     const userId = currentUser?.uid || myDisplayName || 'anonymous';
@@ -939,13 +967,19 @@ function registerPresence(roomId) {
     const onlineRef   = rtdb.ref('rooms/' + roomId + '/online');
     const myRef       = rtdb.ref('rooms/' + roomId + '/online/' + key);
 
-    // ① Detach any previous listener on this path
-    onlineRef.off('value');
+    // ① Detach any previous listener on old room
+    if (_presenceRoomId) {
+        rtdb.ref('rooms/' + _presenceRoomId + '/online').off('value');
+    }
+    if (presenceRef) {
+        presenceRef.remove();
+        presenceRef = null;
+    }
 
     // ② Attach listener FIRST so it catches our own write below
     onlineRef.on('value', snap => {
         const users = [];
-        if (snap.exists()) {
+        if (snap.exists() && snap.hasChildren()) {
             snap.forEach(child => {
                 const d = child.val();
                 if (d && d.name) users.push(d.name);
@@ -959,6 +993,7 @@ function registerPresence(roomId) {
     });
 
     // ③ Write OUR presence (listener above will fire and count us)
+    _presenceRoomId = roomId;
     presenceRef = myRef;
     myRef.set({ name: myDisplayName, photoUrl: myPhotoUrl, joined: firebase.database.ServerValue.TIMESTAMP });
     myRef.onDisconnect().remove();
