@@ -596,6 +596,17 @@ let presenceRef    = null;   // RTDB presence ref
 let authMode       = 'login';
 let lastRenderedDate = '';
 let myReadLang     = 'en';   // user's preferred reading language (for translation)
+let mySessionId    = '';     // Unique session ID for presence tracking
+
+// Generate or retrieve unique session ID
+function getSessionId() {
+    let sessionId = localStorage.getItem('gps_session_id');
+    if (!sessionId) {
+        sessionId = 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('gps_session_id', sessionId);
+    }
+    return sessionId;
+}
 
 // ══════════════════════════════════════════════════════════════
 //  AUTH — TAB SWITCHER
@@ -1068,9 +1079,9 @@ async function confirmDeleteMyMessages() {
 let _presenceRoomId = null;
 
 function registerPresence(roomId) {
-    // Use uid if available (Firebase), otherwise use display name (localStorage session)
-    const userId = currentUser?.uid || myDisplayName || 'anonymous';
-    const key     = sanitizeKey(userId);
+    // Use uid if available (Firebase), otherwise use unique session ID
+    mySessionId = currentUser?.uid || getSessionId();
+    const key     = sanitizeKey(mySessionId);
     const onlineRef = rtdb.ref('rooms/' + roomId + '/online');
     const myRef     = rtdb.ref('rooms/' + roomId + '/online/' + key);
 

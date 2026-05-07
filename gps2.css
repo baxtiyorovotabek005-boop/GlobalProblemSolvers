@@ -1306,3 +1306,30 @@ footer {
     margin-left: 4px; font-family: 'Inter',sans-serif;
 }
 .nav-edit-profile-btn:hover { color: var(--accent); }
+
+/* Phone input with country code */
+.phone-input-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+.phone-country-code {
+    width: 140px;
+    padding: 12px 8px;
+    border: 1px solid var(--border, rgba(100,255,218,0.12));
+    border-radius: 8px;
+    background: var(--input-bg, #020c1b);
+    color: var(--text-main, #ccd6f6);
+    font-size: 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.phone-country-code option {
+    background: var(--bg-card, #0a192f);
+    color: var(--text-main, #ccd6f6);
+    padding: 8px;
+}
+.phone-number-input {
+    flex: 1;
+}
+

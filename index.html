@@ -64,7 +64,35 @@
                 <h3 class="login-step-title">Where are you from?</h3>
                 <div class="login-field-group">
                     <label class="login-label"><i class="fas fa-phone"></i> Phone Number</label>
-                    <input type="tel" id="login-phone" class="login-input" placeholder="+998 90 123 45 67" autocomplete="tel">
+                    <div class="phone-input-wrapper">
+                        <select id="login-country-code" class="phone-country-code" onchange="updatePhonePlaceholder()">
+                            <option value="+998" data-digits="9">🇺🇿 +998</option>
+                            <option value="+1" data-digits="10">🇺🇸 +1</option>
+                            <option value="+44" data-digits="10">🇬🇧 +44</option>
+                            <option value="+91" data-digits="10">🇮🇳 +91</option>
+                            <option value="+86" data-digits="11">🇨🇳 +86</option>
+                            <option value="+7" data-digits="10">🇷🇺 +7</option>
+                            <option value="+49" data-digits="11">🇩🇪 +49</option>
+                            <option value="+33" data-digits="9">🇫🇷 +33</option>
+                            <option value="+81" data-digits="10">🇯🇵 +81</option>
+                            <option value="+82" data-digits="10">🇰🇷 +82</option>
+                            <option value="+61" data-digits="9">🇦🇺 +61</option>
+                            <option value="+55" data-digits="11">🇧🇷 +55</option>
+                            <option value="+34" data-digits="9">🇪🇸 +34</option>
+                            <option value="+39" data-digits="10">🇮🇹 +39</option>
+                            <option value="+90" data-digits="10">🇹🇷 +90</option>
+                            <option value="+966" data-digits="9">🇸🇦 +966</option>
+                            <option value="+971" data-digits="9">🇦🇪 +971</option>
+                            <option value="+92" data-digits="10">🇵🇰 +92</option>
+                            <option value="+880" data-digits="10">🇧🇩 +880</option>
+                            <option value="+62" data-digits="10">🇮🇩 +62</option>
+                            <option value="+234" data-digits="10">🇳🇬 +234</option>
+                            <option value="+20" data-digits="10">🇪🇬 +20</option>
+                            <option value="+27" data-digits="9">🇿🇦 +27</option>
+                            <option value="+52" data-digits="10">🇲🇽 +52</option>
+                        </select>
+                        <input type="tel" id="login-phone" class="login-input phone-number-input" placeholder="90 123 45 67" maxlength="15" autocomplete="tel" oninput="validatePhoneDigits()">
+                    </div>
                     <span class="login-field-error" id="err-phone"></span>
                 </div>
                 <div class="login-field-group">
@@ -478,6 +506,39 @@
         }, { passive: true });
     })();
 
+    // ── PHONE INPUT HELPERS ────────────────────────
+    function updatePhonePlaceholder() {
+        const sel = document.getElementById('login-country-code');
+        const phoneInput = document.getElementById('login-phone');
+        const digits = sel.options[sel.selectedIndex].getAttribute('data-digits') || 10;
+        phoneInput.placeholder = 'Enter ' + digits + ' digits';
+        phoneInput.value = '';
+        phoneInput.maxLength = parseInt(digits) + 4; // digits + spaces
+        document.getElementById('err-phone').innerText = '';
+    }
+    
+    function validatePhoneDigits() {
+        const sel = document.getElementById('login-country-code');
+        const phoneInput = document.getElementById('login-phone');
+        const digits = parseInt(sel.options[sel.selectedIndex].getAttribute('data-digits')) || 10;
+        const cleanNum = phoneInput.value.replace(/\D/g, '');
+        
+        if (cleanNum.length > 0 && cleanNum.length < digits) {
+            document.getElementById('err-phone').innerText = 'Please enter ' + digits + ' digits for this country';
+        } else if (cleanNum.length > digits) {
+            phoneInput.value = cleanNum.slice(0, digits);
+            document.getElementById('err-phone').innerText = 'Max ' + digits + ' digits for this country';
+        } else {
+            document.getElementById('err-phone').innerText = '';
+        }
+    }
+    
+    function getFullPhoneNumber() {
+        const code = document.getElementById('login-country-code').value;
+        const num = document.getElementById('login-phone').value.replace(/\D/g, '');
+        return code + num;
+    }
+
     // ── LOGIN ──────────────────────────────────────
     let isLoggedIn=false, currentUser=null;
     function openLoginModal() { goToStep(1); document.getElementById('loginModal').classList.add('active'); document.body.style.overflow='hidden'; }
@@ -487,17 +548,45 @@
 
     function goToStep(n) {
         if(n===2){ const name=document.getElementById('login-name').value.trim(),age=parseInt(document.getElementById('login-age').value); document.getElementById('err-name').innerText=''; document.getElementById('err-age').innerText=''; let ok=true; if(name.length<2){document.getElementById('err-name').innerText='Please enter your full name (min 2 chars).';ok=false;} if(!age||age<10||age>120){document.getElementById('err-age').innerText='Enter a valid age between 10 and 120.';ok=false;} if(!ok)return; }
-        if(n===3){ const phone=document.getElementById('login-phone').value.trim(),country=document.getElementById('login-country').value; document.getElementById('err-phone').innerText=''; document.getElementById('err-country').innerText=''; let ok=true; if(phone.length<6){document.getElementById('err-phone').innerText='Enter a valid phone number.';ok=false;} if(!country){document.getElementById('err-country').innerText='Please select your country.';ok=false;} if(!ok)return; buildSummary(); }
+        if(n===3){ 
+            const phone=document.getElementById('login-phone').value.replace(/\D/g,''),
+                  country=document.getElementById('login-country').value,
+                  countryCode=document.getElementById('login-country-code').value,
+                  expectedDigits=parseInt(document.getElementById('login-country-code').options[document.getElementById('login-country-code').selectedIndex].getAttribute('data-digits'))||10;
+            document.getElementById('err-phone').innerText=''; 
+            document.getElementById('err-country').innerText=''; 
+            let ok=true; 
+            if(phone.length!==expectedDigits){document.getElementById('err-phone').innerText='Enter exactly '+expectedDigits+' digits for this country.';ok=false;} 
+            if(!country){document.getElementById('err-country').innerText='Please select your country.';ok=false;} 
+            if(!ok)return; 
+            buildSummary(); 
+        }
         document.querySelectorAll('.login-step').forEach(s=>s.classList.remove('active'));
         document.querySelectorAll('.login-dot').forEach(d=>d.classList.remove('active'));
         const t=document.getElementById('step-'+n); if(t)t.classList.add('active');
         const dt=document.getElementById('dot-'+n); if(dt)dt.classList.add('active');
     }
     function buildSummary() {
-        const name=document.getElementById('login-name').value.trim(),age=document.getElementById('login-age').value,phone=document.getElementById('login-phone').value.trim(),country=document.getElementById('login-country').value;
-        document.getElementById('login-summary').innerHTML=`<div class="summary-row"><i class="fas fa-user"></i><span>${name}</span></div><div class="summary-row"><i class="fas fa-birthday-cake"></i><span>${age} years old</span></div><div class="summary-row"><i class="fas fa-phone"></i><span>${phone}</span></div><div class="summary-row"><i class="fas fa-flag"></i><span>${country}</span></div>`;
+        const name=document.getElementById('login-name').value.trim(),
+              age=document.getElementById('login-age').value,
+              phone=document.getElementById('login-phone').value.replace(/\D/g,''),
+              countryCode=document.getElementById('login-country-code').value,
+              country=document.getElementById('login-country').value;
+        document.getElementById('login-summary').innerHTML=`<div class="summary-row"><i class="fas fa-user"></i><span>${name}</span></div><div class="summary-row"><i class="fas fa-birthday-cake"></i><span>${age} years old</span></div><div class="summary-row"><i class="fas fa-phone"></i><span>${countryCode} ${phone}</span></div><div class="summary-row"><i class="fas fa-flag"></i><span>${country}</span></div>`;
     }
-    function confirmLogin() { currentUser={name:document.getElementById('login-name').value.trim(),country:document.getElementById('login-country').value,description:'',photoUrl:''}; finishLogin(); }
+    function confirmLogin() { 
+        const countryCode=document.getElementById('login-country-code').value,
+              phone=document.getElementById('login-phone').value.replace(/\D/g,''),
+              fullPhone=countryCode+phone;
+        currentUser={
+            name:document.getElementById('login-name').value.trim(),
+            country:document.getElementById('login-country').value,
+            phone:fullPhone,
+            description:'',
+            photoUrl:''
+        }; 
+        finishLogin(); 
+    }
     function finishLogin() {
         isLoggedIn=true;
         const session={
