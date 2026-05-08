@@ -438,15 +438,50 @@
     </section>
 
     <!-- CONTACT -->
-    <section id="contact" class="section">
+    <section id="contact" class="section join-section">
+        <div class="join-orb join-orb-1"></div>
+        <div class="join-orb join-orb-2"></div>
         <h2 class="section-title contact-title" data-aos="fade-up">Join the Movement</h2>
-        <div class="contact-card" data-aos="zoom-in">
-            <p><i class="fas fa-envelope" style="font-size:27px"></i> <strong class="gmail-label" style="font-size:27px">Gmail:</strong> <a style="font-size:27px" href="/cdn-cgi/l/email-protection#5436352c203d2d3b263b223b203536313f646461143339353d387a373b39"><span class="__cf_email__" data-cfemail="1674776e627f6f7964796079627774737d26262356717b777f7a3875797b">[email&#160;protected]</span></a></p>
-            <p><i class="fab fa-telegram" style="font-size:27px"></i> <strong class="telegram-label" style="font-size:27px">Telegram:</strong> <a style="font-size:27px" href="https://t.me/globalproblemsolvers" target="_blank">Join our Telegram Community</a></p>
+        <p class="join-subtitle" data-aos="fade-up" data-aos-delay="50">Connect with us and be part of the global change.</p>
+        <div class="join-cards" data-aos="fade-up" data-aos-delay="100">
+            <a href="/cdn-cgi/l/email-protection#5436352c203d2d3b263b223b203536313f646461143339353d387a373b39" class="join-card" target="_blank">
+                <div class="join-card-bg"></div>
+                <div class="join-card-icon"><i class="fas fa-envelope"></i></div>
+                <div class="join-card-content">
+                    <span class="join-card-label gmail-label">Gmail:</span>
+                    <span class="join-card-value">globalproblemsolverss@gmail.com</span>
+                </div>
+                <div class="join-card-arrow"><i class="fas fa-arrow-right"></i></div>
+            </a>
+            <a href="https://t.me/globalproblemsolvers" class="join-card" target="_blank">
+                <div class="join-card-bg"></div>
+                <div class="join-card-icon tg"><i class="fab fa-telegram-plane"></i></div>
+                <div class="join-card-content">
+                    <span class="join-card-label telegram-label">Telegram:</span>
+                    <span class="join-card-value">Join our Community</span>
+                </div>
+                <div class="join-card-arrow"><i class="fas fa-arrow-right"></i></div>
+            </a>
         </div>
     </section>
 
-    <footer><p class="footer-text">© 2026 GlobySolve | Created by Baxtiyorov Otabek</p></footer>
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo">Globy<span>Solve</span></div>
+                    <p class="footer-desc">Crowdsourced solutions for the world's biggest challenges.</p>
+                </div>
+                <div class="footer-navs">
+                    <a href="#home">Home</a>
+                    <a href="#problems">Challenges</a>
+                    <a href="community.html">Community</a>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <p class="footer-text">© 2026 GlobySolve | Created by Baxtiyorov Otabek</p>
+        </div>
+    </footer>
 
     <!-- AI MODAL -->
     <div class="ai-modal-overlay" id="aiModal" onclick="closeAiModal(event)">
@@ -908,6 +943,7 @@ if (document.readyState === 'loading') {
     }
 
     document.addEventListener('DOMContentLoaded',()=>setTimeout(injectAiButtons,600));
+    updatePhonePlaceholder();
     setLanguage(localStorage.getItem('gps_lang')||'en');
     restoreSession();
     setTimeout(injectAiButtons,600);
