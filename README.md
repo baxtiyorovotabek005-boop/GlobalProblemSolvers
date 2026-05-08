@@ -1,1 +1,1 @@
-# GlobalProblemSolvers
+# GlobySolve
