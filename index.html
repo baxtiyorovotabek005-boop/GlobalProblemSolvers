@@ -507,27 +507,55 @@
     })();
 
     // ── PHONE INPUT HELPERS ────────────────────────
+    function getPhoneGroups(digits) {
+        const map = { 7: [3,4], 8: [2,2,2,2], 9: [2,3,2,2], 10: [3,3,4], 11: [3,4,4], 12: [3,3,3,3] };
+        return map[digits] || [digits];
+    }
+    function formatPhoneNumber(clean, digits) {
+        const groups = getPhoneGroups(digits);
+        let result = '', idx = 0;
+        for (const g of groups) {
+            if (idx >= clean.length) break;
+            result += clean.slice(idx, idx + g);
+            idx += g;
+            if (idx < clean.length) result += ' ';
+        }
+        return result;
+    }
     function updatePhonePlaceholder() {
         const sel = document.getElementById('login-country-code');
         const phoneInput = document.getElementById('login-phone');
-        const digits = sel.options[sel.selectedIndex].getAttribute('data-digits') || 10;
-        phoneInput.placeholder = 'Enter ' + digits + ' digits';
+        const digits = parseInt(sel.options[sel.selectedIndex].getAttribute('data-digits')) || 10;
+        const groups = getPhoneGroups(digits);
+        phoneInput.placeholder = groups.map(g => '0'.repeat(g)).join(' ');
         phoneInput.value = '';
-        phoneInput.maxLength = parseInt(digits) + 4; // digits + spaces
+        phoneInput.maxLength = digits + groups.length - 1;
         document.getElementById('err-phone').innerText = '';
     }
-    
     function validatePhoneDigits() {
         const sel = document.getElementById('login-country-code');
         const phoneInput = document.getElementById('login-phone');
         const digits = parseInt(sel.options[sel.selectedIndex].getAttribute('data-digits')) || 10;
+        const start = phoneInput.selectionStart;
+        const digitsBeforeCursor = phoneInput.value.slice(0, start).replace(/\D/g, '').length;
         const cleanNum = phoneInput.value.replace(/\D/g, '');
-        
+        if (cleanNum.length > digits) {
+            const v = formatPhoneNumber(cleanNum.slice(0, digits), digits);
+            phoneInput.value = v;
+            phoneInput.setSelectionRange(v.length, v.length);
+            document.getElementById('err-phone').innerText = 'Max ' + digits + ' digits';
+            return;
+        }
+        const formatted = formatPhoneNumber(cleanNum, digits);
+        phoneInput.value = formatted;
+        let newPos = 0, dc = 0;
+        while (dc < digitsBeforeCursor && newPos < formatted.length) {
+            if (formatted[newPos] >= '0' && formatted[newPos] <= '9') dc++;
+            newPos++;
+        }
+        phoneInput.setSelectionRange(newPos, newPos);
         if (cleanNum.length > 0 && cleanNum.length < digits) {
-            document.getElementById('err-phone').innerText = 'Please enter ' + digits + ' digits for this country';
-        } else if (cleanNum.length > digits) {
-            phoneInput.value = cleanNum.slice(0, digits);
-            document.getElementById('err-phone').innerText = 'Max ' + digits + ' digits for this country';
+            document.getElementById('err-phone').innerText = 'Please enter ' + digits + ' digits';
         } else {
             document.getElementById('err-phone').innerText = '';
         }
