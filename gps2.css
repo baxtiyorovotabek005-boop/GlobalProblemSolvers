@@ -407,6 +407,75 @@ header {
 }
 .btn:hover { background: var(--gps-aqua); color: black; }
 
+/* Framework Select & Dynamic Fields */
+.solution-box select {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid #233554;
+    padding: 12px;
+    margin-bottom: 10px;
+    color: var(--text-main);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2364ffda' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+}
+.solution-box select option {
+    background: var(--bg-card);
+    color: var(--text-main);
+}
+.framework-fields {
+    margin-bottom: 10px;
+}
+.framework-group {
+    padding: 14px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(100,255,218,0.08);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    animation: fwFadeIn 0.3s ease;
+}
+@keyframes fwFadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.fw-label {
+    display: block;
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 4px;
+    margin-top: 12px;
+}
+.fw-label:first-child {
+    margin-top: 0;
+}
+.fw-input {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid #233554;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    color: var(--text-main);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.fw-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(100,255,218,0.08);
+}
+.fw-input::placeholder {
+    color: #445577;
+    font-size: 0.82rem;
+}
+
 /* Lock overlay — sits on top of the form */
 .form-lock-overlay {
     position: absolute;
@@ -1617,6 +1686,32 @@ body.light-mode .solution-box textarea {
 body.light-mode .solution-box input:focus,
 body.light-mode .solution-box textarea:focus {
     border-color: var(--accent);
+}
+body.light-mode .solution-box select {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #1e293b;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%230ea5e9' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+}
+body.light-mode .solution-box select option {
+    background: white;
+    color: #1e293b;
+}
+body.light-mode .framework-group {
+    background: rgba(0,0,0,0.02);
+    border: 1px solid rgba(0,0,0,0.06);
+}
+body.light-mode .fw-input {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #1e293b;
+}
+body.light-mode .fw-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(14,165,233,0.1);
+}
+body.light-mode .fw-input::placeholder {
+    color: #94a3b8;
 }
 body.light-mode .form-lock-overlay {
     background: rgba(255,255,255,0.85);
