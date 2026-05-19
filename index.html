@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="gps2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="dark-mode">
+<body>
+<script>(function(){var s=localStorage.getItem('gps_theme'),h=new Date().getHours();if(!s||s==='auto'){s=(h>=6&&h<18)?'light':'dark'}document.body.classList.add(s==='light'?'light-mode':'dark-mode');})();</script>
 
     <a class="kofi-float" href="https://ko-fi.com/baxtiyorovotabek" target="_blank" rel="noopener" title="Support GPS on Ko-fi">
         <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="Ko-fi"> Support GPS ☕
@@ -230,6 +231,125 @@
     </header>
 
     <!-- ══════════════════════════════════════════
+         LANDING SHOWCASE — BRAND STATS
+    ══════════════════════════════════════════ -->
+    <section class="landing-stats" data-aos="fade-up">
+        <div class="stats-grid">
+            <div class="stat-item"><span class="stat-icon">🌍</span><span class="stat-num" id="stat-1-num">10</span><span class="stat-label lp-stat-1">Global Challenges</span></div>
+            <div class="stat-item"><span class="stat-icon">🤖</span><span class="stat-num" id="stat-2-num">AI</span><span class="stat-label lp-stat-2">Powered Evaluation</span></div>
+            <div class="stat-item"><span class="stat-icon">👥</span><span class="stat-num" id="stat-3-num">Global</span><span class="stat-label lp-stat-3">Community of Solvers</span></div>
+            <div class="stat-item"><span class="stat-icon">🌐</span><span class="stat-num" id="stat-4-num">4</span><span class="stat-label lp-stat-4">Languages</span></div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         FEATURES SHOWCASE
+    ══════════════════════════════════════════ -->
+    <section class="section landing-features" data-aos="fade-up">
+        <h2 class="section-title lp-feature-title" data-aos="fade-down">Why GlobySolve?</h2>
+        <div class="features-grid">
+            <div class="feature-card" data-aos="zoom-in" data-aos-delay="0">
+                <div class="feature-icon"><i class="fas fa-globe-americas"></i></div>
+                <h3 class="lp-f-1-title">10 Global Problems</h3>
+                <p class="lp-f-1-desc">Track and analyze the world's most pressing challenges from digitalisation to gender inequality.</p>
+            </div>
+            <div class="feature-card" data-aos="zoom-in" data-aos-delay="50">
+                <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                <h3 class="lp-f-2-title">AI Solution Evaluator</h3>
+                <p class="lp-f-2-desc">Get instant AI-powered feedback on your solutions with detailed scoring and personalised suggestions.</p>
+            </div>
+            <div class="feature-card" data-aos="zoom-in" data-aos-delay="100">
+                <div class="feature-icon"><i class="fas fa-pen-to-square"></i></div>
+                <h3 class="lp-f-3-title">Smart Frameworks</h3>
+                <p class="lp-f-3-desc">Submit structured solutions using SMART, SWOT, or PESTLE analysis frameworks.</p>
+            </div>
+            <div class="feature-card" data-aos="zoom-in" data-aos-delay="150">
+                <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                <h3 class="lp-f-4-title">Community Hub</h3>
+                <p class="lp-f-4-desc">Join real-time global discussions with changemakers from around the world.</p>
+            </div>
+            <div class="feature-card" data-aos="zoom-in" data-aos-delay="200">
+                <div class="feature-icon"><i class="fas fa-language"></i></div>
+                <h3 class="lp-f-5-title">Multi-Language</h3>
+                <p class="lp-f-5-desc">Fully available in English, Uzbek, Russian, and Karakalpak.</p>
+            </div>
+            <div class="feature-card" data-aos="zoom-in" data-aos-delay="250">
+                <div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
+                <h3 class="lp-f-6-title">Secure & Free</h3>
+                <p class="lp-f-6-desc">100% free to use with secure profile management and global reach.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         HOW IT WORKS
+    ══════════════════════════════════════════ -->
+    <section class="section landing-how" data-aos="fade-up">
+        <h2 class="section-title lp-how-title" data-aos="fade-down">How It Works</h2>
+        <p class="how-subtitle lp-how-sub" data-aos="fade-up">Four simple steps to start making a difference.</p>
+        <div class="steps-grid">
+            <div class="step-card" data-aos="fade-right" data-aos-delay="0">
+                <div class="step-num">01</div>
+                <div class="step-content">
+                    <h3 class="lp-s-1-title">Choose a Challenge</h3>
+                    <p class="lp-s-1-desc">Pick from 10 global problems and understand their causes and effects in detail.</p>
+                </div>
+            </div>
+            <div class="step-card" data-aos="fade-right" data-aos-delay="100">
+                <div class="step-num">02</div>
+                <div class="step-content">
+                    <h3 class="lp-s-2-title">Submit Your Solution</h3>
+                    <p class="lp-s-2-desc">Write your solution using structured frameworks like SMART, SWOT, or PESTLE.</p>
+                </div>
+            </div>
+            <div class="step-card" data-aos="fade-right" data-aos-delay="200">
+                <div class="step-num">03</div>
+                <div class="step-content">
+                    <h3 class="lp-s-3-title">AI Evaluation</h3>
+                    <p class="lp-s-3-desc">Get instant AI feedback with detailed scores on impact, feasibility, and innovation.</p>
+                </div>
+            </div>
+            <div class="step-card" data-aos="fade-right" data-aos-delay="300">
+                <div class="step-num">04</div>
+                <div class="step-content">
+                    <h3 class="lp-s-4-title">Join the Community</h3>
+                    <p class="lp-s-4-desc">Discuss solutions in real-time chat with changemakers from every continent.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         APP PREVIEW / MOCKUP
+    ══════════════════════════════════════════ -->
+    <section class="section landing-preview" data-aos="fade-up">
+        <h2 class="section-title lp-preview-title" data-aos="fade-down">Explore the Experience</h2>
+        <p class="preview-subtitle lp-preview-sub" data-aos="fade-up">A glimpse into the GlobySolve platform.</p>
+        <div class="preview-grid">
+            <div class="preview-card" data-aos="flip-up" data-aos-delay="0">
+                <div class="preview-card-img"><i class="fas fa-globe-americas"></i></div>
+                <div class="preview-card-badge">10 Problems</div>
+                <div class="preview-card-label lp-prev-1">Browse challenges with detailed causes & effects</div>
+            </div>
+            <div class="preview-card" data-aos="flip-up" data-aos-delay="100">
+                <div class="preview-card-img"><i class="fas fa-robot"></i></div>
+                <div class="preview-card-badge">AI Powered</div>
+                <div class="preview-card-label lp-prev-2">Evaluate solutions with intelligent scoring</div>
+            </div>
+            <div class="preview-card" data-aos="flip-up" data-aos-delay="200">
+                <div class="preview-card-img"><i class="fas fa-users"></i></div>
+                <div class="preview-card-badge">Community</div>
+                <div class="preview-card-label lp-prev-3">Real-time global discussions and brainstorming</div>
+            </div>
+            <div class="preview-card" data-aos="flip-up" data-aos-delay="300">
+                <div class="preview-card-img"><i class="fas fa-chart-simple"></i></div>
+                <div class="preview-card-badge">Frameworks</div>
+                <div class="preview-card-label lp-prev-4">SMART, SWOT & PESTLE analysis tools</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
          PROBLEMS
     ══════════════════════════════════════════ -->
     <section id="problems" class="section">
@@ -237,7 +357,7 @@
         <div class="problem-grid">
 
             <div class="problem-card" data-aos="fade-up">
-                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop" alt="Digitalisation">
+                <img src="https://plus.unsplash.com/premium_photo-1733306493254-52b143296396?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGRpZ2l0YWxpemF0aW9ufGVufDB8fDB8fHww" alt="Digitalisation">
                 <div class="card-content">
                     <h3 class="p-title">1. Digitalisation</h3>
                     <p><strong class="label-cause">Causes:</strong> <span class="p-cause">Digital divide, rapid technological change, and lack of digital literacy.</span></p>
@@ -246,7 +366,7 @@
                         <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
                             <input type="hidden" name="Problem" value="Digitalisation">
                             <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
-                            <textarea name="description" class="p-text" placeholder="Describe the specific issue..." minlength="10" required></textarea>
+                            <textarea name="description" class="p-text" placeholder="Describe local examples or specific details of this problem (e.g. 'Aral Sea water level is dropping')..." minlength="10" required></textarea>
                             <select name="framework" class="p-framework-select" onchange="toggleFrameworkFields(this)">
                                 <option value="" disabled selected>Select Analysis Framework</option>
                                 <option value="SMART">SMART</option>
@@ -308,7 +428,7 @@
                         <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
                             <input type="hidden" name="Problem" value="Global Hunger">
                             <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
-                            <textarea name="description" class="p-text" placeholder="Describe the specific issue..." minlength="10" required></textarea>
+                            <textarea name="description" class="p-text" placeholder="Describe local examples or specific details of this problem (e.g. 'Aral Sea water level is dropping')..." minlength="10" required></textarea>
                             <select name="framework" class="p-framework-select" onchange="toggleFrameworkFields(this)">
                                 <option value="" disabled selected>Select Analysis Framework</option>
                                 <option value="SMART">SMART</option>
@@ -370,7 +490,7 @@
                         <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
                             <input type="hidden" name="Problem" value="Education Access">
                             <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
-                            <textarea name="description" class="p-text" placeholder="Describe the specific issue..." minlength="10" required></textarea>
+                            <textarea name="description" class="p-text" placeholder="Describe local examples or specific details of this problem (e.g. 'Aral Sea water level is dropping')..." minlength="10" required></textarea>
                             <select name="framework" class="p-framework-select" onchange="toggleFrameworkFields(this)">
                                 <option value="" disabled selected>Select Analysis Framework</option>
                                 <option value="SMART">SMART</option>
@@ -432,7 +552,7 @@
                         <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
                             <input type="hidden" name="Problem" value="Water Scarcity">
                             <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
-                            <textarea name="description" class="p-text" placeholder="Describe the specific issue..." minlength="10" required></textarea>
+                            <textarea name="description" class="p-text" placeholder="Describe local examples or specific details of this problem (e.g. 'Aral Sea water level is dropping')..." minlength="10" required></textarea>
                             <select name="framework" class="p-framework-select" onchange="toggleFrameworkFields(this)">
                                 <option value="" disabled selected>Select Analysis Framework</option>
                                 <option value="SMART">SMART</option>
@@ -494,7 +614,7 @@
                         <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
                             <input type="hidden" name="Problem" value="Air Pollution">
                             <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
-                            <textarea name="description" class="p-text" placeholder="Describe the specific issue..." minlength="10" required></textarea>
+                            <textarea name="description" class="p-text" placeholder="Describe local examples or specific details of this problem (e.g. 'Aral Sea water level is dropping')..." minlength="10" required></textarea>
                             <select name="framework" class="p-framework-select" onchange="toggleFrameworkFields(this)">
                                 <option value="" disabled selected>Select Analysis Framework</option>
                                 <option value="SMART">SMART</option>
@@ -556,7 +676,7 @@
                         <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
                             <input type="hidden" name="Problem" value="Deforestation">
                             <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
-                            <textarea name="description" class="p-text" placeholder="Describe the specific issue..." minlength="10" required></textarea>
+                            <textarea name="description" class="p-text" placeholder="Describe local examples or specific details of this problem (e.g. 'Aral Sea water level is dropping')..." minlength="10" required></textarea>
                             <select name="framework" class="p-framework-select" onchange="toggleFrameworkFields(this)">
                                 <option value="" disabled selected>Select Analysis Framework</option>
                                 <option value="SMART">SMART</option>
@@ -618,7 +738,7 @@
                         <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
                             <input type="hidden" name="Problem" value="Ocean Plastic">
                             <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
-                            <textarea name="description" class="p-text" placeholder="Describe the specific issue..." minlength="10" required></textarea>
+                            <textarea name="description" class="p-text" placeholder="Describe local examples or specific details of this problem (e.g. 'Aral Sea water level is dropping')..." minlength="10" required></textarea>
                             <select name="framework" class="p-framework-select" onchange="toggleFrameworkFields(this)">
                                 <option value="" disabled selected>Select Analysis Framework</option>
                                 <option value="SMART">SMART</option>
@@ -680,7 +800,7 @@
                         <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
                             <input type="hidden" name="Problem" value="Healthcare Access">
                             <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
-                            <textarea name="description" class="p-text" placeholder="Describe the specific issue..." minlength="10" required></textarea>
+                            <textarea name="description" class="p-text" placeholder="Describe local examples or specific details of this problem (e.g. 'Aral Sea water level is dropping')..." minlength="10" required></textarea>
                             <select name="framework" class="p-framework-select" onchange="toggleFrameworkFields(this)">
                                 <option value="" disabled selected>Select Analysis Framework</option>
                                 <option value="SMART">SMART</option>
@@ -742,7 +862,7 @@
                         <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
                             <input type="hidden" name="Problem" value="Corruption">
                             <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
-                            <textarea name="description" class="p-text" placeholder="Describe the specific issue..." minlength="10" required></textarea>
+                            <textarea name="description" class="p-text" placeholder="Describe local examples or specific details of this problem (e.g. 'Aral Sea water level is dropping')..." minlength="10" required></textarea>
                             <select name="framework" class="p-framework-select" onchange="toggleFrameworkFields(this)">
                                 <option value="" disabled selected>Select Analysis Framework</option>
                                 <option value="SMART">SMART</option>
@@ -804,7 +924,7 @@
                         <form action="https://formspree.io/f/xdaldqeo" method="POST" class="solution-box">
                             <input type="hidden" name="Problem" value="Gender Inequality">
                             <input type="email" name="email" class="p-email-label" placeholder="Your Gmail" required>
-                            <textarea name="description" class="p-text" placeholder="Describe the specific issue..." minlength="10" required></textarea>
+                            <textarea name="description" class="p-text" placeholder="Describe local examples or specific details of this problem (e.g. 'Aral Sea water level is dropping')..." minlength="10" required></textarea>
                             <select name="framework" class="p-framework-select" onchange="toggleFrameworkFields(this)">
                                 <option value="" disabled selected>Select Analysis Framework</option>
                                 <option value="SMART">SMART</option>
@@ -959,7 +1079,34 @@
     function toggleMobileNav() { document.getElementById('navLinks').classList.toggle('mobile-open'); document.getElementById('hamburger').classList.toggle('active'); }
     function toggleMenu(menuId) { const menu=document.getElementById(menuId),other=menuId==='themeMenu'?'langMenu':'themeMenu'; document.getElementById(other).classList.remove('show'); menu.classList.toggle('show'); }
     window.onclick = e => { if(!e.target.matches('.theme-btn')&&!e.target.closest('.theme-btn')) document.querySelectorAll('.theme-dropdown-content').forEach(d=>d.classList.remove('show')); };
-    function setTheme(t) { const b=document.body; if(t==='light'){b.classList.add('light-mode');b.classList.remove('dark-mode');}else if(t==='dark'){b.classList.add('dark-mode');b.classList.remove('light-mode');}else{window.matchMedia('(prefers-color-scheme:dark)').matches?b.classList.add('dark-mode'):b.classList.add('light-mode');} }
+    function getTimeBasedTheme() {
+        const h = new Date().getHours();
+        return (h >= 6 && h < 18) ? 'light' : 'dark';
+    }
+    function applyTheme(t) {
+        const b = document.body;
+        b.classList.remove('light-mode', 'dark-mode');
+        if (t === 'light') b.classList.add('light-mode');
+        else b.classList.add('dark-mode');
+    }
+    function setTheme(t) {
+        if (t === 'auto') {
+            localStorage.setItem('gps_theme', 'auto');
+            applyTheme(getTimeBasedTheme());
+        } else {
+            localStorage.setItem('gps_theme', t);
+            applyTheme(t);
+        }
+    }
+    function initTheme() {
+        const saved = localStorage.getItem('gps_theme');
+        if (!saved || saved === 'auto') {
+            applyTheme(getTimeBasedTheme());
+        } else {
+            applyTheme(saved);
+        }
+    }
+    initTheme();
     function toggleFrameworkFields(select) {
         const form = select.closest('.solution-box');
         const groups = form.querySelectorAll('.framework-group');
@@ -1277,7 +1424,8 @@ if (document.readyState === 'loading') {
             nav:["Home","Problems","Contact","Community"],
             hero:['Solutions from the people.','Crowdsourcing for a better planet.','Your ideas can change the world.'],
             exploreBtn:"Explore Challenges", sectionTitle:"10 Global Challenges",
-            labels:["Causes","Effects","Submit"], placeholders:["Your Gmail","Your Solution..."],
+            lp:["Global Challenges","AI-Powered","Community","Languages","Why GlobySolve?","10 Global Problems","Track and analyze the world's most pressing challenges from digitalisation to gender inequality.","AI Solution Evaluator","Get instant AI-powered feedback on your solutions with detailed scoring and personalised suggestions.","Smart Frameworks","Submit structured solutions using SMART, SWOT, or PESTLE analysis frameworks.","Community Hub","Join real-time global discussions with changemakers from around the world.","Multi-Language","Fully available in English, Uzbek, Russian, and Karakalpak.","Secure & Free","100% free to use with secure profile management and global reach.","How It Works","Four simple steps to start making a difference.","Choose a Challenge","Pick from 10 global problems and understand their causes and effects in detail.","Submit Your Solution","Write your solution using structured frameworks like SMART, SWOT, or PESTLE.","AI Evaluation","Get instant AI feedback with detailed scores on impact, feasibility, and innovation.","Join the Community","Discuss solutions in real-time chat with changemakers from every continent.","Explore the Experience","A glimpse into the GlobySolve platform.","Browse challenges with detailed causes & effects","Evaluate solutions with intelligent scoring","Real-time global discussions and brainstorming","SMART, SWOT & PESTLE analysis tools"],
+            labels:["Causes","Effects","Submit"], placeholders:["Your Gmail","Describe local examples or specific details of this problem (e.g. 'Aral Sea water level is dropping')..."],
             about:{title:"About GPS",v_title:"The Vision",v_text:"GlobySolve is an open-source hub for innovation. We believe the internet allows us to bypass borders and connect the world's brightest minds to the world's deepest crises.",c_title:"The Creator",c_text1:"I am Baxtiyorov Otabek, a student at the Presidential School. I use software engineering to build tools that tackle ten global challenges and inspire bold action for our planet.",c_text2:"I am planning to expand this project to include more global problems and solutions."},
             contact:{title:"Join the Movement",gmail:"Gmail",telegram:"Telegram"},
             footer:"© 2026 GlobySolve | Created by Baxtiyorov Otabek",
@@ -1289,7 +1437,8 @@ if (document.readyState === 'loading') {
             nav:["Bosh sahifa","Muammolar","Aloqa","Hamjamiyat"],
             hero:["Xalqdan yechimlar.","Sayyoramiz uchun kraudsorsing.","Sizning g'oyangiz dunyoni o'zgartiradi."],
             exploreBtn:"Muammolarni ko'rish",sectionTitle:"10 ta Global Muammo",
-            labels:["Sabablar","Oqibatlar","Yuborish"],placeholders:["Sizning Gmailingiz","Sizning yechimingiz..."],
+            lp:["Global Muammolar","AI Kuchli","Hamjamiyat","Tillar","Nega GlobySolve?","10 Global Muammo","Raqamlashtirishdan gender tengsizligigacha bo'lgan eng dolzarb muammolarni kuzating va tahlil qiling.","AI Yechim Baholovchi","Yechimlaringiz haqida batafsil ball va shaxsiy tavsiyalar bilan tezkor AI fikr-mulohazalarini oling.","Aqlli Frameworks","SMART, SWOT yoki PESTLE tahlil freymvorklari yordamida tizimli yechimlarni taqdim eting.","Hamjamiyat Markazi","Butun dunyodagi o'zgartiruvchilar bilan real vaqt rejimida global muhokamalarga qo'shiling.","Ko'p Til","Ingliz, O'zbek, Rus va Qoraqalpoq tillarida to'liq mavjud.","Xavfsiz va Bepul","Xavfsiz profil boshqaruvi bilan 100% bepul.","Qanday Ishlaydi","O'zgarish kiritishni boshlash uchun to'rt oddiy qadam.","Muammoni Tanlang","10 ta global muammodan birini tanlang va ularning sabablari va oqibatlarini batafsil o'rganing.","Yechimni Yuboring","SMART, SWOT yoki PESTLE kabi tizimli freymvorklardan foydalanib yechimingizni yozing.","AI Baholash","Ta'sir, amalga oshirish va innovatsiya bo'yicha batafsil ballar bilan tezkor AI fikr-mulohazalarini oling.","Hamjamiyatga Qo'shiling","Har bir qit'adan o'zgartiruvchilar bilan real vaqt chatida yechimlarni muhokama qiling.","Tajribani O'rganing","GlobySolve platformasiga bir nazar.","Batafsil sabab va oqibatlar bilan muammolarni ko'rib chiqing","Yechimlarni aqlli baholash bilan baholang","Real vaqt global muhokamalar","SMART, SWOT va PESTLE tahlil vositalari"],
+            labels:["Sabablar","Oqibatlar","Yuborish"],placeholders:["Sizning Gmailingiz","Ushbu muammoning mahalliy misollari yoki tafsilotlarini yozing (masalan, 'Orol dengizi suv sathi pasaymoqda')..."],
             about:{title:"GPS Haqida",v_title:"Maqsad",v_text:"GlobySolve - innovatsiyalar uchun ochiq markazdir.",c_title:"Yaratuvchi",c_text1:"Men Baxtiyorov Otabek, Prezident maktabi o'quvchisiman.",c_text2:"Bu loyihani kengaytirishni rejalashtirmoqdaman."},
             contact:{title:"Harakatga qo'shiling",gmail:"Gmail",telegram:"Telegram"},
             footer:"© 2026 GlobySolve | Baxtiyorov Otabek tomonidan yaratilgan",
@@ -1301,7 +1450,8 @@ if (document.readyState === 'loading') {
             nav:["Главная","Проблемы","Контакт","Сообщество"],
             hero:["Решения от людей.","Краудсорсинг для планеты.","Ваши идеи меняют мир."],
             exploreBtn:"Исследовать задачи",sectionTitle:"10 Глобальных Проблем",
-            labels:["Причины","Следствия","Отправить"],placeholders:["Ваш Gmail","Ваше решение..."],
+            lp:["Глобальные Проблемы","ИИ-Сила","Сообщество","Языки","Почему GlobySolve?","10 Глобальных Проблем","Отслеживайте и анализируйте самые актуальные мировые проблемы от цифровизации до гендерного неравенства.","ИИ Оценщик Решений","Получайте мгновенную обратную связь от ИИ с детальными оценками и персонализированными рекомендациями.","Умные Фреймворки","Представляйте структурированные решения с помощью SMART, SWOT или PESTLE.","Центр Сообщества","Присоединяйтесь к глобальным обсуждениям в реальном времени с участниками со всего мира.","Многоязычность","Полностью доступно на английском, узбекском, русском и каракалпакском.","Безопасно и Бесплатно","100% бесплатно с безопасным управлением профилем.","Как Это Работает","Четыре простых шага, чтобы начать вносить изменения.","Выберите Проблему","Выберите одну из 10 глобальных проблем и изучите их причины и следствия.","Отправьте Решение","Напишите своё решение, используя структурированные фреймворки SMART, SWOT или PESTLE.","ИИ Оценка","Получите мгновенную оценку ИИ с детальными баллами по влиянию, осуществимости и инновационности.","Присоединяйтесь к Сообществу","Обсуждайте решения в чате реального времени с участниками со всех континентов.","Изучите Возможности","Взгляд на платформу GlobySolve.","Просматривайте проблемы с причинами и следствиями","Оценивайте решения с помощью ИИ","Глобальные обсуждения в реальном времени","Инструменты анализа SMART, SWOT и PESTLE"],
+            labels:["Причины","Следствия","Отправить"],placeholders:["Ваш Gmail","Опишите местные примеры или детали этой проблемы (например, 'Уровень воды в Аральском море падает')..."],
             about:{title:"О проекте GPS",v_title:"Видение",v_text:"GlobySolve — это хаб инноваций.",c_title:"Создатель",c_text1:"Я Бахтиёров Отабек, ученик Президентской школы.",c_text2:"Планирую расширить проект."},
             contact:{title:"Присоединяйтесь",gmail:"Почта",telegram:"Телеграм"},
             footer:"© 2026 GlobySolve | Создано Бахтиёровым Отабеком",
@@ -1313,7 +1463,8 @@ if (document.readyState === 'loading') {
             nav:["Bas bet","Mashqalalar","Baylanıs","Jámiyet"],
             hero:["Xalıqtan sheshimler.","Planetamız ushın ideyalar.","Siziń g'oyańız dúnyanı ózgertedi."],
             exploreBtn:"Mashqalalardı kóriw",sectionTitle:"10 Global Mashqala",
-            labels:["Sebepter","Aqıbetler","Jiberiw"],placeholders:["Siziń Gmailıńız","Siziń sheshimińiz..."],
+            lp:["Global Mashqalalar","AI Kúshli","Jámiyet","Tiller","Nega GlobySolve?","10 Global Mashqala","Raqamlastırıwdan gender teńsizligine shekemgi eń áhmiyetli mashqalalardı baqılań hám analiz qılıń.","AI Sheshim Bahalawshı","Sheshimlerińiz haqqında batafsıl ball hám jeke usınıslar menen tez AI pikir-baylamaların alıń.","Aqıllı Freymvorkler","SMART, SWOT yamasa PESTLE analiz freymvorkleri járdeminde strukturalıq sheshimlerdi usınıń.","Jámiyet Orayı","Dúnyanıń hár túrli jaylarınan ózgertiwshiler menen real waqıtta global talqılawlarǵa qosılıń.","Kóp Til","Inglis, Ózbek, Rus hám Qaraqalpaq tillerinde tolıq bar.","Qawipsiz hám Tegin","Qawipsiz profil basqarıwı menen 100% tegin.","Qalay Isleydi","Ózgeris kiritedi baslaw ushın tórt ápiwayı qádem.","Mashqalanı Tańlań","10 global mashqaladan birin tańlań hám olardıń sebep hám aqıbetlerin batafsıl úyreniń.","Sheshimdi Jiberiń","SMART, SWOT yamasa PESTLE sıyaqlı strukturalıq freymvorklerdi paydalanıp sheshimińizdi jazıń.","AI Bahalaw","Tásir, ámelge asırıw hám innovatsiya boyınsha batafsıl ballar menen tez AI pikir-baylamaların alıń.","Jámiyetke Qosılıń","Hár bir qıtadan ózgertiwshiler menen real waqıt chatında sheshimlerdi talqılań.","Tájiriybeni Úyreniń","GlobySolve platformasına bir kóz taslaw.","Batafsıl sebep hám aqıbetler menen mashqalalardı kóriń","Sheshimlerdi aqıllı bahalaw menen bahalań","Real waqıt global talqılawlar","SMART, SWOT hám PESTLE analiz quralları"],
+            labels:["Sebepter","Aqıbetler","Jiberiw"],placeholders:["Siziń Gmailıńız","Bul mashqalanıń jergilikli mısalları yaki tafsilatların jazıń (mısalı, 'Aral teńizi suw dárejesi tómendep atır')..."],
             about:{title:"GPS Haqqında",v_title:"Maqset",v_text:"GlobySolve - innovatsiyalar ushın ashıq oray.",c_title:"Yaratıwshı",c_text1:"Men Baxtiyorov Otabek, Prezident mektebi oquvshısıman.",c_text2:"Bul loyihanı keńeytiw niyetindemen."},
             contact:{title:"Háreketke qosılıń",gmail:"Gmail",telegram:"Telegram"},
             footer:"© 2026 GlobySolve | Baxtiyorov Otabek tárepinen jaratılǵan",
@@ -1343,6 +1494,54 @@ if (document.readyState === 'loading') {
         document.querySelector('.contact-title').innerText=d.contact.title; document.querySelector('.gmail-label').innerText=d.contact.gmail+':'; document.querySelector('.telegram-label').innerText=d.contact.telegram+':'; document.querySelector('.footer-text').innerText=d.footer;
         if(d.donation){const dn=d.donation;const dt=document.querySelector('.donation-section .section-title');if(dt)dt.innerText=dn.title;const ds=document.querySelector('.donation-subtitle');if(ds)ds.innerText=dn.subtitle;document.querySelectorAll('.donation-tier').forEach((t,i)=>{if(!dn.tiers[i])return;const n=t.querySelector('.tier-name'),a=t.querySelector('.tier-amount'),d2=t.querySelector('.tier-desc'),b=t.querySelector('.tier-btn');if(n)n.innerText=dn.tiers[i].name;if(a)a.innerText=dn.tiers[i].amount;if(d2)d2.innerText=dn.tiers[i].desc;if(b)b.innerText=dn.tiers[i].btn;});const badge=document.querySelector('.tier-badge');if(badge)badge.innerText=dn.popular;const boxText=document.querySelector('.donation-kofi-box p');if(boxText)boxText.innerText=dn.boxText;const kofiBtn=document.querySelector('.kofi-big-btn');if(kofiBtn){const img=kofiBtn.querySelector('img');kofiBtn.innerHTML='';if(img)kofiBtn.appendChild(img);kofiBtn.appendChild(document.createTextNode(' '+dn.kofiBtn));}}
         const kf=document.querySelector('.kofi-float');if(kf&&d.kofiFloat){const img=kf.querySelector('img');kf.innerHTML='';if(img)kf.appendChild(img);kf.appendChild(document.createTextNode(d.kofiFloat));}
+        // Landing page translations
+        if(d.lp){
+            const lp=d.lp;
+            const statLabels=document.querySelectorAll('.stat-label');
+            if(statLabels[0])statLabels[0].innerText=lp[0];
+            if(statLabels[1])statLabels[1].innerText=lp[1];
+            if(statLabels[2])statLabels[2].innerText=lp[2];
+            if(statLabels[3])statLabels[3].innerText=lp[3];
+            const fTitle=document.querySelector('.lp-feature-title');
+            if(fTitle)fTitle.innerText=lp[4];
+            const fTitles=document.querySelectorAll('[class^="lp-f-"][class$="-title"]');
+            const fDescs=document.querySelectorAll('[class^="lp-f-"][class$="-desc"]');
+            if(fTitles[0])fTitles[0].innerText=lp[5];
+            if(fDescs[0])fDescs[0].innerText=lp[6];
+            if(fTitles[1])fTitles[1].innerText=lp[7];
+            if(fDescs[1])fDescs[1].innerText=lp[8];
+            if(fTitles[2])fTitles[2].innerText=lp[9];
+            if(fDescs[2])fDescs[2].innerText=lp[10];
+            if(fTitles[3])fTitles[3].innerText=lp[11];
+            if(fDescs[3])fDescs[3].innerText=lp[12];
+            if(fTitles[4])fTitles[4].innerText=lp[13];
+            if(fDescs[4])fDescs[4].innerText=lp[14];
+            if(fTitles[5])fTitles[5].innerText=lp[15];
+            if(fDescs[5])fDescs[5].innerText=lp[16];
+            const hTitle=document.querySelector('.lp-how-title');
+            if(hTitle)hTitle.innerText=lp[17];
+            const hSub=document.querySelector('.lp-how-sub');
+            if(hSub)hSub.innerText=lp[18];
+            const sTitles=document.querySelectorAll('[class^="lp-s-"][class$="-title"]');
+            const sDescs=document.querySelectorAll('[class^="lp-s-"][class$="-desc"]');
+            if(sTitles[0])sTitles[0].innerText=lp[19];
+            if(sDescs[0])sDescs[0].innerText=lp[20];
+            if(sTitles[1])sTitles[1].innerText=lp[21];
+            if(sDescs[1])sDescs[1].innerText=lp[22];
+            if(sTitles[2])sTitles[2].innerText=lp[23];
+            if(sDescs[2])sDescs[2].innerText=lp[24];
+            if(sTitles[3])sTitles[3].innerText=lp[25];
+            if(sDescs[3])sDescs[3].innerText=lp[26];
+            const pTitle=document.querySelector('.lp-preview-title');
+            if(pTitle)pTitle.innerText=lp[27];
+            const pSub=document.querySelector('.lp-preview-sub');
+            if(pSub)pSub.innerText=lp[28];
+            const prevLabels=document.querySelectorAll('[class^="lp-prev-"]');
+            if(prevLabels[0])prevLabels[0].innerText=lp[29];
+            if(prevLabels[1])prevLabels[1].innerText=lp[30];
+            if(prevLabels[2])prevLabels[2].innerText=lp[31];
+            if(prevLabels[3])prevLabels[3].innerText=lp[32];
+        }
         if(d.aiBtn){document.querySelectorAll('.ai-eval-btn').forEach(b=>b.innerHTML='<span class="ai-icon">🤖</span> '+d.aiBtn);window._currentAiLabel=d.aiBtn;}
     }
 
