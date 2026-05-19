@@ -1,0 +1,7 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/community.html", "destination": "/community.html" },
+    { "source": "/community", "destination": "/community.html" }
+  ]
+}
